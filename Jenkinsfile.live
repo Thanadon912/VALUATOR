@@ -1,0 +1,81 @@
+pipeline {
+  agent any
+
+  options {
+    skipDefaultCheckout(true)
+    timestamps()
+    timeout(time: 60, unit: 'MINUTES')
+    disableConcurrentBuilds(abortPrevious: true)
+    buildDiscarder(logRotator(numToKeepStr: '14', daysToKeepStr: '30'))
+  }
+
+  environment {
+    COMPOSE_DOCKER_CLI_BUILD = '1'
+    LIVE_PROJECT = "valuator-live-${BUILD_NUMBER}"
+  }
+
+  stages {
+    stage('Checkout Main') {
+      steps {
+        checkout scm
+        script {
+          env.REVISION = sh(script: 'git rev-parse --short=12 HEAD', returnStdout: true).trim()
+          env.BACKEND_IMAGE = "valuator-backend:live-${env.REVISION}"
+          env.FRONTEND_IMAGE = "valuator-frontend:live-${env.REVISION}"
+          env.E2E_IMAGE = "valuator-e2e:live-${env.REVISION}"
+        }
+      }
+    }
+
+    stage('Build Live Stack') {
+      parallel {
+        stage('Backend') {
+          steps { sh 'docker build --target runtime -t "$BACKEND_IMAGE" Back-End' }
+        }
+        stage('Frontend') {
+          steps {
+            sh 'docker build --target runner --build-arg API_BASE_URL=http://backend:8000 -t "$FRONTEND_IMAGE" Front-End'
+          }
+        }
+        stage('Playwright') {
+          steps { sh 'docker build -f Front-End/Dockerfile.e2e -t "$E2E_IMAGE" Front-End' }
+        }
+      }
+    }
+
+    stage('Live Provider E2E') {
+      environment {
+        VALUATOR_RUNTIME_ENV = credentials('valuator-staging-env')
+      }
+      steps {
+        catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+          sh '''
+            set -eu
+            mkdir -p ci-artifacts/playwright-live
+            export BACKEND_IMAGE FRONTEND_IMAGE E2E_IMAGE
+            docker compose --env-file "$VALUATOR_RUNTIME_ENV" -p "$LIVE_PROJECT" -f docker-compose.live-e2e.yml \
+              up --abort-on-container-exit --exit-code-from e2e
+          '''
+        }
+      }
+      post {
+        always {
+          sh '''
+            export BACKEND_IMAGE FRONTEND_IMAGE E2E_IMAGE
+            docker compose --env-file "$VALUATOR_RUNTIME_ENV" -p "$LIVE_PROJECT" -f docker-compose.live-e2e.yml \
+              logs --no-color > ci-artifacts/playwright-live/compose.log 2>&1 || true
+            docker compose --env-file "$VALUATOR_RUNTIME_ENV" -p "$LIVE_PROJECT" -f docker-compose.live-e2e.yml \
+              down --volumes --remove-orphans || true
+          '''
+        }
+      }
+    }
+  }
+
+  post {
+    always {
+      junit allowEmptyResults: true, testResults: 'ci-artifacts/playwright-live/**/*junit.xml'
+      archiveArtifacts allowEmptyArchive: true, artifacts: 'ci-artifacts/playwright-live/**/*', fingerprint: true
+    }
+  }
+}

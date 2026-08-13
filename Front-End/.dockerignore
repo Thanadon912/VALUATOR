@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+playwright-report
+test-results
+allure-results
+coverage
+*.tsbuildinfo
+*.log
+.env
+.env.*

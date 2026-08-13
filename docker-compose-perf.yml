@@ -1,0 +1,131 @@
+services:
+  perf-backend:
+    build:
+      context: ./Back-End
+      target: runtime
+    image: valuator-perf-backend:${PERF_IMAGE_TAG:-local}
+    container_name: valuator-perf-backend
+    network_mode: host
+    env_file:
+      - path: ${PERF_BACKEND_ENV_FILE:-./.env}
+        required: false
+    environment:
+      PERFORMANCE_CACHE_ONLY_ENABLED: "true"
+      SUPABASE_URL: ${SUPABASE_URL:-http://127.0.0.1:56321}
+      PORT: "8200"
+    command: ["uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", "8200", "--workers", "1"]
+    cpus: "2.0"
+    mem_limit: 2g
+    pids_limit: 512
+    restart: "no"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8200/health', timeout=2)"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+    profiles: ["target"]
+
+  influxdb:
+    image: influxdb:1.8.10
+    ports:
+      - "127.0.0.1:8086:8086"
+    environment:
+      INFLUXDB_DB: k6
+    volumes:
+      - influxdb-data:/var/lib/influxdb
+    healthcheck:
+      test: ["CMD-SHELL", "influx -execute 'CREATE DATABASE telegraf' >/dev/null && influx -execute 'SHOW DATABASES' >/dev/null"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  telegraf:
+    image: telegraf:1.39.1
+    user: root
+    group_add:
+      - "${DOCKER_SOCKET_GID:-963}"
+    security_opt:
+      - label=disable
+    volumes:
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      influxdb:
+        condition: service_healthy
+
+  telegraf-postgres:
+    image: telegraf:1.39.1
+    network_mode: host
+    environment:
+      PERF_POSTGRES_DSN: ${PERF_POSTGRES_DSN:-}
+    volumes:
+      - ./telegraf-postgres.conf:/etc/telegraf/telegraf.conf:ro
+    profiles: ["db-observer"]
+    depends_on:
+      influxdb:
+        condition: service_healthy
+
+  grafana:
+    image: grafana/grafana:13.1.0
+    ports:
+      - "127.0.0.1:3005:3000"
+    environment:
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_BASIC_ENABLED: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: "false"
+      GF_PLUGINS_PREINSTALL_DISABLED: "true"
+      GF_PLUGINS_PREINSTALL_AUTO_UPDATE: "false"
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      influxdb:
+        condition: service_healthy
+
+  k6-base: &k6-base
+    image: grafana/k6:2.1.0
+    network_mode: host
+    environment:
+      K6_OUT: influxdb=http://127.0.0.1:8086/k6
+      PERF_TARGET_ACK: local-dedicated
+    volumes:
+      - ./k6-tests:/scripts:ro
+      - ./ci-artifacts/performance:/results
+    depends_on:
+      influxdb:
+        condition: service_healthy
+    profiles: ["never"]
+
+  k6-smoke:
+    <<: *k6-base
+    command: run --tag test_type=smoke --tag provider_mode=cache_only --summary-export=/results/smoke.json /scripts/tests/smoke_test.js
+    profiles: ["smoke"]
+
+  k6-load:
+    <<: *k6-base
+    command: run --tag test_type=load --tag provider_mode=cache_only --summary-export=/results/load.json /scripts/tests/load_test.js
+    profiles: ["load"]
+
+  k6-stress:
+    <<: *k6-base
+    command: run --tag test_type=stress --tag provider_mode=cache_only --summary-export=/results/stress.json /scripts/tests/stress_test.js
+    profiles: ["stress"]
+
+  k6-spike:
+    <<: *k6-base
+    command: run --tag test_type=spike --tag provider_mode=cache_only --summary-export=/results/spike.json /scripts/tests/spike_test.js
+    profiles: ["spike"]
+
+  k6-soak:
+    <<: *k6-base
+    command: run --tag test_type=soak_30m --tag provider_mode=cache_only --summary-export=/results/soak-30m.json /scripts/tests/soak_test.js
+    profiles: ["soak"]
+
+volumes:
+  influxdb-data:
+  grafana-data:

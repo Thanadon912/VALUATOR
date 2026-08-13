@@ -1,0 +1,41 @@
+name: Feature request
+description: Propose a focused improvement that fits the product scope
+title: "feat: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user problem should this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the smallest useful change and its expected behavior.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Product area
+      options:
+        - Summary
+        - News
+        - Valuation
+        - Authentication and account
+        - API and providers
+        - CI, security, or deployment
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Data and calculation impact
+      description: Identify required sourced inputs, provenance, or valuation-formula impact. Write “None” when not applicable.
+    validations:
+      required: true

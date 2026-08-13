@@ -1,0 +1,8 @@
+.env
+.env.*
+.next
+node_modules
+allure-results
+playwright-report
+test-results
+tests

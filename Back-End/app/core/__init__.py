@@ -1,0 +1,2 @@
+"""Core deterministic business logic."""
+

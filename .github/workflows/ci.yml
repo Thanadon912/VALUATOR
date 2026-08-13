@@ -1,0 +1,202 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    name: Docker regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      COMPOSE_DOCKER_CLI_BUILD: "1"
+      E2E_FRONTEND_PORT: "0"
+      SUPABASE_CLI_VERSION: "2.112.0"
+      REVISION: ${{ github.sha }}
+      BACKEND_IMAGE: valuator-backend:${{ github.sha }}
+      FRONTEND_IMAGE: valuator-frontend:${{ github.sha }}
+      E2E_IMAGE: valuator-e2e:${{ github.sha }}
+      E2E_PROJECT: e2e-gh-${{ github.run_id }}-${{ github.run_attempt }}
+      CI_BRANCH: ${{ github.head_ref || github.ref_name }}
+      CI_COMMIT: ${{ github.sha }}
+      TEST_ENVIRONMENT: ci-deterministic
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: "22"
+
+      - name: Free disk space
+        # ubuntu-latest ships ~20-40GB of preinstalled toolchains this
+        # pipeline never touches (dotnet, Android SDK, GHC, extra tool
+        # caches). A later build-cache prune before the E2E stage was not
+        # enough on its own: the crash was an unhandled exception writing
+        # the runner's own diagnostic log, meaning the whole filesystem was
+        # full, not just Docker's share of it. Remove the largest unused
+        # toolchains up front, before any image builds consume the
+        # reclaimed space.
+        run: |
+          set -euo pipefail
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc \
+            /opt/hostedtoolcache/CodeQL "$AGENT_TOOLSDIRECTORY" 2>/dev/null || true
+          docker image prune -af || true
+          df -h /
+
+      - name: Preflight
+        run: |
+          set -euo pipefail
+          docker version
+          docker compose version
+          node --version
+          npx --version
+          python3 -m unittest discover -s scripts/tests -p 'test_*.py'
+          docker compose --env-file ops/ci.env -f docker-compose.yml config --quiet
+          docker compose --env-file ops/ci.env -f docker-compose.e2e.yml config --quiet
+          PERF_POSTGRES_DSN=postgresql://placeholder@127.0.0.1:56322/postgres \
+            docker compose -f docker-compose-perf.yml config --quiet
+          mkdir -p \
+            ci-artifacts/backend \
+            ci-artifacts/supabase \
+            ci-artifacts/allure-results \
+            ci-artifacts/allure-combined-results \
+            ci-artifacts/playwright
+
+      - name: Backend tests
+        run: |
+          set -euo pipefail
+          docker build --target test -t "valuator-backend-test:${REVISION}" Back-End
+          docker run --rm --env-file ops/ci.env \
+            -v "$GITHUB_WORKSPACE/ci-artifacts/backend:/reports" \
+            "valuator-backend-test:${REVISION}" \
+            python -m pytest tests \
+              --ignore=tests/test_supabase_integration.py \
+              --junitxml=/reports/backend-junit.xml \
+              --alluredir=/reports/allure-results \
+              --allure-no-capture
+
+      - name: Frontend lint
+        run: docker build --target lint -t "valuator-frontend-lint:${REVISION}" Front-End
+
+      - name: Security source and dependency gates
+        env:
+          GITLEAKS_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          set -euo pipefail
+          gitleaks_log_args=()
+          if [[ -n "${GITLEAKS_BASE_SHA:-}" \
+            && ! "$GITLEAKS_BASE_SHA" =~ ^0+$ ]] \
+            && git cat-file -e "${GITLEAKS_BASE_SHA}^{commit}"; then
+            gitleaks_log_args+=("--log-opts=${GITLEAKS_BASE_SHA}..${GITHUB_SHA}")
+          fi
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE:/repo:ro" \
+            zricethezav/gitleaks:v8.28.0 \
+            detect --source=/repo --config=/repo/.gitleaks.toml \
+              --redact --no-banner "${gitleaks_log_args[@]}"
+          docker run --rm "valuator-backend-test:${REVISION}" \
+            bandit -r app -q -ll -ii
+          docker run --rm "valuator-backend-test:${REVISION}" \
+            pip-audit -r requirements.txt
+          npm --prefix Front-End audit --omit=dev --audit-level=high
+
+      - name: Performance harness validation
+        run: |
+          set -euo pipefail
+          for script in k6-tests/tests/*.js; do
+            docker run --rm \
+              -v "$GITHUB_WORKSPACE/k6-tests:/scripts:ro" \
+              grafana/k6:2.1.0 \
+              inspect "/scripts/tests/$(basename "$script")" >/dev/null
+          done
+          jq empty grafana/dashboards/valuator-custom-dashboard.json
+          bash -n run_all_perf_tests.sh scripts/performance/manage-isolated-supabase.sh
+
+      - name: Supabase schema and RLS
+        env:
+          SUPABASE_TEST_IMAGE: valuator-backend-test:${{ github.sha }}
+        run: scripts/ci/run-supabase-integration.sh
+
+      - name: Build runtime images
+        run: |
+          set -euo pipefail
+          docker build --target runtime -t "$BACKEND_IMAGE" Back-End
+          docker build --target runner \
+            --build-arg API_BASE_URL=http://backend:8000 \
+            --build-arg APP_REVISION="$REVISION" \
+            --build-arg APP_ENV=production \
+            -t "$FRONTEND_IMAGE" Front-End
+          docker build -f Front-End/Dockerfile.e2e -t "$E2E_IMAGE" Front-End
+
+      - name: Reclaim disk space before E2E
+        # ubuntu-latest runners have limited free disk, and by this point
+        # the job has built five Docker images (backend test/runtime,
+        # frontend lint/runner, e2e) plus their BuildKit layer cache. The
+        # test/lint images are single-use and already consumed; the layer
+        # cache is typically the largest consumer. Without this, the E2E
+        # docker compose step (the most disk-heavy step) can fail with
+        # "No space left on device" independent of any test outcome.
+        run: |
+          set -euo pipefail
+          docker rmi "valuator-backend-test:${REVISION}" "valuator-frontend-lint:${REVISION}" 2>/dev/null || true
+          docker builder prune -af
+          df -h /
+
+      - name: Deterministic valuation E2E
+        run: |
+          set -euo pipefail
+          export FRONTEND_IMAGE E2E_IMAGE CI_BRANCH CI_COMMIT TEST_ENVIRONMENT
+          docker compose --env-file ops/ci.env -p "$E2E_PROJECT" -f docker-compose.e2e.yml \
+            up --abort-on-container-exit --exit-code-from e2e
+          node scripts/ci/validate-allure-results.mjs
+
+      - name: Collect Compose logs
+        if: always()
+        run: |
+          export FRONTEND_IMAGE E2E_IMAGE
+          docker compose --env-file ops/ci.env -p "$E2E_PROJECT" -f docker-compose.e2e.yml \
+            logs --no-color > ci-artifacts/playwright/compose.log 2>&1 || true
+
+      - name: Normalize artifact ownership
+        if: always()
+        run: |
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE/ci-artifacts:/artifacts" \
+            alpine chown -R "$(id -u):$(id -g)" /artifacts || true
+
+      - name: Assemble Allure results
+        if: always()
+        run: node scripts/ci/assemble-allure-results.mjs
+
+      - name: Upload regression artifacts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: regression-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ci-artifacts/backend
+            ci-artifacts/supabase
+            ci-artifacts/allure-results
+            ci-artifacts/playwright
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Stop test services
+        if: always()
+        run: |
+          export FRONTEND_IMAGE E2E_IMAGE
+          docker compose --env-file ops/ci.env -p "$E2E_PROJECT" -f docker-compose.e2e.yml \
+            down --volumes --remove-orphans || true

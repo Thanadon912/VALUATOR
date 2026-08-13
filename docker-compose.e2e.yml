@@ -1,0 +1,63 @@
+services:
+  backend:
+    image: node:22-alpine
+    working_dir: /fixtures
+    command: ["node", "fixture-server.mjs"]
+    environment:
+      PORT: "8000"
+    volumes:
+      - ./Front-End/tests/e2e:/fixtures:ro
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8000/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+
+  frontend:
+    image: ${FRONTEND_IMAGE:-valuator-frontend:local}
+    env_file:
+      - path: ./Front-End/.env.local
+        required: false
+    ports:
+      - "${E2E_FRONTEND_PORT:-3101}:3000"
+    environment:
+      API_BASE_URL: http://backend:8000
+      SUPABASE_URL: http://backend:8000
+      SUPABASE_PUBLISHABLE_KEY: mock-publishable-key
+      APP_BASE_URL: http://frontend:3000
+      APP_ENV: development
+      GOOGLE_AUTH_ENABLED: "true"
+      # The fixture accepts only this public, deterministic test token. Never
+      # inherit a developer or production email token into the E2E stack.
+      EMAIL_INTERNAL_API_TOKEN: ci-deterministic-email-token-not-a-secret
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+
+  e2e:
+    image: ${E2E_IMAGE:-valuator-e2e:local}
+    command: ["npx", "playwright", "test", "--grep-invert", "@live"]
+    environment:
+      CI: "true"
+      E2E_BASE_URL: http://frontend:3000
+      E2E_FIXTURE_CONTROL_URL: http://backend:8000
+      PLAYWRIGHT_OUTPUT_DIR: /artifacts/test-results
+      PLAYWRIGHT_JUNIT_OUTPUT: /artifacts/test-results/e2e-junit.xml
+      PLAYWRIGHT_HTML_OUTPUT: /artifacts/playwright-report
+      ALLURE_RESULTS_DIR: /app/allure-results
+      GIT_BRANCH: ${CI_BRANCH:-local}
+      GIT_COMMIT: ${CI_COMMIT:-uncommitted}
+      TEST_ENVIRONMENT: ${TEST_ENVIRONMENT:-ci-deterministic}
+    volumes:
+      - ./ci-artifacts/playwright:/artifacts
+      - ./ci-artifacts/allure-results:/app/allure-results
+      - ./Front-End/tests/e2e:/app/tests/e2e:ro
+      - ./Front-End/playwright.config.ts:/app/playwright.config.ts:ro
+    depends_on:
+      frontend:
+        condition: service_healthy

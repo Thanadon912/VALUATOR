@@ -1,0 +1,5 @@
+[
+  { "symbol": "AAPL", "case": "verified_us_equity" },
+  { "symbol": "JPM", "case": "verified_regulated_equity" },
+  { "symbol": "TSM", "case": "verified_adr_equity" }
+]

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>USA Stock Analysis</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero section-grid" aria-labelledby="hero-title">
+        <div class="section-bg section-bg--hero" aria-hidden="true"></div>
+        <div class="hero__inner">
+          <div class="hero__copy">
+            <p class="eyebrow">USA STOCK ANALYSIS PLATFORM</p>
+            <h1 id="hero-title">Analyze any US stock in one intelligent view.</h1>
+            <p class="subheadline">
+              Type a ticker to generate revenue mix, financial statements,
+              growth charts, valuation context, DCF inputs, and the latest
+              market news in one focused dashboard.
+            </p>
+
+            <form class="ticker-search" id="ticker-form" novalidate>
+              <label class="sr-only" for="ticker-input">Stock ticker symbol</label>
+              <span class="ticker-search__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="img">
+                  <path d="M10.7 18.4a7.7 7.7 0 1 1 0-15.4 7.7 7.7 0 0 1 0 15.4Zm0-2.2a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z" />
+                  <path d="m16.3 16 4.2 4.2-1.6 1.6-4.2-4.2 1.6-1.6Z" />
+                </svg>
+              </span>
+              <input
+                id="ticker-input"
+                name="ticker"
+                inputmode="latin"
+                autocomplete="off"
+                maxlength="10"
+                placeholder="Search ticker, e.g. AAPL"
+              />
+              <button type="submit">Analyze now</button>
+            </form>
+            <p class="form-status" id="form-status" aria-live="polite"></p>
+
+            <div class="metric-row" aria-label="Preview states">
+              <article class="metric-card">
+                <span>Revenue CAGR</span>
+                <strong id="metric-revenue">Ticker needed</strong>
+              </article>
+              <article class="metric-card">
+                <span>DCF Fair Value</span>
+                <strong id="metric-dcf">Inputs needed</strong>
+              </article>
+              <article class="metric-card">
+                <span>Latest News</span>
+                <strong id="metric-news">Not loaded</strong>
+              </article>
+            </div>
+          </div>
+
+          <div class="growth-mark" aria-hidden="true">
+            <div class="growth-mark__glow"></div>
+            <div class="growth-mark__floor"></div>
+            <img src="./assets/stock-growth-logo.svg" alt="" />
+            <div class="market-pill market-pill--dcf">
+              <span></span>
+              DCF inputs
+            </div>
+            <div class="market-pill market-pill--ticker">
+              <span></span>
+              Ticker ready
+            </div>
+            <div class="market-pill market-pill--risk">
+              <span></span>
+              Risk model
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo section-grid" aria-labelledby="demo-title">
+        <div class="section-bg section-bg--demo" aria-hidden="true"></div>
+        <div class="demo__inner">
+          <div class="section-heading">
+            <p class="eyebrow">WORKSPACE PREVIEW</p>
+            <h2 id="demo-title">One focused flow from ticker to analysis.</h2>
+            <p>
+              Move from raw company data to editable valuation assumptions,
+              traceable charts, source-aware news, and an AI summary.
+            </p>
+          </div>
+
+          <div class="demo__content">
+            <div class="video-shell" aria-label="Demo video placeholder">
+              <div class="video-shell__toolbar" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="video-shell__empty" aria-hidden="true"></div>
+            </div>
+
+            <div class="feature-grid" aria-label="Analysis capabilities">
+              <article class="feature-card">
+                <span class="feature-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10h-9V2Z" /><path d="M14 2.2V10h7.8A10 10 0 0 0 14 2.2Z" /></svg>
+                </span>
+                <h3>Revenue mix</h3>
+                <p>Segment breakdowns with source and period context.</p>
+              </article>
+              <article class="feature-card">
+                <span class="feature-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M4 19h16v2H4v-2Z" /><path d="M6 17V7h3v10H6Zm5 0V3h3v14h-3Zm5 0v-7h3v7h-3Z" /></svg>
+                </span>
+                <h3>DCF valuation</h3>
+                <p>Editable growth, margin, discount, and terminal inputs.</p>
+              </article>
+              <article class="feature-card">
+                <span class="feature-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M3 18.5 8.2 13l3.7 3.2L20 6.7V12h2V3h-9v2h5.6l-7 8.1-3.6-3.2L1.5 17l1.5 1.5Z" /></svg>
+                </span>
+                <h3>Growth charts</h3>
+                <p>Revenue and profit trends prepared for comparison.</p>
+              </article>
+              <article class="feature-card">
+                <span class="feature-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 3h14v18H5V3Zm2 2v14h10V5H7Zm2 3h6v2H9V8Zm0 4h6v2H9v-2Zm0 4h4v2H9v-2Z" /></svg>
+                </span>
+                <h3>Financials</h3>
+                <p>Statements stay separated from derived calculations.</p>
+              </article>
+              <article class="feature-card">
+                <span class="feature-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4V4Zm2 2v12h12V6H6Zm2 2h8v2H8V8Zm0 4h8v2H8v-2Zm0 4h5v2H8v-2Z" /></svg>
+                </span>
+                <h3>Market news</h3>
+                <p>Relevant headlines with timestamp and provider context.</p>
+              </article>
+              <article class="feature-card">
+                <span class="feature-card__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 2 9.8 8.7 3 11l6.8 2.3L12 20l2.2-6.7L21 11l-6.8-2.3L12 2Z" /></svg>
+                </span>
+                <h3>AI summary</h3>
+                <p>Facts, assumptions, and calculations remain distinct.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

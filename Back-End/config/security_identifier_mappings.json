@@ -1,0 +1,18 @@
+{
+  "mappings": [
+    {
+      "ticker": "TSM",
+      "company_cik": "0001046179",
+      "cusip": "874039100",
+      "issuer_name": "TAIWAN SEMICONDUCTOR MANUFAC",
+      "class_title": "SPONSORED ADS"
+    },
+    {
+      "ticker": "JPM",
+      "company_cik": "0000019617",
+      "cusip": "46625H100",
+      "issuer_name": "JPMORGAN CHASE & CO",
+      "class_title": "COM"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "title": "VALUATOR - Performance Revalidation",
+  "uid": "valuator-perf-metrics",
+  "refresh": "5s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "time": { "from": "now-35m", "to": "now" },
+  "panels": [
+    {
+      "type": "timeseries", "title": "Virtual Users", "gridPos": { "h": 7, "w": 8, "x": 0, "y": 0 },
+      "datasource": { "type": "influxdb", "uid": "k6-influxdb" },
+      "targets": [{ "refId": "A", "rawQuery": true, "query": "SELECT max(\"value\") FROM \"vus\" WHERE $timeFilter GROUP BY time($__interval), \"test_type\" fill(null)", "alias": "$tag_test_type" }]
+    },
+    {
+      "type": "timeseries", "title": "Request Rate", "gridPos": { "h": 7, "w": 8, "x": 8, "y": 0 },
+      "datasource": { "type": "influxdb", "uid": "k6-influxdb" },
+      "targets": [{ "refId": "A", "rawQuery": true, "query": "SELECT non_negative_derivative(sum(\"value\"), 1s) FROM \"http_reqs\" WHERE $timeFilter GROUP BY time($__interval), \"route\", \"scenario\" fill(null)", "alias": "$tag_scenario / $tag_route" }]
+    },
+    {
+      "type": "timeseries", "title": "Iterations and Dropped Iterations", "gridPos": { "h": 7, "w": 8, "x": 16, "y": 0 },
+      "datasource": { "type": "influxdb", "uid": "k6-influxdb" },
+      "targets": [
+        { "refId": "A", "rawQuery": true, "query": "SELECT non_negative_derivative(sum(\"value\"), 1s) FROM \"iterations\" WHERE $timeFilter GROUP BY time($__interval), \"scenario\" fill(null)", "alias": "iterations / $tag_scenario" },
+        { "refId": "B", "rawQuery": true, "query": "SELECT non_negative_derivative(sum(\"value\"), 1s) FROM \"dropped_iterations\" WHERE $timeFilter GROUP BY time($__interval), \"scenario\" fill(null)", "alias": "dropped / $tag_scenario" }
+      ]
+    },
+    {
+      "type": "timeseries", "title": "Latency p50 / p90 / p95 / p99 / max", "gridPos": { "h": 9, "w": 16, "x": 0, "y": 7 },
+      "datasource": { "type": "influxdb", "uid": "k6-influxdb" },
+      "targets": [{ "refId": "A", "rawQuery": true, "query": "SELECT median(\"value\") AS \"p50\", percentile(\"value\", 90) AS \"p90\", percentile(\"value\", 95) AS \"p95\", percentile(\"value\", 99) AS \"p99\", max(\"value\") AS \"max\" FROM \"http_req_duration\" WHERE \"phase\"='measurement' AND $timeFilter GROUP BY time($__interval), \"route\", \"scenario\", \"cache_state\" fill(null)", "alias": "$tag_scenario / $tag_route / $tag_cache_state / $col" }],
+      "fieldConfig": { "defaults": { "unit": "ms" }, "overrides": [] }
+    },
+    {
+      "type": "timeseries", "title": "HTTP and Business Failure Rates", "gridPos": { "h": 9, "w": 8, "x": 16, "y": 7 },
+      "datasource": { "type": "influxdb", "uid": "k6-influxdb" },
+      "targets": [
+        { "refId": "A", "rawQuery": true, "query": "SELECT mean(\"value\") * 100 FROM \"http_req_failed\" WHERE $timeFilter GROUP BY time($__interval), \"scenario\" fill(null)", "alias": "HTTP / $tag_scenario" },
+        { "refId": "B", "rawQuery": true, "query": "SELECT (1 - mean(\"value\")) * 100 FROM \"business_correctness\" WHERE $timeFilter GROUP BY time($__interval), \"scenario\" fill(null)", "alias": "business / $tag_scenario" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent" }, "overrides": [] }
+    },
+    {
+      "type": "timeseries", "title": "Correctness Failure Counters", "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+      "datasource": { "type": "influxdb", "uid": "k6-influxdb" },
+      "targets": [
+        { "refId": "A", "rawQuery": true, "query": "SELECT cumulative_sum(sum(\"value\")) FROM /business_check_failures|valuation_invalid_results|cache_isolation_failures|monte_carlo_timeout_count/ WHERE $timeFilter GROUP BY time($__interval), \"scenario\" fill(0)", "alias": "$measurement / $tag_scenario" },
+        { "refId": "B", "rawQuery": true, "query": "SELECT cumulative_sum(sum(\"value\")) FROM \"provider_fallback_count\" WHERE $timeFilter GROUP BY time($__interval), \"scenario\" fill(0)", "alias": "provider fallback / $tag_scenario" }
+      ]
+    },
+    {
+      "type": "timeseries", "title": "Backend Container CPU", "gridPos": { "h": 8, "w": 6, "x": 12, "y": 16 },
+      "datasource": { "type": "influxdb", "uid": "telegraf-influxdb" },
+      "targets": [{ "refId": "A", "rawQuery": true, "query": "SELECT mean(\"usage_percent\") FROM \"docker_container_cpu\" WHERE \"container_name\"='valuator-perf-backend' AND $timeFilter GROUP BY time($__interval) fill(null)", "alias": "CPU" }],
+      "fieldConfig": { "defaults": { "unit": "percent" }, "overrides": [] }
+    },
+    {
+      "type": "timeseries", "title": "Backend Container Memory", "gridPos": { "h": 8, "w": 6, "x": 18, "y": 16 },
+      "datasource": { "type": "influxdb", "uid": "telegraf-influxdb" },
+      "targets": [{ "refId": "A", "rawQuery": true, "query": "SELECT mean(\"usage\") AS \"used\", mean(\"usage_percent\") AS \"percent\" FROM \"docker_container_mem\" WHERE \"container_name\"='valuator-perf-backend' AND $timeFilter GROUP BY time($__interval) fill(null)", "alias": "$col" }]
+    },
+    {
+      "type": "timeseries", "title": "Backend Network IO", "gridPos": { "h": 8, "w": 8, "x": 0, "y": 24 },
+      "datasource": { "type": "influxdb", "uid": "telegraf-influxdb" },
+      "targets": [{ "refId": "A", "rawQuery": true, "query": "SELECT non_negative_derivative(mean(\"rx_bytes\"), 1s) AS \"rx\", non_negative_derivative(mean(\"tx_bytes\"), 1s) AS \"tx\" FROM \"docker_container_net\" WHERE \"container_name\"='valuator-perf-backend' AND $timeFilter GROUP BY time($__interval) fill(null)", "alias": "$col" }],
+      "fieldConfig": { "defaults": { "unit": "Bps" }, "overrides": [] }
+    },
+    {
+      "type": "timeseries", "title": "Backend Uptime / Exit Status", "gridPos": { "h": 8, "w": 8, "x": 8, "y": 24 },
+      "datasource": { "type": "influxdb", "uid": "telegraf-influxdb" },
+      "targets": [{ "refId": "A", "rawQuery": true, "query": "SELECT last(\"uptime_ns\") FROM \"docker_container_status\" WHERE \"container_name\"='valuator-perf-backend' AND $timeFilter GROUP BY time($__interval) fill(null)", "alias": "uptime" }]
+    },
+    {
+      "type": "timeseries", "title": "PostgreSQL Connections", "gridPos": { "h": 8, "w": 8, "x": 16, "y": 24 },
+      "datasource": { "type": "influxdb", "uid": "telegraf-influxdb" },
+      "targets": [{ "refId": "A", "rawQuery": true, "query": "SELECT max(\"numbackends\") FROM \"postgresql\" WHERE $timeFilter GROUP BY time($__interval), \"db\" fill(null)", "alias": "$tag_db" }]
+    },
+    {
+      "type": "timeseries", "title": "PostgreSQL Transactions / Rollbacks / Deadlocks", "gridPos": { "h": 8, "w": 24, "x": 0, "y": 32 },
+      "datasource": { "type": "influxdb", "uid": "telegraf-influxdb" },
+      "targets": [{ "refId": "A", "rawQuery": true, "query": "SELECT non_negative_derivative(mean(\"xact_commit\"), 1s) AS \"commit\", non_negative_derivative(mean(\"xact_rollback\"), 1s) AS \"rollback\", non_negative_derivative(mean(\"deadlocks\"), 1s) AS \"deadlocks\" FROM \"postgresql\" WHERE $timeFilter GROUP BY time($__interval), \"db\" fill(null)", "alias": "$tag_db / $col" }]
+    }
+  ]
+}

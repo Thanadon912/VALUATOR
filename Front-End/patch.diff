@@ -1,0 +1,68 @@
+--- features/valuation/components/terminal-header.tsx
++++ features/valuation/components/terminal-header.tsx
+@@ -2,12 +2,21 @@
+ import { fmt } from "@/lib/valuation"
+ 
+-function Telemetry({ label, value }: { label: string; value: string }) {
++function Telemetry({ label, value, sourceUrl }: { label: string; value: string; sourceUrl?: string | null }) {
++  const content = <span className="font-mono text-sm font-medium tabular-nums text-[#E0E6E2]">{value}</span>;
++  const isLink = sourceUrl?.startsWith("http");
+   return (
+     <div className="flex flex-col items-end">
+       <span className="text-xs text-[#869E8F]">{label}</span>
+-      <span className="font-mono text-sm font-medium tabular-nums text-[#E0E6E2]">{value}</span>
++      {sourceUrl ? (
++        isLink ? (
++          <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="hover:underline hover:text-emerald-400" title={sourceUrl}>
++            {content}
++          </a>
++        ) : (
++          <span title={sourceUrl} className="cursor-help decoration-dotted underline decoration-[#869E8F]/50 underline-offset-4 hover:text-emerald-400">
++            {content}
++          </span>
++        )
++      ) : (
++        content
++      )}
+     </div>
+   )
+ }
+@@ -19,12 +28,15 @@
+   costOfEquity = null,
+   riskFreeRate = null,
++  riskFreeRateSource = null,
+   marketCap = null,
++  marketCapSource = null,
+   beta = null,
++  betaSource = null,
+   logoUrl,
+   fmpLogoUrl,
+ }: { 
+   tickerSymbol: string, 
+   currentPrice: number | null,
+   costOfEquity?: number | null,
+   riskFreeRate?: number | null,
++  riskFreeRateSource?: string | null,
+   marketCap?: string | null,
++  marketCapSource?: string | null,
+   beta?: number | null,
++  betaSource?: string | null,
+   logoUrl?: string | null,
+   fmpLogoUrl?: string | null,
+ }) {
+@@ -95,7 +107,11 @@
+               {marketCap ?? "N/A"}
+             </span>
++          )}
++          {marketCapSource && (
++            <a href={marketCapSource} target="_blank" rel="noopener noreferrer" className="ml-2 text-xs text-[#869E8F] hover:text-emerald-400 hover:underline" title={marketCapSource}>source</a>
+           )}
+         </div>
+         <div className="hidden h-8 w-px bg-[#1A2E20] sm:block" />
+-        <Telemetry label="BETA" value={beta === null ? "N/A" : beta.toFixed(2)} />
++        <Telemetry label="BETA" value={beta === null ? "N/A" : beta.toFixed(2)} sourceUrl={betaSource} />
+         <div className="hidden h-8 w-px bg-[#1A2E20] sm:block" />
+-        <Telemetry label="Risk-Free (10Y)" value={riskFreeRate === null ? "N/A" : fmt.pct(riskFreeRate)} />
++        <Telemetry label="Risk-Free (10Y)" value={riskFreeRate === null ? "N/A" : fmt.pct(riskFreeRate)} sourceUrl={riskFreeRateSource} />
+         <div className="hidden h-8 w-px bg-[#1A2E20] sm:block" />
+         <Telemetry label="Cost of Equity" value={costOfEquity === null ? "N/A" : fmt.pct(costOfEquity)} />

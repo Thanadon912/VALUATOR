@@ -1,0 +1,74 @@
+services:
+  backend:
+    image: ${BACKEND_IMAGE}
+    environment:
+      ENABLE_LIVE_PROVIDERS: ${ENABLE_LIVE_PROVIDERS:-true}
+      SEC_USER_AGENT: ${SEC_USER_AGENT}
+      PROVIDER_TIMEOUT_SECONDS: ${PROVIDER_TIMEOUT_SECONDS:-8}
+      FRED_API_KEY: ${FRED_API_KEY:-}
+      FMP_API_KEY: ${FMP_API_KEY:-}
+      FINNHUB_API_KEY: ${FINNHUB_API_KEY:-}
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY:-}
+      EMAIL_DELIVERY_MODE: ${EMAIL_DELIVERY_MODE:-}
+      EMAIL_PROVIDER: ${EMAIL_PROVIDER:-}
+      EMAIL_INTERNAL_API_TOKEN: ${EMAIL_INTERNAL_API_TOKEN:-}
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      EMAIL_FROM: ${EMAIL_FROM:-}
+      EMAIL_FROM_NAME: ${EMAIL_FROM_NAME:-VALUATOR}
+      EMAIL_REPLY_TO: ${EMAIL_REPLY_TO:-}
+      SMTP_TIMEOUT_SECONDS: ${SMTP_TIMEOUT_SECONDS:-10}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-VALUATOR <onboarding@resend.dev>}
+      RESEND_TEST_RECIPIENT: ${RESEND_TEST_RECIPIENT:-}
+      APP_BASE_URL: ${APP_BASE_URL:-http://127.0.0.1:3200}
+      SUPABASE_TIMEOUT_SECONDS: ${SUPABASE_TIMEOUT_SECONDS:-5}
+      ALPHA_VANTAGE_API_KEY: ${ALPHA_VANTAGE_API_KEY:-}
+      ALPACA_API_KEY: ${ALPACA_API_KEY:-}
+      ALPACA_API_SECRET: ${ALPACA_API_SECRET:-}
+      ALPACA_DATA_FEED: ${ALPACA_DATA_FEED:-iex}
+      SUPPLY_CHAIN_AI_ENABLED: ${SUPPLY_CHAIN_AI_ENABLED:-false}
+      CUSTOMER_MIX_AI_ENABLED: ${CUSTOMER_MIX_AI_ENABLED:-false}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 40
+
+  frontend:
+    image: ${FRONTEND_IMAGE}
+    environment:
+      API_BASE_URL: http://backend:8000
+      SUPABASE_URL: ${SUPABASE_URL:-}
+      SUPABASE_PUBLISHABLE_KEY: ${SUPABASE_PUBLISHABLE_KEY:-}
+      EMAIL_INTERNAL_API_TOKEN: ${EMAIL_INTERNAL_API_TOKEN:-}
+      APP_BASE_URL: ${APP_BASE_URL:-http://frontend:3000}
+      GOOGLE_AUTH_ENABLED: ${GOOGLE_AUTH_ENABLED:-false}
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 3s
+      retries: 40
+
+  e2e:
+    image: ${E2E_IMAGE}
+    command: ["npx", "playwright", "test", "--grep", "@live"]
+    environment:
+      CI: "true"
+      E2E_BASE_URL: http://frontend:3000
+      LIVE_E2E_TICKERS: ${LIVE_E2E_TICKERS:-TSLA,JPM,XOM,WMT}
+      PLAYWRIGHT_OUTPUT_DIR: /artifacts/test-results
+      PLAYWRIGHT_JUNIT_OUTPUT: /artifacts/test-results/e2e-live-junit.xml
+      PLAYWRIGHT_HTML_OUTPUT: /artifacts/playwright-report
+    volumes:
+      - ./ci-artifacts/playwright-live:/artifacts
+    depends_on:
+      frontend:
+        condition: service_healthy

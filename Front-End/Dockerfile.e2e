@@ -1,0 +1,11 @@
+FROM mcr.microsoft.com/playwright:v1.61.1-noble
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY playwright.config.ts ./
+COPY tests/e2e ./tests/e2e
+
+CMD ["npx", "playwright", "test", "--grep-invert", "@live"]

@@ -1,0 +1,102 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+Back-End/.venv/
+# Rebuildable provider snapshots, including the local SEC 13F SQLite index.
+Back-End/.cache/
+Back-End/*.sqlite3-wal
+Back-End/*.sqlite3-shm
+Back-End/13f-*.sqlite3
+Back-End/*_form13f.zip
+
+# Next.js / Node
+Front-End/node_modules/
+Front-End/.next/
+Front-End/out/
+Front-End/playwright-report/
+Front-End/test-results/
+Front-End/allure-results/
+*.tsbuildinfo
+ci-artifacts/
+
+# Local tooling
+.playwright-mcp/
+
+# Environment files
+.env
+.env.*
+.env.local
+.env.*.local
+!.env.example
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Visual verification artifacts
+stock-analysis-desktop.png
+stock-analysis-mobile.png
+
+# Log and PID files
+*.log
+*.pid
+
+# Agent and temporary tools
+.cache/
+.zcode/
+.agents/
+.impeccable/
+Design/Penpot/
+skills-lock.json
+patch.js
+valuation-aapl-before.png
+
+# Debug JSONs
+Back-End/dcf_out.json
+Back-End/dcf_tsm.json
+Back-End/debug_*.json
+Back-End/ri_test.json
+*.db
+# Test files and ad-hoc scripts
+test_*.py
+!Back-End/tests/test_*.py
+time_*.py
+check_*.py
+debug_*.py
+profile_*.py
+replace_*.py
+run_local.py
+screenshot.py
+fix_realtime.py
+test_frontend_api.js
+
+# Data dumps and cache
+dcf_out.json
+dcf_tsm.json
+debug_*.json
+res.json
+ri_test.json
+*_financials.json
+sec_*.json
+summary_*.json
+parsed_news.json
+test_news*.json
+aapl.json
+page.html
+*.html
+
+# Ignore images at the root
+*.png
+
+# Archive folder for clutter
+.archive/
+
+# Allure Reporting
+allure-results/
+allure-report/
+docs/agent-prompts/
