@@ -2,9 +2,9 @@
 
 [![CI](https://github.com/Thanadon912/VALUATOR/actions/workflows/ci.yml/badge.svg)](https://github.com/Thanadon912/VALUATOR/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-B7FF3C.svg)](LICENSE)
-[![Live demo](https://img.shields.io/badge/Live_demo-Vercel-000000.svg)](https://valuator-xi.vercel.app)
+[![Live demo](https://img.shields.io/badge/Live_demo-Vercel-000000.svg)](https://valuator-thanadon912.vercel.app)
 
-Open-source portfolio project · [Live demo](https://valuator-xi.vercel.app)
+Open-source portfolio project · [Live demo](https://valuator-thanadon912.vercel.app)
 
 VALUATOR is a fair-value engine for **U.S.-listed stocks** and machine-readable
 financial workflows. It combines sourced market and filing data with five
