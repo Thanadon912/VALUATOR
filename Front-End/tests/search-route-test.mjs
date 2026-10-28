@@ -139,7 +139,33 @@ async function runTests() {
     assert.equal(fetchCalls.length, 0, "Pre-populated alias 'spacex' must resolve to SPCX with 0 fetch calls");
     console.log("✓ Test 9 Passed: 'SPACEX' resolved to SPCX from In-Memory Aliases (0 fetch calls)");
 
-    console.log("\n>>> ALL 9 SEARCH ROUTE TESTS PASSED SUCCESSFULLY! <<<\n");
+    // Test 10: Non-English query rejection (e.g. Thai characters)
+    fetchCalls = [];
+    const res10 = await GET(
+      new Request("http://localhost:3000/api/search?q=%E0%B9%84%E0%B8%97%E0%B8%A2", {
+        headers: { "x-forwarded-for": "10.0.0.10" },
+      })
+    );
+    assert.equal(res10.status, 400);
+    const data10 = await res10.json();
+    assert.equal(data10.error, "Use letters, numbers, spaces, periods, or hyphens only.");
+    assert.equal(fetchCalls.length, 0, "Non-English query must make ZERO fetch calls and reject immediately");
+    console.log("✓ Test 10 Passed: Non-English query rejected with 400 and clear error");
+
+    // Test 11: Invalid stock symbol characters rejection (e.g. "BRK/B" or "@#$")
+    fetchCalls = [];
+    const res11 = await GET(
+      new Request("http://localhost:3000/api/search?q=BRK/B", {
+        headers: { "x-forwarded-for": "10.0.0.11" },
+      })
+    );
+    assert.equal(res11.status, 400);
+    const data11 = await res11.json();
+    assert.equal(data11.error, "Use letters, numbers, spaces, periods, or hyphens only.");
+    assert.equal(fetchCalls.length, 0, "Invalid symbols must make ZERO fetch calls and reject immediately");
+    console.log("✓ Test 11 Passed: Invalid characters rejected with 400 and clear error");
+
+    console.log("\n>>> ALL 11 SEARCH ROUTE TESTS PASSED SUCCESSFULLY! <<<\n");
   } finally {
     globalThis.fetch = originalFetch;
     if (originalEnvKey !== undefined) {

@@ -150,6 +150,13 @@ export async function GET(request: Request) {
     if (query.length > 120) {
       return json({ error: "Search query is too long." }, rateLimit, { status: 422 });
     }
+    if (!/^[a-zA-Z0-9.\-\s]+$/.test(query)) {
+      return json(
+        { error: "Use letters, numbers, spaces, periods, or hyphens only." },
+        rateLimit,
+        { status: 400 },
+      );
+    }
 
     const lowerQuery = query.toLowerCase();
 

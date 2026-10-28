@@ -23,6 +23,7 @@ export function WorkspaceTopbar({ ticker }: { ticker: string }) {
     query: value,
     setQuery: setValue,
     handleInputChange,
+    handleKeyDown,
     error,
     loading,
     handleSubmit: submit,
@@ -74,6 +75,7 @@ export function WorkspaceTopbar({ ticker }: { ticker: string }) {
               suppressHydrationWarning
               value={value}
               onChange={(event) => handleInputChange(event.target.value)}
+              onKeyDown={handleKeyDown}
               autoCapitalize="characters"
               autoComplete="off"
               spellCheck={false}
@@ -82,6 +84,9 @@ export function WorkspaceTopbar({ ticker }: { ticker: string }) {
               maxLength={64}
               className="uppercase placeholder:normal-case"
             />
+            <button type="submit" className="sr-only" tabIndex={-1} aria-hidden="true">
+              Search
+            </button>
           </div>
           {error ? <span className="workspace-search__error" role="alert">{error}</span> : null}
         </form>

@@ -18,7 +18,10 @@ export function useTickerSearch(options?: UseTickerSearchOptions) {
   const clearError = () => setError("");
 
   const handleInputChange = (raw: string) => {
-    setQuery(raw);
+    // Only accept English letters, numbers, spaces, periods, hyphens, and slashes.
+    // Filters out non-English (e.g. Thai, Chinese, Cyrillic) and characters not related to stock searching.
+    const filtered = raw.replace(/[^a-zA-Z0-9.\-\s/]/g, "");
+    setQuery(filtered);
     if (error) setError("");
   };
 
@@ -81,6 +84,13 @@ export function useTickerSearch(options?: UseTickerSearchOptions) {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && !event.nativeEvent.isComposing) {
+      event.preventDefault();
+      void executeSearch();
+    }
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await executeSearch();
@@ -90,6 +100,7 @@ export function useTickerSearch(options?: UseTickerSearchOptions) {
     query,
     setQuery,
     handleInputChange,
+    handleKeyDown,
     error,
     setError,
     clearError,
