@@ -4,13 +4,17 @@ from threading import Lock
 from time import monotonic
 
 from fastapi import APIRouter, HTTPException, Query
+from typing import Any
 
+from app.core.config import get_settings
 from app.core.performance_cache import (
     is_performance_cache_only,
     raise_performance_cache_miss,
 )
 from app.core.validation import normalize_ticker
 from app.models import LiveQuoteResponse, StockSnapshotsResponse
+from app.providers.alpaca import AlpacaMarketDataProvider
+from app.providers.yahoo import get_yahoo_quote
 from app.services.market_snapshots import build_market_snapshots
 from app.services.quote import build_live_quote_response
 
@@ -83,6 +87,40 @@ def get_live_quote(ticker: str) -> LiveQuoteResponse:
             with _cache_lock:
                 _cache[key] = (monotonic(), response)
         return response
+
+
+@router.get("/{ticker}/validate")
+def validate_ticker(ticker: str) -> dict[str, Any]:
+    try:
+        normalized = normalize_ticker(ticker)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+    key = normalized.upper()
+
+    # Fast 1: Check active live quote cache
+    with _cache_lock:
+        if key in _cache:
+            return {"valid": True, "ticker": key}
+
+    # Fast 2: Fast Yahoo quote check (typically ~0.4s and never blocks on Nasdaq)
+    yahoo_data = get_yahoo_quote(key)
+    if yahoo_data and (
+        yahoo_data.get("regularMarketPrice") is not None
+        or yahoo_data.get("shortName")
+    ):
+        return {"valid": True, "ticker": key}
+
+    # Fast 3: Alpaca check with short timeout
+    settings = get_settings()
+    alpaca = AlpacaMarketDataProvider(
+        timeout_seconds=min(settings.provider_timeout_seconds, 2.0),
+    )
+    alp_res = alpaca.fetch_latest(key)
+    if alp_res.data and alp_res.data.get("price") is not None:
+        return {"valid": True, "ticker": key}
+
+    return {"valid": False, "ticker": key}
 
 
 @router.get("/snapshots", response_model=StockSnapshotsResponse)

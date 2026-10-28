@@ -3394,10 +3394,10 @@ def get_relative(
                 raise ValueError("At least one available peer must be included.")
 
         peers = [available_by_symbol[symbol] for symbol in selected_symbols]
-        values["peers"] = peers
+        values["peers"] = peers if peers else None
         missing = missing_required(values, ["peers"])
-        if missing:
-            return missing_input_response(ticker, "relative", missing, values)
+        if missing or not peers:
+            return missing_input_response(ticker, "relative", ["peers"], values)
 
         is_financials = False
         sector = inputs.get("company_profile", {}).get("sector", "").lower()
