@@ -72,3 +72,28 @@ def test_live_quote_response_uses_alpaca_before_yahoo(monkeypatch):
     assert response.data.extended_change == 10.0
     assert response.data.extended_change_percent == 10.0 / 190.0 * 100
     assert response.sources[0].provider == "Alpaca Trade"
+
+
+def test_validate_ticker_endpoint(monkeypatch):
+    from fastapi.testclient import TestClient
+    from app.main import app
+
+    client = TestClient(app)
+
+    # Valid via Yahoo mock
+    monkeypatch.setattr(
+        "app.api.routes.quote.get_yahoo_quote",
+        lambda t: {"regularMarketPrice": 150.0} if t == "AAPL" else {},
+    )
+    res = client.get("/api/stocks/AAPL/validate")
+    assert res.status_code == 200
+    assert res.json() == {"valid": True, "ticker": "AAPL"}
+
+    # Invalid ticker mock
+    monkeypatch.setattr(
+        "app.api.routes.quote.AlpacaMarketDataProvider",
+        lambda timeout_seconds: type("Fake", (), {"fetch_latest": lambda self, t: type("R", (), {"data": None})()})(),
+    )
+    res_fake = client.get("/api/stocks/FAKE/validate")
+    assert res_fake.status_code == 200
+    assert res_fake.json() == {"valid": False, "ticker": "FAKE"}

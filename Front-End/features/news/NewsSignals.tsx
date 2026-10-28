@@ -6,6 +6,7 @@ import {
   ExternalLink,
   RefreshCw,
   Search,
+  ShieldAlert,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLiveQuote } from "@/components/workspace/live-quote-provider";
@@ -742,6 +743,25 @@ export function NewsSignals({ ticker }: { ticker: string }) {
         )}
         <p className="sr-only" aria-live="polite">{bookmarkAnnouncement}</p>
       </main>
+
+      <footer className="mt-12 border-t border-[#1A2E20] bg-[#0A0D0B] px-4 py-8 md:px-6">
+        <div className="mx-auto max-w-[1440px] flex flex-col gap-3 text-xs leading-relaxed text-[#869E8F]">
+          <div className="flex items-start gap-3">
+            <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[#B7FF3C]" aria-hidden="true" />
+            <div className="space-y-1.5">
+              <h3 className="font-semibold text-[#E0E6E2]">
+                Market News &amp; Sentiment Analysis Disclaimer
+              </h3>
+              <p>
+                News articles, directional cues, and topic classifications are aggregated from third-party publishers for informational and contextual research only. Sentiment and topic indicators are automated heuristics and do not constitute trading signals, investment advice, or publisher endorsements.
+              </p>
+            </div>
+          </div>
+          <div className="border-t border-[#1A2E20]/60 pt-3 text-[11px] text-[#869E8F]">
+            VALUATOR · For informational research only — not investment advice.
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

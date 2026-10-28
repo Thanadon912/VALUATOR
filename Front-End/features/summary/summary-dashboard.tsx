@@ -699,7 +699,7 @@ function revenueCategoryMarker(index: number) {
 }
 
 function reportedPerformanceMovement(data: RevenueEarningsData | null): string | null {
-  if (!data || data.points.length < 2) return null;
+  if (!data || !Array.isArray(data.points) || data.points.length < 2) return null;
   const [previous, latest] = data.points.slice(-2);
   if (!Number.isFinite(previous.revenue) || !Number.isFinite(latest.revenue) || previous.revenue <= 0) return null;
 
@@ -927,7 +927,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
   const companyName = company?.company_name || quote?.company_name || summary.ticker;
   const visiblePricePoints = filterPricePoints(priceHistory?.points || [], priceRange);
   const availableRevenueMixDimensions = (["business_segments", "products", "geography", "end_markets"] as const).filter(
-    (dimension) => revenueMix?.revenue_mix[dimension]?.length,
+    (dimension) => revenueMix?.revenue_mix?.[dimension]?.length,
   );
   const revenueMixDimension = availableRevenueMixDimensions.includes(revenueMixView)
     ? revenueMixView
@@ -935,8 +935,8 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
 
   const keyFactItems: MetricItem[] = [
     { label: "Previous close", value: formatCurrency(keyFacts?.previous_close, currency) },
-    { label: keyFacts?.range_label || "Day range", value: formatRange(keyFacts?.day_range.low, keyFacts?.day_range.high, currency) },
-    { label: "52-week range", value: formatRange(keyFacts?.week_52_range.low, keyFacts?.week_52_range.high, currency) },
+    { label: keyFacts?.range_label || "Day range", value: formatRange(keyFacts?.day_range?.low, keyFacts?.day_range?.high, currency) },
+    { label: "52-week range", value: formatRange(keyFacts?.week_52_range?.low, keyFacts?.week_52_range?.high, currency) },
     { label: "Market cap", value: formatCurrency(keyFacts?.market_cap?.value, currency), basis: keyFacts?.market_cap?.basis },
     { label: "P/E (ttm)", value: formatNumber(keyFacts?.pe_ratio?.value), basis: keyFacts?.pe_ratio?.basis },
     { label: "EPS (ttm)", value: formatCurrency(keyFacts?.eps?.value, currency) },
@@ -1191,7 +1191,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
 
         <footer className="border-t border-[#1E293B] px-4 py-5 md:px-6">
           <p className="font-mono text-xs leading-relaxed text-[#90B09E]">
-            Source-aware workspace. Figures retain provider source references and are not investment advice.
+            Source-aware workspace. Figures retain provider source references and are not investment advice. Financial metrics and model outputs are quantitative estimates for research purposes and do not guarantee future performance.
           </p>
         </footer>
       </div>

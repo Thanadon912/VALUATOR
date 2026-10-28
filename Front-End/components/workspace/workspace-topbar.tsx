@@ -1,6 +1,5 @@
 "use client";
 
-import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { LoaderCircle, Search, UserRound } from "lucide-react";
@@ -8,6 +7,7 @@ import { LoaderCircle, Search, UserRound } from "lucide-react";
 import { SaveStockButton } from "@/features/saved-stocks/save-stock-button";
 import { useSavedStocks } from "@/features/saved-stocks/saved-stocks-provider";
 import { sectionFromPathname } from "@/features/saved-stocks/validation";
+import { useTickerSearch } from "@/features/ticker-search/use-ticker-search";
 
 const navigation = [
   ["Summary", "summary"],
@@ -19,50 +19,19 @@ export function WorkspaceTopbar({ ticker }: { ticker: string }) {
   const router = useRouter();
   const pathname = usePathname();
   const { mode } = useSavedStocks();
-  const [value, setValue] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (loading || !value) return;
-
-    setError("");
-    setLoading(true);
-
-    try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(value)}`);
-
-      if (!res.ok) {
-        let errorMessage = `No matching US ticker found for '${value}'`;
-        try {
-          const errorData = await res.json();
-          if (errorData.error) {
-            errorMessage = errorData.error;
-          }
-        } catch {} // Fallback to default message if JSON parsing fails
-
-        setLoading(false);
-        setError(errorMessage);
-        return;
-      }
-
-      const data = await res.json();
-      const symbol = data.symbol;
-
-      if (!symbol) {
-        setLoading(false);
-        setError(`No matching US ticker found for '${value}'`);
-        return;
-      }
-
+  const {
+    query: value,
+    setQuery: setValue,
+    handleInputChange,
+    error,
+    loading,
+    handleSubmit: submit,
+  } = useTickerSearch({
+    onSuccess: (symbol) => {
       router.push(`/stocks/${symbol}/summary`);
-      setLoading(false);
-    } catch {
-      setLoading(false);
-      setError(`Failed to search for '${value}'. Please try again.`);
-    }
-  }
+      setValue("");
+    },
+  });
 
   return (
     <header className="workspace-topbar">
@@ -104,14 +73,14 @@ export function WorkspaceTopbar({ ticker }: { ticker: string }) {
               id="workspace-ticker"
               suppressHydrationWarning
               value={value}
-              onChange={(event) => {
-                const newValue = event.target.value.replace(/[^a-zA-Z0-9\s]/g, "");
-                setValue(newValue);
-                if (error) setError("");
-              }}
+              onChange={(event) => handleInputChange(event.target.value)}
+              autoCapitalize="characters"
+              autoComplete="off"
+              spellCheck={false}
               disabled={loading}
               placeholder={`Search ticker or company… (${ticker})`}
-              maxLength={10}
+              maxLength={64}
+              className="uppercase placeholder:normal-case"
             />
           </div>
           {error ? <span className="workspace-search__error" role="alert">{error}</span> : null}

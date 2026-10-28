@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useRef, useCallback } from "react"
 import type { ReactNode } from "react"
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import useSWR from "swr"
-import { Activity, CircleAlert, CircleOff, Database, LayoutGrid, Microscope } from "lucide-react"
+import { Activity, CircleAlert, CircleOff, Database, LayoutGrid, Microscope, ShieldAlert } from "lucide-react"
 
 import { useLiveQuote } from "@/components/workspace/live-quote-provider"
 import { useSavedStocks } from "@/features/saved-stocks/saved-stocks-provider"
@@ -778,6 +778,32 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
           )}
         </AnimatePresence>
       </main>
+
+      <footer className="mt-12 border-t border-[#1A2E20] bg-[#0A0D0B] px-4 py-8 md:px-6">
+        <div className="mx-auto max-w-[1600px] flex flex-col gap-4 text-xs leading-relaxed text-[#869E8F]">
+          <div className="flex items-start gap-3">
+            <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[#B7FF3C]" aria-hidden="true" />
+            <div className="space-y-2">
+              <h3 className="font-semibold text-[#E0E6E2]">
+                Model Limitations &amp; Investment Research Disclaimer
+              </h3>
+              <p>
+                All valuation metrics, computed fair values, margins of safety, and probabilistic simulations presented in this workspace are theoretical approximations derived from quantitative models (Discounted Cash Flow, Dividend Discount Model, Peer Multiples, Residual Income, and Asset-Based Valuation) using historical SEC filings, consensus estimates, and user-defined assumptions.
+              </p>
+              <p>
+                No mathematical formula or valuation model can predict future stock price movements or guarantee real-world investment outcomes with certainty. Actual financial performance and equity prices are influenced by broader macroeconomic conditions, interest rate fluctuations, market sentiment, industry competition, and unexpected corporate developments that cannot be modeled deterministically.
+              </p>
+              <p>
+                This platform is intended solely for educational, analytical, and informational research purposes and does not constitute financial, investment, legal, or tax advice. Always conduct your own independent due diligence and consult a qualified financial professional before making investment decisions.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-t border-[#1A2E20]/60 pt-4 text-[11px] text-[#869E8F]">
+            <span>VALUATOR · Sourced Valuation Engine &amp; AI-Ready Telemetry</span>
+            <span>Theoretical valuation models · Not an investment recommendation</span>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

@@ -1,69 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
-import { normalizeTicker } from "@/lib/validation/ticker";
-
-
+import { useTickerSearch } from "./use-ticker-search";
 
 export function LandingSearch() {
   const router = useRouter();
-  const [ticker, setTicker] = useState("");
-  const [error, setError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-
-  async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (submitting) return;
-
-    const query = ticker.trim();
-    if (!query) {
-      setError("Enter a ticker symbol or company name.");
-      return;
-    }
-    if (!/^[a-zA-Z0-9.\-\s]+$/.test(query)) {
-      setError("Use letters, numbers, spaces, periods, or hyphens only.");
-      return;
-    }
-
-    setError("");
-    setSubmitting(true);
-
-    try {
-      // Fetch request to internal Search API
-      const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-
-      if (!res.ok) {
-        let errorMessage = `No matching US ticker found for '${query}'`;
-        try {
-          const errorData = await res.json();
-          if (errorData.error) {
-            errorMessage = errorData.error;
-          }
-        } catch {} // Fallback to default message if JSON parsing fails
-
-        setSubmitting(false);
-        setError(errorMessage);
-        return;
-      }
-
-      const data = await res.json();
-      const symbol = typeof data.symbol === "string" ? normalizeTicker(data.symbol) : null;
-
-      if (!symbol) {
-        setSubmitting(false);
-        setError(`No matching US ticker found for '${query}'`);
-        return;
-      }
-
+  const {
+    query: ticker,
+    handleInputChange,
+    error,
+    loading: submitting,
+    handleSubmit: submit,
+  } = useTickerSearch({
+    onSuccess: (symbol) => {
       router.push(`/stocks/${symbol}/valuation`);
-    } catch {
-      setSubmitting(false);
-      setError(`Failed to search for '${query}'. Please try again.`);
-    }
-  }
+    },
+  });
 
   return (
     <form className="w-full" onSubmit={submit} noValidate>
@@ -75,10 +29,7 @@ export function LandingSearch() {
           <input
             id="landing-ticker"
             value={ticker}
-            onChange={(event) => {
-              setTicker(event.target.value);
-              if (error) setError("");
-            }}
+            onChange={(event) => handleInputChange(event.target.value)}
             placeholder="AAPL or Apple"
             autoCapitalize="characters"
             autoComplete="off"
