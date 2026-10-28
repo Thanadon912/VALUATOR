@@ -757,7 +757,7 @@ export function NewsSignals({ ticker }: { ticker: string }) {
               </p>
             </div>
           </div>
-          <div className="border-t border-[#1A2E20]/60 pt-3 text-[11px] text-[#55695D]">
+          <div className="border-t border-[#1A2E20]/60 pt-3 text-[11px] text-[#869E8F]">
             VALUATOR · For informational research only — not investment advice.
           </div>
         </div>

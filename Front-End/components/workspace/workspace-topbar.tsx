@@ -19,8 +19,6 @@ export function WorkspaceTopbar({ ticker }: { ticker: string }) {
   const router = useRouter();
   const pathname = usePathname();
   const { mode } = useSavedStocks();
-  const currentSection = sectionFromPathname(pathname)?.section ?? "summary";
-
   const {
     query: value,
     setQuery: setValue,
@@ -30,7 +28,7 @@ export function WorkspaceTopbar({ ticker }: { ticker: string }) {
     handleSubmit: submit,
   } = useTickerSearch({
     onSuccess: (symbol) => {
-      router.push(`/stocks/${symbol}/${currentSection}`);
+      router.push(`/stocks/${symbol}/summary`);
       setValue("");
     },
   });

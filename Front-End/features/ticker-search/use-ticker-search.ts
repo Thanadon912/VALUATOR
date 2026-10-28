@@ -18,9 +18,7 @@ export function useTickerSearch(options?: UseTickerSearchOptions) {
   const clearError = () => setError("");
 
   const handleInputChange = (raw: string) => {
-    // Preserve letters, numbers, spaces, periods, and hyphens (e.g. BRK.B, BF.A)
-    const sanitized = raw.replace(/[^a-zA-Z0-9.\-\s]/g, "");
-    setQuery(sanitized);
+    setQuery(raw);
     if (error) setError("");
   };
 

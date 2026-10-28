@@ -798,7 +798,7 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
               </p>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-t border-[#1A2E20]/60 pt-4 text-[11px] text-[#55695D]">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-t border-[#1A2E20]/60 pt-4 text-[11px] text-[#869E8F]">
             <span>VALUATOR · Sourced Valuation Engine &amp; AI-Ready Telemetry</span>
             <span>Theoretical valuation models · Not an investment recommendation</span>
           </div>
