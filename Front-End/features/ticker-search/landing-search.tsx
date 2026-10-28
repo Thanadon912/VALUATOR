@@ -10,6 +10,7 @@ export function LandingSearch() {
   const {
     query: ticker,
     handleInputChange,
+    handleKeyDown,
     error,
     loading: submitting,
     handleSubmit: submit,
@@ -30,6 +31,7 @@ export function LandingSearch() {
             id="landing-ticker"
             value={ticker}
             onChange={(event) => handleInputChange(event.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="AAPL or Apple"
             autoCapitalize="characters"
             autoComplete="off"

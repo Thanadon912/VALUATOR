@@ -391,6 +391,7 @@
   color: #effaf4;
   font-size: 13px;
   font-weight: 600;
+  text-transform: uppercase;
 }
 
 .workspace-search input::placeholder {

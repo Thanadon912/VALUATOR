@@ -23,6 +23,7 @@ export function WorkspaceTopbar({ ticker }: { ticker: string }) {
     query: value,
     setQuery: setValue,
     handleInputChange,
+    handleKeyDown,
     error,
     loading,
     handleSubmit: submit,
@@ -74,6 +75,7 @@ export function WorkspaceTopbar({ ticker }: { ticker: string }) {
               suppressHydrationWarning
               value={value}
               onChange={(event) => handleInputChange(event.target.value)}
+              onKeyDown={handleKeyDown}
               autoCapitalize="characters"
               autoComplete="off"
               spellCheck={false}
