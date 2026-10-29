@@ -2,6 +2,7 @@ fastapi==0.137.1
 uvicorn[standard]==0.49.0
 pydantic==2.13.4
 httpx==0.28.1
+certifi>=2026.10.18
 python-dotenv==1.2.2
 numpy==2.5.0
 scipy==1.18.0

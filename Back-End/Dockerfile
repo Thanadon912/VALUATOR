@@ -24,7 +24,9 @@ ENV PATH="/opt/venv/bin:$PATH" \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 WORKDIR /app
 
-RUN addgroup --system --gid 10001 valuator \
+RUN apt-get update && apt-get -y --no-install-recommends upgrade \
+    && rm -rf /var/lib/apt/lists/* \
+    && addgroup --system --gid 10001 valuator \
     && adduser --system --uid 10001 --ingroup valuator --home /nonexistent valuator \
     && mkdir -p /app/.cache \
     && chown -R valuator:valuator /app/.cache

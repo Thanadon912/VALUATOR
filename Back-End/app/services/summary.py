@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+import re
 from concurrent.futures import ThreadPoolExecutor
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from typing import Any
 
 from app.core.config import get_settings
@@ -39,6 +40,54 @@ def _get_mrq(financials: dict, stmt: str, row_id: str):
         val = _fetch_from_period("annual")
     return val
 
+def _are_consecutive_quarters(keys: list[str]) -> tuple[bool, list[str]]:
+    """Verify if the quarterly keys include 4 strictly consecutive quarters.
+
+    Returns (True, [key0, key1, key2, key3]) for the latest 4 consecutive quarters,
+    or (False, []).
+    """
+    if len(keys) < 4:
+        return False, []
+
+    # 1. Calendar frames: CY<YYYY>Q<Q>
+    cy_pattern = re.compile(r"^CY(\d{4})Q([1-4])$")
+    cy_items: list[tuple[int, str]] = []
+    for k in keys:
+        m = cy_pattern.match(k)
+        if m:
+            cy_items.append((int(m.group(1)) * 4 + int(m.group(2)), k))
+    if len(cy_items) >= 4:
+        cy_items.sort(key=lambda x: x[0])
+        last4 = cy_items[-4:]
+        indices = [x[0] for x in last4]
+        if (
+            indices[1] == indices[0] + 1
+            and indices[2] == indices[1] + 1
+            and indices[3] == indices[2] + 1
+        ):
+            return True, [x[1] for x in last4]
+        return False, []
+
+    # 2. Date format: YYYY-MM-DD
+    date_items: list[tuple[date, str]] = []
+    for k in keys:
+        try:
+            d = datetime.strptime(k, "%Y-%m-%d").date()
+            date_items.append((d, k))
+        except (ValueError, TypeError):
+            pass
+    if len(date_items) >= 4:
+        date_items.sort(key=lambda x: x[0])
+        last4 = date_items[-4:]
+        diffs = [(last4[i + 1][0] - last4[i][0]).days for i in range(3)]
+        total = (last4[3][0] - last4[0][0]).days
+        if all(60 <= diff <= 125 for diff in diffs) and 240 <= total <= 320:
+            return True, [x[1] for x in last4]
+        return False, []
+
+    return False, []
+
+
 def _get_ttm(financials: dict, stmt: str, row_id: str):
     quarterly = financials.get("quarterly", {})
     stmt_data = quarterly.get(stmt, {})
@@ -53,23 +102,25 @@ def _get_ttm(financials: dict, stmt: str, row_id: str):
         return cells[ttm_keys[-1]]["value"]
 
     quarterly_dates = [k for k in valid_dates if not k.startswith("TTM_")]
-    if not quarterly_dates or len(quarterly_dates) < 4:
-        # Fallback to latest annual if we don't have 4 quarters
-        annual_data = financials.get("annual", {}).get(stmt, {})
-        a_rows = annual_data.get("rows", [])
-        a_row = next((r for r in a_rows if r["id"] == row_id), None)
-        if not a_row:
-            return None
-        a_cells = a_row.get("cells", {})
-        a_valid = [k for k, v in a_cells.items() if v.get("value") is not None]
-        if not a_valid:
-            return None
-        a_valid.sort()
-        return a_cells[a_valid[-1]]["value"]
-    
-    quarterly_dates.sort()
-    # sum last 4 quarters
-    return sum([cells[date]["value"] for date in quarterly_dates[-4:]])
+    is_consec, last_4_keys = _are_consecutive_quarters(quarterly_dates)
+    if is_consec:
+        return sum([cells[date]["value"] for date in last_4_keys])
+
+    # Fallback to annual: prefer explicit ttm cell if computed, else latest annual
+    annual_data = financials.get("annual", {}).get(stmt, {})
+    a_rows = annual_data.get("rows", [])
+    a_row = next((r for r in a_rows if r["id"] == row_id), None)
+    if not a_row:
+        return None
+    a_cells = a_row.get("cells", {})
+    ttm_cell = a_cells.get("ttm")
+    if ttm_cell and ttm_cell.get("value") is not None:
+        return ttm_cell["value"]
+    a_valid = [k for k, v in a_cells.items() if k.lower() != "ttm" and v.get("value") is not None]
+    if not a_valid:
+        return None
+    a_valid.sort()
+    return a_cells[a_valid[-1]]["value"]
 
 def _get_ttm_at_factory(financials: dict, date_key: str):
     def _get_ttm_at(stmt: str, row_id: str):

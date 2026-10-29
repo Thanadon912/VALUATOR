@@ -788,6 +788,57 @@ def test_applicable_ddm_uses_standard_calculated_response_status(monkeypatch):
     assert payload["underlying_assumptions"]["is_ddm_applicable"] is True
 
 
+def test_ddm_growth_exceeding_cost_of_equity_does_not_claim_no_dividends_available(monkeypatch):
+    monkeypatch.setattr(valuation, "get_valuation_inputs", lambda ticker: {
+        "dividends_paid": 200.0,
+        "shares_outstanding": 100.0,
+        "historical_dividends": [100.0, 150.0],
+        "net_income": 400.0,
+        "adr_ratio": 1.0,
+    })
+    monkeypatch.setattr(valuation, "get_valuation_telemetry", lambda ticker: {
+        "cost_of_equity": 0.10,
+        "current_price": 40.0,
+    })
+    monkeypatch.setattr(valuation, "get_yahoo_quote", lambda ticker: {
+        "regularMarketPrice": 40.0,
+    })
+
+    payload = valuation.get_ddm("HIGHGROWTH", historical_dividends=None)
+
+    assert payload["valuation_status"] == "INAPPLICABLE"
+    assert payload["computed_fair_value"] is None
+    assert payload["underlying_assumptions"]["status"] == "DDM_INAPPLICABLE_GROWTH_RATE"
+    assert payload["underlying_assumptions"]["is_ddm_applicable"] is False
+    reasons = payload["underlying_assumptions"]["applicability_reasons"]
+    assert "Dividend growth is not below cost of equity." in reasons
+    assert "No sourced dividend distribution is available." not in reasons
+
+
+def test_annual_row_series_and_latest_annual_cell_exclude_ttm():
+    financials = {
+        "annual": {
+            "cash_flow": {
+                "rows": [
+                    {
+                        "id": "dividends_paid",
+                        "cells": {
+                            "2023-12-31": {"value": 100.0},
+                            "2024-12-31": {"value": 110.0},
+                            "ttm": {"value": 150.0},
+                        },
+                    }
+                ]
+            }
+        }
+    }
+    series = valuation._annual_row_series(financials, "cash_flow", "dividends_paid")
+    assert series == [("2023-12-31", 100.0), ("2024-12-31", 110.0)]
+
+    latest = valuation._latest_annual_cell(financials, "cash_flow", "dividends_paid")
+    assert latest == {"value": 110.0}
+
+
 def test_dcf_caps_cost_of_debt_after_comparable_unit_normalization(monkeypatch):
     monkeypatch.setattr(valuation, "get_valuation_inputs", lambda ticker: {
         "sic_code": "5331", "capex": 80.0, "base_revenue": 1000.0,
