@@ -340,7 +340,11 @@ def _latest_annual_cell(financials: dict, stmt: str, row_id: str) -> Optional[di
     if not row:
         return None
     cells = row.get("cells", {})
-    valid_dates = [key for key, cell in cells.items() if cell.get("value") is not None]
+    valid_dates = [
+        key
+        for key, cell in cells.items()
+        if key.lower() != "ttm" and cell.get("value") is not None
+    ]
     if not valid_dates:
         return None
     valid_dates.sort()
@@ -448,6 +452,8 @@ def _annual_row_series(financials: dict, stmt: str, row_id: str) -> list[tuple[s
         return []
     series: list[tuple[str, float]] = []
     for key, cell in row.get("cells", {}).items():
+        if key.lower() == "ttm":
+            continue
         value = _cell_value(cell)
         if value is not None:
             series.append((key, value))
@@ -1049,13 +1055,24 @@ def _load_valuation_inputs(ticker: str):
         cash = cash_equivalents + short_term_investments if cash_equivalents is not None else None
         if cash is None:
             cash = _cell_value(instants.get("cash"))
-        dividends_raw = _cell_value(_get_ttm(financials, "cash_flow", "dividendsPaid")) or _cell_value(_get_ttm(financials, "cash_flow", "dividends_paid"))
+        dividends_cell = (
+            _latest_annual_cell(financials, "cash_flow", "dividends_paid")
+            or _latest_annual_cell(financials, "cash_flow", "dividendsPaid")
+        )
+        dividends_raw = _cell_value(dividends_cell)
+        if dividends_raw is None:
+            dividends_raw = (
+                _cell_value(_get_ttm(financials, "cash_flow", "dividendsPaid"))
+                or _cell_value(_get_ttm(financials, "cash_flow", "dividends_paid"))
+            )
         dividends_paid = abs(dividends_raw) if dividends_raw is not None else None
         historical_dividends = [
             abs(value)
             for _, value in _annual_row_series(financials, "cash_flow", "dividends_paid")
             if value is not None
         ]
+        if dividends_paid is None and historical_dividends:
+            dividends_paid = historical_dividends[-1]
         
         net_income = _cell_value(_get_ttm(financials, "income_statement", "netIncome")) or _cell_value(_get_ttm(financials, "income", "net_income"))
         if net_income is None:
@@ -3295,7 +3312,7 @@ def get_ddm(
         
         is_ddm_applicable = True
         applicability_reasons: list[str] = []
-        if str(res.get("status", "")).startswith("DDM_INAPPLICABLE"):
+        if res.get("status") == "DDM_INAPPLICABLE":
             is_ddm_applicable = False
             applicability_reasons.append("No sourced dividend distribution is available.")
         if payout_ratio is not None and payout_ratio < 15.0:
