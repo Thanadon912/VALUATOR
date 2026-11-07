@@ -10,7 +10,7 @@ export const scenarioMeta: Record<
   },
   base: {
     label: "Base Case",
-    classes: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30 shadow-[0_0_16px_-4px_rgba(16,185,129,0.5)]",
+    classes: "bg-[#C6F432]/10 text-[#C6F432] border-[#C6F432]/30 shadow-[0_0_16px_-4px_rgba(198,244,50,0.4)]",
   },
   bull: {
     label: "Bull Case",

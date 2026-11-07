@@ -20,13 +20,13 @@ function Telemetry({
 }) {
   const content = (
     <>
-      <span className="text-xs text-[#869E8F]">{label}</span>
-      <span className={`mt-0.5 font-mono text-sm font-medium tabular-nums ${emphasized ? "text-emerald-400" : "text-[#E0E6E2]"}`}>{value}</span>
-      <span className="mt-0.5 text-[9px] uppercase leading-4 tracking-[0.08em] text-[#6F8577]">{role}{asOf ? ` · ${asOf}` : ""}</span>
+      <span className="text-xs text-[#8E8E99]">{label}</span>
+      <span className={`mt-0.5 font-mono text-sm font-medium tabular-nums ${emphasized ? "text-[#C6F432]" : "text-[#FFFFFF]"}`}>{value}</span>
+      <span className="mt-0.5 text-[9px] uppercase leading-4 tracking-[0.08em] text-[#8E8E99]">{role}{asOf ? ` · ${asOf}` : ""}</span>
     </>
   );
   const baseClass = `flex min-h-[76px] min-w-0 flex-col items-start justify-center px-3 py-2 text-left lg:items-end lg:text-right ${className}`;
-  if (sourceUrl?.startsWith("http")) return <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className={`${baseClass} rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#B7FF3C] hover:bg-[#152019] hover:underline`} title={sourceUrl}>{content}</a>
+  if (sourceUrl?.startsWith("http")) return <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className={`${baseClass} rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#C6F432] hover:bg-[#18181B] hover:underline`} title={sourceUrl}>{content}</a>
   return <div title={sourceUrl ?? undefined} className={baseClass}>{content}</div>
 }
 
@@ -77,11 +77,11 @@ export function TerminalHeader({
   }
 
   return (
-    <header className="border-b border-[#1A2E20] bg-[#0A0D0B]">
+    <header className="border-b border-[#242429] bg-[#0B0B0C]">
       <div className="mx-auto flex max-w-[1600px] flex-col gap-4 px-4 py-4 md:px-6 lg:flex-row lg:items-center lg:justify-between">
         {/* Left: ticker metadata */}
         <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-md border border-white/20 bg-white p-1 text-emerald-400">
+          <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-md border border-white/20 bg-white p-1 text-[#C6F432]">
             {currentUrl ? (
               // Provider-backed URLs retain their existing fallback behavior; no third-party logo is fabricated.
               // eslint-disable-next-line @next/next/no-img-element
@@ -93,21 +93,21 @@ export function TerminalHeader({
                 onError={handleError}
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-[#1A2E20] font-mono text-sm font-bold text-[#E0E6E2] rounded-sm">
+              <div className="flex h-full w-full items-center justify-center bg-[#18181B] font-mono text-sm font-bold text-[#FFFFFF] rounded-sm">
                 {tickerSymbol.slice(0, 2).toUpperCase()}
               </div>
             )}
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <h1 className="font-mono text-lg font-bold tracking-tight text-white">
+              <h1 className="font-mono text-lg font-bold tracking-tight text-[#FFFFFF]">
                 {tickerSymbol}
                 <span className="sr-only"> valuation dashboard</span>
               </h1>
-              <span className="text-sm text-[#869E8F]">| Live Equities</span>
+              <span className="text-sm text-[#8E8E99]">| Live Equities</span>
             </div>
             <div className="mt-1 flex items-center gap-3">
-              <span className="font-mono text-xl font-semibold tabular-nums text-white">
+              <span className="font-mono text-xl font-semibold tabular-nums text-[#FFFFFF]">
                 {currentPrice === null ? "N/A" : `$${fmt.money(currentPrice)}`}
               </span>
             </div>
@@ -115,26 +115,26 @@ export function TerminalHeader({
         </div>
 
         {/* Right: macro telemetry */}
-        <div className="grid w-full grid-cols-2 overflow-hidden rounded-md border border-[#1A2E20] bg-[#111613] lg:w-auto lg:min-w-[640px] lg:grid-cols-4" data-testid="valuation-telemetry-grid">
+        <div className="grid w-full grid-cols-2 overflow-hidden rounded-md border border-[#242429] bg-[#121214] lg:w-auto lg:min-w-[640px] lg:grid-cols-4" data-testid="valuation-telemetry-grid">
           <Telemetry
             label="MKT CAP"
             value={marketCap ?? "N/A"}
             sourceUrl={marketCapSource}
             emphasized
-            className="border-b border-r border-[#1A2E20] lg:border-b-0"
+            className="border-b border-r border-[#242429] lg:border-b-0"
           />
           <Telemetry
             label="BETA"
             value={beta === null ? "N/A" : beta.toFixed(2)}
             sourceUrl={betaSource}
-            className="border-b border-[#1A2E20] lg:border-b-0 lg:border-r"
+            className="border-b border-[#242429] lg:border-b-0 lg:border-r"
           />
           <Telemetry
             label="Risk-Free (10Y)"
             value={riskFreeRate === null ? "N/A" : fmt.pct(riskFreeRate)}
             sourceUrl={riskFreeRateSource}
             asOf={riskFreeRateAsOf}
-            className="border-r border-[#1A2E20]"
+            className="border-r border-[#242429]"
           />
           <Telemetry label="Cost of Equity" value={costOfEquity === null ? "N/A" : fmt.pct(costOfEquity)} role="Derived output" />
         </div>

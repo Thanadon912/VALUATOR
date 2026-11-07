@@ -133,7 +133,7 @@ async function assertSummarySurface(page, ticker) {
     "Price history must use the neutral Data Cyan series color",
   );
   assert.ok(
-    await page.locator('[data-testid="revenue-earnings-chart"] [fill="#EFFAF4"]').count(),
+    await page.locator('[data-testid="revenue-earnings-chart"] [fill="#FFFFFF"]').count(),
     "Earnings comparison must use Strong Ink instead of a positive/negative semantic color",
   );
   const revenueCategoryEncoding = await page.locator(".summary-revenue-mix-bar").first().evaluate((bar) =>
@@ -142,7 +142,7 @@ async function assertSummarySurface(page, ticker) {
       separator: getComputedStyle(segment).borderRightWidth,
     })),
   );
-  const expectedColors = ["rgb(167, 139, 250)", "rgb(239, 250, 244)", "rgb(144, 176, 158)"];
+  const expectedColors = ["rgb(167, 139, 250)", "rgb(255, 255, 255)", "rgb(184, 184, 194)"];
   assert.deepEqual(
     revenueCategoryEncoding.map((segment) => segment.color),
     expectedColors.slice(0, revenueCategoryEncoding.length),

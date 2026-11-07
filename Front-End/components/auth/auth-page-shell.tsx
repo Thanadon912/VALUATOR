@@ -42,29 +42,29 @@ export function AuthPageShell({
   }
 
   return (
-    <div className="valuator-site min-h-[100svh] bg-[#050505] text-[#F2F2EE] flex flex-col overflow-x-clip">
-      <header className="flex h-16 shrink-0 items-center justify-between px-5 sm:px-8 bg-[#050505]">
+    <div className="valuator-site min-h-[100svh] bg-[#0B0B0C] text-[#FFFFFF] flex flex-col overflow-x-clip">
+      <header className="flex h-16 shrink-0 items-center justify-between px-5 sm:px-8 bg-[#0B0B0C]">
         <Link
           href="/"
-          className="valuator-wordmark inline-flex items-center text-xl font-bold text-[#F2F2EE] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C] sm:text-2xl"
+          className="valuator-wordmark inline-flex items-center text-xl font-bold text-[#FFFFFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432] sm:text-2xl"
           aria-label="VALUATOR home"
         >
-          VALUATOR<span aria-hidden="true" className="ml-1 inline-block size-2 bg-[#B7FF3C]" />
+          VALUATOR<span aria-hidden="true" className="ml-1 inline-block size-2 bg-[#C6F432]" />
         </Link>
         <Link
           href={actionHref}
-          className="inline-flex min-h-[44px] items-center px-1 text-[13px] font-medium text-[#B7FF3C] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+          className="inline-flex min-h-[44px] items-center px-1 text-[13px] font-medium text-[#C6F432] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
         >
           {actionLabel}
         </Link>
       </header>
       <main className="flex flex-1 justify-center px-4 pb-6 pt-8 sm:px-6 sm:pb-16 sm:pt-20">
-        <div className="h-fit w-full max-w-[448px] rounded-[14px] border border-[#24372C] bg-[#0B0F0D] p-5 sm:p-6">
+        <div className="h-fit w-full max-w-[448px] rounded-[14px] border border-[#242429] bg-[#121214] p-5 sm:p-6">
           <div className="mb-6 text-center">
-            <h1 className="text-[18px] font-bold tracking-tight text-[#EFFAF4]">{title}</h1>
-            <p className="mt-1 text-[13px] leading-5 text-[#90B09E]">{description}</p>
+            <h1 className="text-[18px] font-bold tracking-tight text-[#FFFFFF]">{title}</h1>
+            <p className="mt-1 text-[13px] leading-5 text-[#B8B8C2]">{description}</p>
             {destination ? (
-              <p className="mt-2 text-[13px] font-medium text-[#C6D8CD]">
+              <p className="mt-2 text-[13px] font-medium text-[#FFFFFF]">
                 Continue to {destination} after sign-in.
               </p>
             ) : null}

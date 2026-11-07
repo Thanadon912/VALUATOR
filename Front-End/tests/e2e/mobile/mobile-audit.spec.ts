@@ -212,7 +212,7 @@ test("valuation telemetry, sticky tables and WACC equation retain mobile hierarc
       };
     });
     expect(overlay.position).toBe("sticky");
-    expect(overlay.backgroundColor).toBe("rgb(9, 10, 11)");
+    expect(overlay.backgroundColor).toBe("rgb(11, 11, 12)");
     expect(overlay.zIndex).toBeGreaterThan(0);
     expect(overlay.ownsPoint).toBe(true);
   }

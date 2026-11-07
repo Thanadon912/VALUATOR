@@ -77,16 +77,16 @@ export function RealityCheckBanner({ data }: { data: ValuationPayload }) {
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-400">
               Market-implied expectations
             </p>
-            <p className="mt-0.5 text-sm font-semibold text-[#E0E6E2]">Implied Market Expectations</p>
+            <p className="mt-0.5 text-sm font-semibold text-[#FFFFFF]">Implied Market Expectations</p>
           </div>
         </div>
 
         <div className="hidden h-12 w-px bg-amber-500/20 md:block" />
 
         <div className="min-w-0 flex-1">
-          <p className="text-sm leading-relaxed text-[#E0E6E2]">
+          <p className="text-sm leading-relaxed text-[#FFFFFF]">
             To justify the current live price of{" "}
-            <span className="font-mono font-semibold tabular-nums text-[#E0E6E2]">
+            <span className="font-mono font-semibold tabular-nums text-[#FFFFFF]">
               ${fmt.money(marketPrice)}
             </span>
             , this company must achieve a{" "}

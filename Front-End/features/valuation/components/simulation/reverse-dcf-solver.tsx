@@ -83,19 +83,19 @@ function Metric({
   suffix: string
 }) {
   return (
-    <div className="rounded-md border border-emerald-900/20 bg-[#090A0B] px-5 py-4">
-      <p className="text-xs text-[#869E8F]">{label}</p>
+    <div className="rounded-md border border-[#242429] bg-[#0B0B0C] px-5 py-4">
+      <p className="text-xs text-[#8E8E99]">{label}</p>
       <div className="mt-1 flex items-baseline gap-1">
         <motion.span
           key={value.toFixed(1)}
           initial={{ opacity: 0.4, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
-          className="font-mono text-4xl font-bold tabular-nums text-emerald-400"
+          className="font-mono text-4xl font-bold tabular-nums text-[#C6F432]"
         >
           {value.toFixed(1)}
         </motion.span>
-        <span className="font-mono text-2xl font-semibold text-emerald-400/70">{suffix}</span>
+        <span className="font-mono text-2xl font-semibold text-[#C6F432]/75">{suffix}</span>
       </div>
     </div>
   )
@@ -327,9 +327,9 @@ export function ReverseDcfSolver({ data }: { data: ValuationPayload }) {
           tooltipText="Reverse-engineers the DCF formula from the live price to determine the implied growth and margin expectations priced in by the market."
         />
         <div className="p-5">
-          <div className="rounded-md border border-[#294231] bg-[#0A0D0B] px-5 py-4">
-            <p className="text-sm font-semibold text-[#DCEBE2]">Market-implied expectations are unavailable</p>
-            <p className="mt-1 text-sm leading-relaxed text-[#A9BAAF]">
+          <div className="rounded-md border border-[#242429] bg-[#0B0B0C] px-5 py-4">
+            <p className="text-sm font-semibold text-[#FFFFFF]">Market-implied expectations are unavailable</p>
+            <p className="mt-1 text-sm leading-relaxed text-[#B8B8C2]">
               {solverWarning ?? "Implied market expectations are unavailable for the current sourced inputs and solver bounds."}
             </p>
           </div>
@@ -390,13 +390,13 @@ export function ReverseDcfSolver({ data }: { data: ValuationPayload }) {
       <div className="grid grid-cols-1 gap-6 p-5 lg:grid-cols-2">
         {/* Slider control */}
         <div className="flex flex-col justify-center">
-          <div className="mb-5 rounded-md border border-[#1A2E20] bg-[#090A0B] p-4">
-            <label className="text-xs text-[#869E8F]" htmlFor="reverse-dcf-target-price">
+          <div className="mb-5 rounded-md border border-[#242429] bg-[#0B0B0C] p-4">
+            <label className="text-xs text-[#8E8E99]" htmlFor="reverse-dcf-target-price">
               Target price to solve
             </label>
             <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-[minmax(0,1fr)_auto_auto]">
               <div className="relative min-w-0">
-                <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center font-mono text-sm text-[#869E8F]">$</span>
+                <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center font-mono text-sm text-[#8E8E99]">$</span>
                 <input
                   id="reverse-dcf-target-price"
                   type="number"
@@ -410,27 +410,27 @@ export function ReverseDcfSolver({ data }: { data: ValuationPayload }) {
                     contextKey: assumptionContextKey,
                     value: event.target.value,
                   })}
-                  className="h-11 w-full rounded-sm border border-[#294231] bg-[#0A0D0B] pl-7 pr-3 font-mono text-sm tabular-nums text-[#E0E6E2] outline-none focus:border-[#B7FF3C]"
+                  className="h-11 w-full rounded-sm border border-[#323238] bg-[#0B0B0C] pl-7 pr-3 font-mono text-sm tabular-nums text-[#FFFFFF] outline-none focus:border-[#C6F432]"
                 />
               </div>
               <button
                 type="button"
                 onClick={solveTarget}
                 disabled={isSolving || !targetValid || !targetDirty}
-                className="h-11 rounded-sm bg-[#B7FF3C] px-4 text-sm font-semibold text-[#071008] disabled:opacity-40"
+                className="h-11 rounded-sm bg-[#C6F432] px-4 text-sm font-semibold text-[#0B0B0C] hover:bg-[#D4F759] disabled:opacity-40"
               >
                 {isSolving ? "Solving…" : solveError ? "Retry target" : "Solve target"}
               </button>
               <button
                 type="button"
                 onClick={resetToLive}
-                className="inline-flex h-11 items-center gap-2 rounded-sm border border-[#294231] px-3 text-sm text-[#C8D4CC] hover:bg-[#1A2E20]"
+                className="inline-flex h-11 items-center gap-2 rounded-sm border border-[#323238] px-3 text-sm text-[#FFFFFF] hover:bg-[#18181B]"
               >
                 <RotateCcw className="h-4 w-4" aria-hidden="true" />
                 Reset to live
               </button>
             </div>
-            <p id="reverse-dcf-target-help" className={`mt-2 text-xs ${!targetValid || solveError ? "text-amber-300" : "text-[#869E8F]"}`}>
+            <p id="reverse-dcf-target-help" className={`mt-2 text-xs ${!targetValid || solveError ? "text-amber-300" : "text-[#8E8E99]"}`}>
               {!targetValid
                 ? "Enter a target price greater than $0."
                 : isSolving
@@ -443,12 +443,12 @@ export function ReverseDcfSolver({ data }: { data: ValuationPayload }) {
           </div>
 
           <div className="flex items-baseline justify-between">
-            <span className="text-xs text-[#869E8F]">
+            <span className="text-xs text-[#8E8E99]">
               {hasCurve ? "Market-Implied Valuation Price" : "Target Valuation Price"}
             </span>
             <div className="flex items-baseline gap-1">
-              <span className="font-mono text-lg text-[#869E8F]">$</span>
-              <span className="font-mono text-3xl font-bold tabular-nums text-[#E0E6E2]">
+              <span className="font-mono text-lg text-[#8E8E99]">$</span>
+              <span className="font-mono text-3xl font-bold tabular-nums text-[#FFFFFF]">
                 {displayPrice.toFixed(2)}
               </span>
             </div>
@@ -457,7 +457,7 @@ export function ReverseDcfSolver({ data }: { data: ValuationPayload }) {
           {hasCurve ? <div className="relative mt-4">
             <div
               className="pointer-events-none absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full"
-              style={{ background: `linear-gradient(to right, rgb(52 211 153) 0%, rgb(34 211 238) ${pct}%, rgb(30 41 59) ${pct}%, rgb(30 41 59) 100%)` }}
+              style={{ background: `linear-gradient(to right, #C6F432 0%, rgb(34 211 238) ${pct}%, #242429 ${pct}%, #242429 100%)` }}
               aria-hidden="true"
             />
             <input
@@ -470,13 +470,13 @@ export function ReverseDcfSolver({ data }: { data: ValuationPayload }) {
               aria-label="Explore feasible growth and margin pairs"
                 className="mc-range h-11 w-full cursor-pointer appearance-none bg-transparent"
             />
-            <div className="mt-2 flex justify-between font-mono text-[10px] tabular-nums text-[#869E8F]">
+            <div className="mt-2 flex justify-between font-mono text-[10px] tabular-nums text-[#8E8E99]">
               <span>High Margin</span>
               <span>High Growth</span>
             </div>
           </div> : null}
 
-          <p className="mt-6 text-sm leading-relaxed text-[#869E8F]">
+          <p className="mt-6 text-sm leading-relaxed text-[#B8B8C2]">
             {narrative(displayPrice, impliedCagr, impliedMargin, segmentName)}
           </p>
         </div>
@@ -486,7 +486,7 @@ export function ReverseDcfSolver({ data }: { data: ValuationPayload }) {
           <Metric label="Required Stage-1 Revenue Growth" value={impliedCagr} suffix="%" />
           <Metric label={`Required Target EBIT Margin (${segmentName})`} value={impliedMargin} suffix="%" />
           {terminalGrowth != null && terminalMargin != null ? (
-            <p className="rounded-md border border-emerald-900/20 bg-[#090A0B] px-4 py-3 text-xs leading-5 text-[#869E8F]">
+            <p className="rounded-md border border-[#242429] bg-[#0B0B0C] px-4 py-3 text-xs leading-5 text-[#B8B8C2]">
               The solved trajectory fades to {(terminalGrowth * 100).toFixed(1)}% terminal growth and {(terminalMargin * 100).toFixed(1)}% terminal EBIT margin{horizonYears ? ` after ${horizonYears} years` : ""}. Stage-1 requirements are not terminal assumptions.
             </p>
           ) : null}
@@ -499,8 +499,8 @@ export function ReverseDcfSolver({ data }: { data: ValuationPayload }) {
           height: 22px;
           width: 22px;
           border-radius: 9999px;
-          background: #0b0f17;
-          border: 2px solid rgb(16 185 129);
+          background: #0b0b0c;
+          border: 2px solid #c6f432;
           box-shadow: none;
           cursor: pointer;
           transition: transform 0.1s ease;
@@ -512,8 +512,8 @@ export function ReverseDcfSolver({ data }: { data: ValuationPayload }) {
           height: 22px;
           width: 22px;
           border-radius: 9999px;
-          background: #0b0f17;
-          border: 2px solid rgb(16 185 129);
+          background: #0b0b0c;
+          border: 2px solid #c6f432;
           box-shadow: none;
           cursor: pointer;
         }

@@ -43,7 +43,7 @@ export function UpdatePasswordForm({ next = '/' }: { next?: string }) {
           actions={state.reason === 'password_update_failed' ? (
             <Link
               href={authPageHref('/forgot-password', next)}
-              className="inline-flex min-h-11 items-center font-semibold text-[#B7FF3C] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+              className="inline-flex min-h-11 items-center font-semibold text-[#C6F432] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
             >
               Request a new reset link
             </Link>
@@ -64,7 +64,7 @@ export function UpdatePasswordForm({ next = '/' }: { next?: string }) {
           onBlur={passwordProps.onBlur}
           onChange={passwordProps.onChange}
         />
-        <p id="new-password-requirements" className="text-[13px] leading-5 text-[#7F998A]">Use at least 8 characters.</p>
+        <p id="new-password-requirements" className="text-[13px] leading-5 text-[#8E8E99]">Use at least 8 characters.</p>
       </div>
 
       <PasswordField
@@ -81,7 +81,7 @@ export function UpdatePasswordForm({ next = '/' }: { next?: string }) {
         type="submit"
         disabled={pending}
         aria-busy={pending}
-        className="mt-2 h-[44px] w-full rounded-[10px] bg-[#B7FF3C] px-3 py-2 text-[13px] font-semibold text-[#010303] transition-colors hover:bg-[#a6e635] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EFFAF4] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F0D] disabled:opacity-50"
+        className="mt-2 h-[44px] w-full rounded-[10px] bg-[#C6F432] px-3 py-2 text-[13px] font-semibold text-[#0B0B0C] transition-colors hover:bg-[#D4F759] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFFFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#121214] disabled:opacity-50"
       >
         {pending ? 'Updating…' : 'Update password'}
       </button>

@@ -35,23 +35,23 @@ function CustomTooltip({
   if (!active || !payload?.length) return null
   const row = payload[0].payload
   return (
-    <div className="rounded-md border border-emerald-500/20 bg-[#090A0B] px-3.5 py-2.5">
-      <p className="mb-1.5 text-[11px] font-medium uppercase tracking-wider text-[#869E8F]">{label}</p>
+    <div className="rounded-md border border-[#242429] bg-[#0B0B0C] px-3.5 py-2.5">
+      <p className="mb-1.5 text-[11px] font-medium uppercase tracking-wider text-[#8E8E99]">{label}</p>
       <div className="flex items-center justify-between gap-6">
-        <span className="flex items-center gap-1.5 text-xs text-[#869E8F]">
-          <span className="h-2 w-2 rounded-sm bg-emerald-500" />
+        <span className="flex items-center gap-1.5 text-xs text-[#8E8E99]">
+          <span className="h-2 w-2 rounded-sm bg-[#C6F432]" />
           Driver
         </span>
-        <span className="font-mono text-sm font-semibold tabular-nums text-[#E0E6E2]">
+        <span className="font-mono text-sm font-semibold tabular-nums text-[#FFFFFF]">
           {fmt.bn(row.primaryDriver)}
         </span>
       </div>
       <div className="mt-1 flex items-center justify-between gap-6">
-        <span className="flex items-center gap-1.5 text-xs text-[#869E8F]">
-          <span className="h-2 w-2 rounded-full bg-[#869E8F]" />
+        <span className="flex items-center gap-1.5 text-xs text-[#8E8E99]">
+          <span className="h-2 w-2 rounded-full bg-[#B8B8C2]" />
           FCF Margin
         </span>
-        <span className="font-mono text-sm font-semibold tabular-nums text-[#E0E6E2]">
+        <span className="font-mono text-sm font-semibold tabular-nums text-[#FFFFFF]">
           {fmt.money(row.fcfMargin)}%
         </span>
       </div>
@@ -81,20 +81,20 @@ export function TrajectoryChart({ scenario, data }: { scenario: Scenario; data?:
             <ComposedChart data={chartData} margin={{ top: 12, right: 8, left: 4, bottom: 0 }}>
               <defs>
                 <linearGradient id="trajectoryRevenueBar" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="rgb(16 185 129)" stopOpacity={0.8} />
-                  <stop offset="100%" stopColor="rgb(16 185 129)" stopOpacity={0.1} />
+                  <stop offset="0%" stopColor="#C6F432" stopOpacity={0.85} />
+                  <stop offset="100%" stopColor="#C6F432" stopOpacity={0.12} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgb(30 41 59 / 0.6)" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#242429" vertical={false} />
               <XAxis
                 dataKey="year"
-                tick={{ fill: "rgb(148 163 184)", fontSize: 11 }}
-                axisLine={{ stroke: "rgb(30 41 59)" }}
+                tick={{ fill: "#8E8E99", fontSize: 11 }}
+                axisLine={{ stroke: "#242429" }}
                 tickLine={false}
               />
               <YAxis
                 yAxisId="left"
-                tick={{ fill: "rgb(100 116 139)", fontSize: 11 }}
+                tick={{ fill: "#8E8E99", fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(value) => `$${Math.round(Number(value))}B`}
@@ -103,12 +103,12 @@ export function TrajectoryChart({ scenario, data }: { scenario: Scenario; data?:
                 yAxisId="right"
                 orientation="right"
                 domain={["auto", "auto"]}
-                tick={{ fill: "rgb(52 211 153)", fontSize: 11 }}
+                tick={{ fill: "#C6F432", fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(value) => `${Number(value).toFixed(0)}%`}
               />
-              <Tooltip cursor={{ fill: "rgb(30 41 59 / 0.35)" }} content={<CustomTooltip />} />
+              <Tooltip cursor={{ fill: "rgba(255, 255, 255, 0.04)" }} content={<CustomTooltip />} />
               <Bar yAxisId="left" dataKey="primaryDriver" radius={[2, 2, 0, 0]} maxBarSize={46} isAnimationActive={false}>
                 {chartData.map((_, i) => (
                   <Cell key={i} fill="url(#trajectoryRevenueBar)" />
@@ -118,16 +118,16 @@ export function TrajectoryChart({ scenario, data }: { scenario: Scenario; data?:
                 yAxisId="right"
                 type="monotone"
                 dataKey="fcfMargin"
-                stroke="rgb(148 163 184)"
+                stroke="#FFFFFF"
                 strokeWidth={2}
-                dot={{ r: 3, fill: "#090A0B", stroke: "rgb(148 163 184)", strokeWidth: 2 }}
-                activeDot={{ r: 5, fill: "rgb(148 163 184)", stroke: "#090A0B", strokeWidth: 2 }}
+                dot={{ r: 3, fill: "#0B0B0C", stroke: "#FFFFFF", strokeWidth: 2 }}
+                activeDot={{ r: 5, fill: "#FFFFFF", stroke: "#0B0B0C", strokeWidth: 2 }}
                 isAnimationActive={false}
               />
             </ComposedChart>
           </ResponsiveContainer>
         ) : (
-          <div className="flex h-full items-center px-3 text-sm text-[#869E8F]">
+          <div className="flex h-full items-center px-3 text-sm text-[#8E8E99]">
             Trajectory requires calculated DCF projection drivers.
           </div>
         )}

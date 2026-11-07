@@ -47,17 +47,17 @@ export function SotpEvidenceNote({ data }: { data?: SotpBreakdown | null }) {
       />
       <div className="flex flex-col gap-4 p-5">
         {data.warning ? (
-          <p className="text-sm leading-relaxed text-[#869E8F]">{data.warning}</p>
+          <p className="text-sm leading-relaxed text-[#B8B8C2]">{data.warning}</p>
         ) : null}
         {segments.length > 0 ? (
           <div className="grid gap-2 sm:grid-cols-2">
             {segments.map((segment, index) => (
               <div
                 key={`${segment.name ?? "segment"}-${index}`}
-                className="rounded-md border border-[#1A2E20] bg-[#0A0D0B]/40 p-3"
+                className="rounded-md border border-[#242429] bg-[#0B0B0C]/40 p-3"
               >
-                <p className="text-xs font-semibold text-[#E0E6E2]">{segment.name ?? "Segment"}</p>
-                <p className="mt-1 font-mono text-sm tabular-nums text-[#869E8F]">
+                <p className="text-xs font-semibold text-[#FFFFFF]">{segment.name ?? "Segment"}</p>
+                <p className="mt-1 font-mono text-sm tabular-nums text-[#B8B8C2]">
                   {typeof segment.revenue_percentage === "number"
                     ? `${fmt.pct(segment.revenue_percentage, 1)} of revenue`
                     : "Revenue share unavailable"}
@@ -66,7 +66,7 @@ export function SotpEvidenceNote({ data }: { data?: SotpBreakdown | null }) {
                     : ""}
                 </p>
                 {segment.period_end ? (
-                  <p className="mt-1 text-[10px] text-[#5C6B62]">As of {segment.period_end}</p>
+                  <p className="mt-1 text-[10px] text-[#8E8E99]">As of {segment.period_end}</p>
                 ) : null}
               </div>
             ))}

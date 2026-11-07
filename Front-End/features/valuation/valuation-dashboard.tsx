@@ -120,12 +120,12 @@ const tabs: { id: Tab; label: string; shortLabel: string; icon: any }[] = [
 function EngineLoadingCard() {
   return (
     <GlassCard className="h-[320px] animate-pulse p-6 motion-reduce:animate-none">
-      <div className="h-6 w-1/3 rounded-sm bg-[#1A2E20]" />
+      <div className="h-6 w-1/3 rounded-sm bg-[#242429]" />
       <div className="mt-8 flex justify-between">
-        <div className="h-10 w-1/4 rounded-sm bg-[#1A2E20]" />
-        <div className="h-10 w-1/4 rounded-sm bg-[#1A2E20]" />
+        <div className="h-10 w-1/4 rounded-sm bg-[#242429]" />
+        <div className="h-10 w-1/4 rounded-sm bg-[#242429]" />
       </div>
-      <div className="mt-8 h-36 rounded-sm bg-[#1A2E20]/50" />
+      <div className="mt-8 h-36 rounded-sm bg-[#242429]/50" />
     </GlassCard>
   )
 }
@@ -155,12 +155,12 @@ function EngineStateCard({
         icon={icon}
       />
       <div className="px-5 py-8 flex flex-col items-start gap-4">
-        <p className="max-w-xl text-sm leading-6 text-[#869E8F]">{message}</p>
+        <p className="max-w-xl text-sm leading-6 text-[#B8B8C2]">{message}</p>
         {onRetry && (
           <button
             type="button"
             onClick={onRetry}
-            className="min-h-11 rounded-sm border border-[#1A2E20] bg-transparent px-4 py-2 text-xs font-semibold text-[#E0E6E2] transition-colors hover:bg-[#1A2E20]"
+            className="min-h-11 rounded-sm border border-[#242429] bg-transparent px-4 py-2 text-xs font-semibold text-[#FFFFFF] transition-colors hover:bg-[#18181B]"
           >
             Retry
           </button>
@@ -541,7 +541,7 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
     : { ...displayDcfData, shares_outstanding: dcfData?.underlying_assumptions?.shares_outstanding };
 
   return (
-    <div className="min-h-screen bg-[#0A0D0B] text-[#E0E6E2] font-sans">
+    <div className="min-h-screen bg-[#0B0B0C] text-[#FFFFFF] font-sans">
       <TerminalHeader
         tickerSymbol={ticker.toUpperCase()}
         currentPrice={livePrice}
@@ -559,17 +559,17 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
 
       <main className="mx-auto max-w-[1600px] px-4 py-6 md:px-6">
         {dcfData?.valuation_status === "CALCULATED" && !isSaved(ticker.toUpperCase()) ? (
-          <aside className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#B7FF3C]/20 bg-[#071710]/55 px-4 py-3" aria-label="Save this valuation workspace">
+          <aside className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-[#C6F432]/25 bg-[#121214] px-4 py-3" aria-label="Save this valuation workspace">
             <div>
-              <p className="text-sm font-semibold text-[#EFFAF4]">Return when {ticker.toUpperCase()} inputs or market expectations change.</p>
-              <p className="mt-1 text-xs text-[#869E8F]">Save the company route; valuation results are always recalculated from current sourced inputs.</p>
+              <p className="text-sm font-semibold text-[#FFFFFF]">Return when {ticker.toUpperCase()} inputs or market expectations change.</p>
+              <p className="mt-1 text-xs text-[#8E8E99]">Save the company route; valuation results are always recalculated from current sourced inputs.</p>
             </div>
             <SaveStockButton ticker={ticker.toUpperCase()} section="valuation" />
           </aside>
         ) : null}
         {/* Tab group */}
         <div className="mb-4 max-w-full">
-        <div role="tablist" aria-label="Valuation views" aria-orientation="horizontal" className="grid w-full grid-cols-3 rounded-md border border-[#1A2E20] bg-[#111613] p-1">
+        <div role="tablist" aria-label="Valuation views" aria-orientation="horizontal" className="grid w-full grid-cols-3 rounded-md border border-[#242429] bg-[#121214] p-1">
           {tabs.map((t) => {
             const active = tab === t.id
             const Icon = t.icon
@@ -586,13 +586,13 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
                 onKeyDown={(event) => handleTabKeyDown(event, t.id)}
                 ref={(node) => { tabRefs.current[t.id] = node }}
                 tabIndex={active ? 0 : -1}
-                className={`relative flex min-h-11 min-w-0 items-center justify-center gap-1.5 rounded-sm px-1 py-2 text-xs font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C] focus-visible:ring-inset sm:gap-2 sm:px-4 sm:text-sm ${
+                className={`relative flex min-h-11 min-w-0 items-center justify-center gap-1.5 rounded-sm px-1 py-2 text-xs font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432] focus-visible:ring-inset sm:gap-2 sm:px-4 sm:text-sm ${
                   active
-                    ? "bg-[#1A2E20] text-[#E0E6E2]"
-                    : "text-[#869E8F] hover:text-[#E0E6E2]"
+                    ? "bg-[#18181B] text-[#FFFFFF]"
+                    : "text-[#8E8E99] hover:text-[#FFFFFF]"
                 }`}
               >
-                <Icon className={`h-4 w-4 ${active ? "text-emerald-400" : ""}`} />
+                <Icon className={`h-4 w-4 ${active ? "text-[#C6F432]" : ""}`} />
                 <span className="truncate sm:hidden">{t.shortLabel}</span>
                 <span className="hidden truncate sm:inline">{t.label}</span>
               </button>
@@ -668,11 +668,11 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
               {dcfData?.valuation_status === "CALCULATED" ? <RealityCheckBanner data={sotpData} /> : null}
               {dcfData?.valuation_status !== "CALCULATED" ? (
                 renderEngine("Adaptive Valuation Engine", dcfData, dcfErr, dcfLoading, () => null, () => dcfMutate())
-              ) : <details className="rounded-md border border-[#1A2E20] bg-[#111613]">
-                <summary className="flex min-h-11 cursor-pointer items-center px-5 py-3 text-sm font-semibold text-[#C8D4CC] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#B7FF3C]">
+              ) : <details className="rounded-md border border-[#242429] bg-[#121214]">
+                <summary className="flex min-h-11 cursor-pointer items-center px-5 py-3 text-sm font-semibold text-[#FFFFFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#C6F432]">
                   Methodology, calculation basis &amp; composition
                 </summary>
-                <div className="flex flex-col gap-6 border-t border-[#1A2E20] p-3 sm:p-4">
+                <div className="flex flex-col gap-6 border-t border-[#242429] p-3 sm:p-4">
                   {renderEngine("Adaptive Valuation Engine", dcfData, dcfErr, dcfLoading, () => (
                     <EngineTelemetry data={displayDcfData!} />
                   ), () => dcfMutate())}
@@ -760,7 +760,7 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
               {dcfData?.valuation_status === "CALCULATED" ? (
               <>
                 {dcfData.engine_metadata?.consensus_horizon_sensitivity?.warning_triggered === true ? (
-                  <div className="rounded-md border border-[#294231] bg-[#0A0D0B] px-4 py-3 text-xs leading-5 text-[#9AB0A1]">
+                  <div className="rounded-md border border-[#242429] bg-[#0B0B0C] px-4 py-3 text-xs leading-5 text-[#B8B8C2]">
                     Monte Carlo and Reverse DCF below use the same full-consensus model as the primary DCF result. The without-last-year value is diagnostic only.
                   </div>
                 ) : null}
@@ -779,12 +779,12 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
         </AnimatePresence>
       </main>
 
-      <footer className="mt-12 border-t border-[#1A2E20] bg-[#0A0D0B] px-4 py-8 md:px-6">
-        <div className="mx-auto max-w-[1600px] flex flex-col gap-4 text-xs leading-relaxed text-[#869E8F]">
+      <footer className="mt-12 border-t border-[#242429] bg-[#0B0B0C] px-4 py-8 md:px-6">
+        <div className="mx-auto max-w-[1600px] flex flex-col gap-4 text-xs leading-relaxed text-[#8E8E99]">
           <div className="flex items-start gap-3">
-            <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[#B7FF3C]" aria-hidden="true" />
+            <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[#C6F432]" aria-hidden="true" />
             <div className="space-y-2">
-              <h3 className="font-semibold text-[#E0E6E2]">
+              <h3 className="font-semibold text-[#FFFFFF]">
                 Model Limitations &amp; Investment Research Disclaimer
               </h3>
               <p>
@@ -798,7 +798,7 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
               </p>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-t border-[#1A2E20]/60 pt-4 text-[11px] text-[#869E8F]">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-t border-[#242429]/60 pt-4 text-[11px] text-[#8E8E99]">
             <span>VALUATOR · Sourced Valuation Engine &amp; AI-Ready Telemetry</span>
             <span>Theoretical valuation models · Not an investment recommendation</span>
           </div>

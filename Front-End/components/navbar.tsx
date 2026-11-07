@@ -35,14 +35,14 @@ export async function Navbar({
   }
 
   return (
-    <header className="valuator-nav sticky inset-x-0 top-0 z-50 border-b border-white/10 bg-[#050505]/92 backdrop-blur-md">
+    <header className="valuator-nav sticky inset-x-0 top-0 z-50 border-b border-white/10 bg-[#0B0B0C]/92 backdrop-blur-md">
       <div className="mx-auto flex min-h-[4.5rem] max-w-[90rem] items-center gap-4 px-5 sm:px-8">
         <Link
           href="/"
-          className="valuator-wordmark inline-flex min-h-11 shrink-0 items-center text-xl font-bold text-[#F2F2EE] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C] sm:text-2xl"
+          className="valuator-wordmark inline-flex min-h-11 shrink-0 items-center text-xl font-bold text-[#FFFFFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432] sm:text-2xl"
           aria-label="VALUATOR home"
         >
-          VALUATOR<span aria-hidden="true" className="ml-1 inline-block size-2 bg-[#B7FF3C]" />
+          VALUATOR<span aria-hidden="true" className="ml-1 inline-block size-2 bg-[#C6F432]" />
         </Link>
 
         {context === "landing" ? (
@@ -51,7 +51,7 @@ export async function Navbar({
               <Link
                 key={link.label}
                 href={link.href}
-                className="min-h-11 content-center px-1 text-sm font-medium text-[#A6A69F] transition-colors duration-150 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+                className="min-h-11 content-center px-1 text-sm font-medium text-[#B8B8C2] transition-colors duration-150 hover:text-[#FFFFFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
               >
                 {link.label}
               </Link>
@@ -65,7 +65,7 @@ export async function Navbar({
               <Link
                 href={returnTo ?? "/#find-fair-value"}
                 aria-label={returnTo ? `Back to ${workspaceLabel(returnTo)}` : "New analysis"}
-                className="inline-flex min-h-11 items-center rounded-[10px] bg-[#B7FF3C] px-[14px] text-[13px] font-semibold text-[#050505] transition-colors duration-150 hover:bg-[#a6e635] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+                className="inline-flex min-h-11 items-center rounded-[10px] bg-[#C6F432] px-[14px] text-[13px] font-semibold text-[#0B0B0C] transition-colors duration-150 hover:bg-[#D4F759] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0B0C]"
               >
                 {returnTo ? <ArrowLeft className="mr-1.5 h-4 w-4" aria-hidden="true" /> : null}
                 <span className="sm:hidden">{returnTo ? "Back" : "New"}</span>
@@ -86,13 +86,13 @@ export async function Navbar({
             <>
               <Link
                 href="/login"
-                className="inline-flex min-h-11 items-center px-1.5 text-[12px] font-medium text-[#C8C8C0] transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C] sm:px-3 sm:text-[13px]"
+                className="inline-flex min-h-11 items-center px-1.5 text-[12px] font-medium text-[#B8B8C2] transition-colors hover:text-[#FFFFFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432] sm:px-3 sm:text-[13px]"
               >
                 Sign in
               </Link>
               <Link
                 href="/register"
-                className="inline-flex min-h-11 items-center rounded-[10px] bg-[#B7FF3C] px-3 text-[12px] font-semibold text-[#050505] transition-colors duration-150 hover:bg-[#a6e635] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505] sm:px-[14px] sm:text-[13px]"
+                className="inline-flex min-h-11 items-center rounded-[10px] bg-[#C6F432] px-3 text-[12px] font-semibold text-[#0B0B0C] transition-colors duration-150 hover:bg-[#D4F759] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0B0C] sm:px-[14px] sm:text-[13px]"
               >
                 Sign up
               </Link>
@@ -101,7 +101,7 @@ export async function Navbar({
             <>
               <Link
                 href="/#find-fair-value"
-                className="inline-flex min-h-11 items-center rounded-[10px] bg-[#B7FF3C] px-[14px] text-[13px] font-semibold text-[#050505] transition-colors duration-150 hover:bg-[#a6e635] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+                className="inline-flex min-h-11 items-center rounded-[10px] bg-[#C6F432] px-[14px] text-[13px] font-semibold text-[#0B0B0C] transition-colors duration-150 hover:bg-[#D4F759] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0B0C]"
               >
                 New analysis
               </Link>
@@ -124,7 +124,7 @@ export async function Navbar({
       {context === "landing" ? (
         <nav aria-label="Landing page mobile" className="flex border-t border-white/10 px-3 md:hidden">
           {links.map((link) => (
-            <Link key={link.label} href={link.mobileHref} className="min-h-11 flex-1 content-center text-center text-sm font-medium text-[#C8C8C0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#B7FF3C]">
+            <Link key={link.label} href={link.mobileHref} className="min-h-11 flex-1 content-center text-center text-sm font-medium text-[#B8B8C2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#C6F432]">
               {link.label}
             </Link>
           ))}

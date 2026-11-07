@@ -744,12 +744,12 @@ export function NewsSignals({ ticker }: { ticker: string }) {
         <p className="sr-only" aria-live="polite">{bookmarkAnnouncement}</p>
       </main>
 
-      <footer className="mt-12 border-t border-[#1A2E20] bg-[#0A0D0B] px-4 py-8 md:px-6">
-        <div className="mx-auto max-w-[1440px] flex flex-col gap-3 text-xs leading-relaxed text-[#869E8F]">
+      <footer className="mt-12 border-t border-[#242429] bg-[#0B0B0C] px-4 py-8 md:px-6">
+        <div className="mx-auto max-w-[1440px] flex flex-col gap-3 text-xs leading-relaxed text-[#8E8E99]">
           <div className="flex items-start gap-3">
-            <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[#B7FF3C]" aria-hidden="true" />
+            <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[#C6F432]" aria-hidden="true" />
             <div className="space-y-1.5">
-              <h3 className="font-semibold text-[#E0E6E2]">
+              <h3 className="font-semibold text-[#FFFFFF]">
                 Market News &amp; Sentiment Analysis Disclaimer
               </h3>
               <p>
@@ -757,7 +757,7 @@ export function NewsSignals({ ticker }: { ticker: string }) {
               </p>
             </div>
           </div>
-          <div className="border-t border-[#1A2E20]/60 pt-3 text-[11px] text-[#869E8F]">
+          <div className="border-t border-[#242429]/60 pt-3 text-[11px] text-[#8E8E99]">
             VALUATOR · For informational research only — not investment advice.
           </div>
         </div>

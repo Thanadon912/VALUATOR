@@ -99,9 +99,9 @@ function buildFcfeCompositionBridge(data: DCFData): BridgeBar[] | null {
 
 const colorFor = (type: string) =>
   type === "total"
-    ? "rgb(71 85 105)"
+    ? "#323238"
     : type === "result"
-      ? "rgb(16 185 129)"
+      ? "#C6F432"
       : type === "plus"
         ? "rgb(52 211 153)"
         : "rgb(245 158 11)"
@@ -129,33 +129,33 @@ export function BridgeChart({ data: dcfData }: { data?: DCFData }) {
           <BarChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
             <XAxis
               dataKey="name"
-              tick={{ fill: "rgb(148 163 184)", fontSize: 11 }}
-              axisLine={{ stroke: "rgb(30 41 59)" }}
+              tick={{ fill: "#8E8E99", fontSize: 11 }}
+              axisLine={{ stroke: "#242429" }}
               tickLine={false}
             />
             <YAxis
               domain={["auto", "auto"]}
-              tick={{ fill: "rgb(100 116 139)", fontSize: 11 }}
+              tick={{ fill: "#8E8E99", fontSize: 11 }}
               axisLine={false}
               tickLine={false}
               tickFormatter={(v) => formatBridgeValue(Number(v))}
             />
             <Tooltip
-              cursor={{ fill: "rgba(16, 185, 129, 0.05)" }}
+              cursor={{ fill: "rgba(255, 255, 255, 0.04)" }}
               contentStyle={{
-                background: "#090A0B",
-                border: "1px solid rgba(16, 185, 129, 0.2)",
+                background: "#0B0B0C",
+                border: "1px solid #242429",
                 borderRadius: 6,
                 fontSize: 12,
               }}
-              labelStyle={{ color: "rgb(148 163 184)" }}
+              labelStyle={{ color: "#B8B8C2" }}
               formatter={(_v, _n, item) => [formatBridgeValue(item.payload.value as number), item.payload.name]}
             />
             <Bar dataKey="bar" radius={[4, 4, 4, 4]} isAnimationActive={false}>
               <LabelList
                 dataKey="label"
                 position="top"
-                fill="rgb(203 213 225)"
+                fill="#FFFFFF"
                 fontSize={11}
                 fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
               />
@@ -166,7 +166,7 @@ export function BridgeChart({ data: dcfData }: { data?: DCFData }) {
           </BarChart>
         </ResponsiveContainer>
         ) : (
-          <div className="flex h-full items-center px-3 text-sm text-[#869E8F]">
+          <div className="flex h-full items-center px-3 text-sm text-[#8E8E99]">
             Financial bridge requires a calculated enterprise value or equity composition.
           </div>
         )}

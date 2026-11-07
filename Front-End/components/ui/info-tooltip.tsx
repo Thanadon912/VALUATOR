@@ -68,7 +68,7 @@ export function InfoTooltip({ text }: { text: string }) {
           id={tooltipId}
           role="tooltip"
           style={{ left: position.left, top: position.top, width: position.width }}
-          className="pointer-events-none fixed z-[100] rounded-md border border-slate-700 bg-[#1e293b] p-3 text-xs font-normal leading-relaxed text-slate-200"
+          className="pointer-events-none fixed z-[100] rounded-md border border-[#323238] bg-[#18181B] p-3 text-xs font-normal leading-relaxed text-[#FFFFFF]"
         >
           {text}
         </span>,
@@ -94,9 +94,9 @@ export function InfoTooltip({ text }: { text: string }) {
         onClick={() => setIsOpen(true)}
         onFocus={() => setIsOpen(true)}
         onBlur={() => setIsOpen(false)}
-        className="flex h-11 w-11 items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+        className="flex h-11 w-11 items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
       >
-        <span className="flex h-4 w-4 items-center justify-center rounded-full border border-slate-600 bg-slate-800/50 text-[9px] font-bold text-slate-400 transition-colors hover:border-slate-400 hover:text-slate-200" aria-hidden="true">i</span>
+        <span className="flex h-4 w-4 items-center justify-center rounded-full border border-[#323238] bg-[#18181B] text-[9px] font-bold text-[#B8B8C2] transition-colors hover:border-[#FFFFFF] hover:text-[#FFFFFF]" aria-hidden="true">i</span>
       </button>
       {popup}
     </span>

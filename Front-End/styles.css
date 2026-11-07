@@ -1,14 +1,14 @@
 :root {
-  --bg: #010302;
-  --panel: rgba(5, 13, 10, 0.62);
-  --panel-strong: rgba(7, 23, 16, 0.76);
-  --line: rgba(28, 209, 115, 0.18);
-  --line-strong: rgba(28, 209, 115, 0.28);
-  --text: #effaf4;
-  --muted: #90b09e;
-  --accent: #1cd173;
-  --accent-soft: #a3ffc9;
-  --ink: #030d07;
+  --bg: #0B0B0C;
+  --panel: rgba(18, 18, 20, 0.82);
+  --panel-strong: rgba(24, 24, 27, 0.92);
+  --line: rgba(255, 255, 255, 0.10);
+  --line-strong: rgba(198, 244, 50, 0.28);
+  --text: #FFFFFF;
+  --muted: #B8B8C2;
+  --accent: #C6F432;
+  --accent-soft: #D4F759;
+  --ink: #0B0B0C;
 }
 
 * {
@@ -116,11 +116,7 @@ button {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background:
-    linear-gradient(rgba(28, 209, 115, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(28, 209, 115, 0.04) 1px, transparent 1px),
-    var(--bg);
-  background-size: 72px 72px, 72px 72px, auto;
+  background: var(--bg);
 }
 
 .section-bg {

@@ -56,13 +56,13 @@ export function ReleaseFreshness({ currentRevision }: { currentRevision: string 
   return (
     <aside
       role="status"
-      className="fixed inset-x-3 bottom-3 z-[100] mx-auto flex max-w-xl items-center justify-between gap-4 rounded-[10px] border border-[#B7FF3C]/40 bg-[#10150F] px-4 py-3 text-sm text-[#EFFAF4] shadow-2xl shadow-black/60"
+      className="fixed inset-x-3 bottom-3 z-[100] mx-auto flex max-w-xl items-center justify-between gap-4 rounded-[10px] border border-[#C6F432]/40 bg-[#121214] px-4 py-3 text-sm text-[#FFFFFF] shadow-2xl shadow-black/60"
     >
       <span>New version available. Reload to use the latest fixes.</span>
       <button
         type="button"
         onClick={() => window.location.reload()}
-        className="min-h-11 shrink-0 rounded-[8px] bg-[#B7FF3C] px-4 font-semibold text-[#071008] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+        className="min-h-11 shrink-0 rounded-[8px] bg-[#C6F432] px-4 font-semibold text-[#0B0B0C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
       >
         Reload now
       </button>

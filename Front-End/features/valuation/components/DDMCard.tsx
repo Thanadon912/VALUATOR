@@ -55,27 +55,27 @@ export function DDMCard({ data }: { data: DDMData }) {
         tooltipText="Estimates intrinsic value based on the present value of expected future dividend payments."
         icon={<Coins className="h-4 w-4" />}
         badge={
-          <span className="rounded-md border border-[#1A2E20] bg-[#111613] px-2 py-1 font-mono text-xs tabular-nums text-white">
+          <span className="rounded-md border border-[#242429] bg-[#121214] px-2 py-1 font-mono text-xs tabular-nums text-[#FFFFFF]">
             Value {isInapplicable ? "N/A" : money(fairValue)}
           </span>
         }
       />
       {isInapplicable ? (
         <div className="p-5">
-          <div className="flex items-start gap-3 rounded-md border border-[#294231] bg-[#0A0D0B] p-4">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[#294231] text-[#A9C6B3]">
+          <div className="flex items-start gap-3 rounded-md border border-[#242429] bg-[#0B0B0C] p-4">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[#323238] text-[#B8B8C2]">
               <CircleSlash2 className="h-4 w-4" />
             </span>
             <div>
-              <p className="text-sm font-semibold text-[#E0E6E2]">DDM not applicable</p>
-              <p className="mt-1 text-xs leading-5 text-[#88998C]">
+              <p className="text-sm font-semibold text-[#FFFFFF]">DDM not applicable</p>
+              <p className="mt-1 text-xs leading-5 text-[#8E8E99]">
                 {reasons.length ? reasons.join(" ") : "The sourced dividend profile does not satisfy the DDM applicability rules."}
               </p>
             </div>
           </div>
         </div>
       ) : (
-        <div className="grid gap-px bg-[#1A2E20] sm:grid-cols-2">
+        <div className="grid gap-px bg-[#242429] sm:grid-cols-2">
           <DdmMetric label="Annual Dividend / Share" value={money(dps)} />
           <DdmMetric label="Dividend Growth CAGR" value={percent(dgr, true)} />
           <DdmMetric label="Cost of Equity" value={percent(ke, true)} />
@@ -94,10 +94,10 @@ export function DDMCard({ data }: { data: DDMData }) {
 
 function DdmMetric({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
-    <div className="flex items-center justify-between gap-3 bg-[#090A0B] px-4 py-3">
-      <span className="text-xs text-[#88998C]">{label}</span>
+    <div className="flex items-center justify-between gap-3 bg-[#0B0B0C] px-4 py-3">
+      <span className="text-xs text-[#8E8E99]">{label}</span>
       <span className={`font-mono text-sm font-medium tabular-nums ${
-          accent === undefined ? "text-white" : accent ? "text-[#00FF66]" : "text-amber-400"
+          accent === undefined ? "text-[#FFFFFF]" : accent ? "text-[#C6F432]" : "text-amber-400"
         }`}>
         {value}
       </span>

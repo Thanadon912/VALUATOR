@@ -39,7 +39,7 @@ export function CompanyLogo({ ticker, className }: CompanyLogoProps) {
     return (
       <span
         className={cn(
-          "flex items-center justify-center rounded-xl border border-white/10 bg-white/10 font-mono text-[9px] font-semibold text-slate-300",
+          "flex items-center justify-center rounded-xl border border-white/10 bg-[#18181B] font-mono text-[9px] font-semibold text-[#FFFFFF]",
           className,
         )}
         aria-hidden="true"

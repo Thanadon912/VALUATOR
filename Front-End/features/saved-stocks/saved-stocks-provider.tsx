@@ -311,7 +311,7 @@ export function SavedStocksProvider({
       {children}
       {guestNotice ? (
         <aside
-          className="fixed bottom-4 left-1/2 z-[80] flex w-[min(92vw,34rem)] -translate-x-1/2 flex-col gap-3 rounded-xl border border-[#B7FF3C]/25 bg-[#0B0F0D]/95 p-4 text-sm text-[#EFFAF4] shadow-2xl backdrop-blur-md sm:flex-row sm:items-center"
+          className="fixed bottom-4 left-1/2 z-[80] flex w-[min(92vw,34rem)] -translate-x-1/2 flex-col gap-3 rounded-xl border border-[#C6F432]/25 bg-[#121214]/95 p-4 text-sm text-[#FFFFFF] shadow-2xl backdrop-blur-md sm:flex-row sm:items-center"
           role="status"
           aria-live="polite"
         >
@@ -321,14 +321,14 @@ export function SavedStocksProvider({
           <div className="flex shrink-0 gap-2">
             <Link
               href={`/register?next=${encodeURIComponent(pathname)}`}
-              className="inline-flex min-h-11 items-center rounded-lg bg-[#B7FF3C] px-3 font-semibold text-[#050505] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="inline-flex min-h-11 items-center rounded-lg bg-[#C6F432] px-3 font-semibold text-[#0B0B0C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
             >
               Create account
             </Link>
             <button
               type="button"
               onClick={() => setGuestNotice(null)}
-              className="min-h-11 rounded-lg border border-white/15 px-3 font-semibold text-[#D1D1CA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+              className="min-h-11 rounded-lg border border-white/15 px-3 font-semibold text-[#B8B8C2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
             >
               Not now
             </button>
