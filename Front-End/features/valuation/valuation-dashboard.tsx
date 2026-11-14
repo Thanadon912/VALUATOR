@@ -230,8 +230,14 @@ function renderEngine(
   return data ? render() : null
 }
 
-export function ValuationDashboard({ ticker }: { ticker: string }) {
-  const [tab, setTab] = useState<Tab>("overview")
+export function ValuationDashboard({
+  ticker,
+  initialTab = "overview",
+}: {
+  ticker: string;
+  initialTab?: Tab;
+}) {
+  const [tab, setTab] = useState<Tab>(initialTab)
   const [scenario, setScenario] = useState<Scenario>("base")
   const [appliedAssumptions, setAppliedAssumptions] = useState<{
     ticker: string
@@ -264,6 +270,15 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
 
   const activateTab = useCallback((nextTab: Tab, focusTab = false) => {
     setTab(nextTab)
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href)
+      if (nextTab === "overview") {
+        url.searchParams.delete("tab")
+      } else {
+        url.searchParams.set("tab", nextTab)
+      }
+      window.history.replaceState(null, "", url.pathname + url.search)
+    }
     if (focusTab) {
       requestAnimationFrame(() => {
         const nextNode = tabRefs.current[nextTab]
@@ -271,6 +286,19 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
         nextNode?.scrollIntoView({ block: "nearest", inline: "nearest" })
       })
     }
+  }, [])
+
+  useEffect(() => {
+    const handleUrlTab = () => {
+      const params = new URLSearchParams(window.location.search)
+      const urlTab = params.get("tab")
+      if (urlTab === "dcf" || urlTab === "sim" || urlTab === "overview") {
+        setTab(urlTab)
+      }
+    }
+    handleUrlTab()
+    window.addEventListener("popstate", handleUrlTab)
+    return () => window.removeEventListener("popstate", handleUrlTab)
   }, [])
 
   useEffect(() => {
@@ -544,6 +572,7 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
     <div className="min-h-screen bg-[#0B0B0C] text-[#FFFFFF] font-sans">
       <TerminalHeader
         tickerSymbol={ticker.toUpperCase()}
+        companyName={summaryData?.data?.company_overview?.data?.company_name}
         currentPrice={livePrice}
         marketCap={formatMarketCap(marketCap)}
         marketCapSource={marketCapSource}
@@ -783,7 +812,7 @@ export function ValuationDashboard({ ticker }: { ticker: string }) {
         <div className="mx-auto max-w-[1600px] flex flex-col gap-4 text-xs leading-relaxed text-[#8E8E99]">
           <div className="flex items-start gap-3">
             <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[#C6F432]" aria-hidden="true" />
-            <div className="space-y-2">
+            <div className="max-w-4xl space-y-2">
               <h3 className="font-semibold text-[#FFFFFF]">
                 Model Limitations &amp; Investment Research Disclaimer
               </h3>

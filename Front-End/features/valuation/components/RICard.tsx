@@ -233,7 +233,7 @@ function Legend({
         <div className="h-1 flex-1 overflow-hidden rounded-full bg-[#242429]">
           <div className={`h-full rounded-full ${color}`} style={{ width: `${barPct}%` }} />
         </div>
-        <span className="font-mono text-[10px] tabular-nums text-[#8E8E99]">{safePct.toFixed(0)}%</span>
+        <span className="font-mono text-[11px] tabular-nums text-[#8E8E99]">{safePct.toFixed(0)}%</span>
       </div>
     </div>
   )

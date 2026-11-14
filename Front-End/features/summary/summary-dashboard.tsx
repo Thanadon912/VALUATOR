@@ -284,9 +284,19 @@ function FactGrid({ items, module }: { items: MetricItem[]; module: SummaryModul
   );
 }
 
-function StatList({ label, rows }: { label: string; rows: MetricItem[] }) {
+function StatList({
+  label,
+  rows,
+  defaultOpen = false,
+  id,
+}: {
+  label: string;
+  rows: MetricItem[];
+  defaultOpen?: boolean;
+  id?: string;
+}) {
   return (
-    <details className="border-t border-white/10 pt-2">
+    <details id={id} open={defaultOpen ? true : undefined} className="scroll-mt-28 border-t border-white/10 pt-2">
       <summary className="summary-trust-control flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 rounded-lg px-2 text-sm font-semibold text-[#FFFFFF] hover:bg-white/[0.03] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#C6F432] [&::-webkit-details-marker]:hidden">
         <span>{label}</span>
         <span className="font-mono text-xs font-normal text-[#8E8E99]">{rows.length} metrics</span>
@@ -579,7 +589,7 @@ function RevenueMixCard({
               type="button"
               onClick={() => setDimension(item)}
               aria-pressed={dimension === item}
-              className={`summary-segment-button rounded-md px-3 text-xs transition-colors ${
+              className={`summary-segment-button flex min-h-9 sm:min-h-8 sm:h-8 items-center justify-center rounded-md px-3 text-xs transition-colors max-sm:min-h-[44px] ${
                 dimension === item
                   ? "bg-[#C6F432]/10 text-[#C6F432] ring-1 ring-inset ring-[#C6F432]/25"
                   : "text-[#B8B8C2] hover:bg-white/[0.04] hover:text-[#FFFFFF]"
@@ -986,7 +996,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
       detail: valuation?.metrics?.ev_to_ebitda?.value == null
         ? "EV / EBITDA is unavailable."
         : `${formatNumber(valuation.metrics.ev_to_ebitda.value)}× EV / EBITDA`,
-      href: "#deep-statistics",
+      href: "#valuation-measures",
       provenance: "App-derived",
       icon: <CircleDollarSign className="h-4 w-4" aria-hidden />,
     },
@@ -998,7 +1008,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
       detail: highlights?.metrics?.return_on_equity?.value == null
         ? "Return on equity is unavailable."
         : `${formatNumber(highlights.metrics.return_on_equity.value * 100)}% return on equity`,
-      href: "#deep-statistics",
+      href: "#financial-highlights",
       provenance: "App-derived",
       icon: <Landmark className="h-4 w-4" aria-hidden />,
     },
@@ -1010,7 +1020,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
       detail: highlights?.metrics?.total_cash?.value == null
         ? "Total cash is unavailable."
         : `${formatCurrency(highlights.metrics.total_cash.value, currency)} total cash`,
-      href: "#deep-statistics",
+      href: "#financial-highlights",
       provenance: "App-derived",
       icon: <WalletCards className="h-4 w-4" aria-hidden />,
     },
@@ -1082,7 +1092,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
                           setPriceRange(range);
                         }}
                         aria-pressed={priceRange === range}
-                        className={`summary-segment-button rounded-md px-3 font-mono text-xs tabular-nums transition-colors ${
+                        className={`summary-segment-button flex min-h-9 sm:min-h-8 sm:h-8 items-center justify-center rounded-md px-3 font-mono text-xs tabular-nums transition-colors max-sm:min-h-[44px] ${
                           priceRange === range
                             ? "bg-[#C6F432]/10 text-[#C6F432] ring-1 ring-inset ring-[#C6F432]/25"
                             : "text-[#B8B8C2] hover:bg-white/[0.04] hover:text-[#FFFFFF]"
@@ -1095,7 +1105,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
                   <select
                     id="additional-price-range"
                     aria-label="Additional price ranges"
-                    className="summary-segment-button min-w-24 rounded-md border-0 bg-[#121214] px-2 font-mono text-xs text-[#FFFFFF] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#C6F432]"
+                    className="summary-segment-button min-w-24 min-h-9 sm:min-h-8 sm:h-8 rounded-md border-0 bg-[#121214] px-2 font-mono text-xs text-[#FFFFFF] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#C6F432] max-sm:min-h-[44px]"
                     value={secondaryPriceRanges.includes(priceRange) ? priceRange : ""}
                     onChange={(event) => {
                       if (event.target.value) {
@@ -1180,8 +1190,8 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
               <div id="deep-statistics" className="scroll-mt-24" />
               <CardTitle title="Valuation & quality metrics" subtitle="Expand a group to inspect calculation basis" source={sourceCaption(summary, data.valuation_measures)} />
               <div className="flex flex-col gap-3">
-                <StatList label="Valuation measures" rows={valuationItems} />
-                <StatList label="Financial highlights" rows={financialHighlightItems} />
+                <StatList id="valuation-measures" defaultOpen label="Valuation measures" rows={valuationItems} />
+                <StatList id="financial-highlights" defaultOpen label="Financial highlights" rows={financialHighlightItems} />
               </div>
               <ModuleState module={data.valuation_measures} compact />
               <ModuleState module={data.financial_highlights} compact />

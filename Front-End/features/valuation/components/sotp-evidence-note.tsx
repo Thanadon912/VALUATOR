@@ -66,7 +66,7 @@ export function SotpEvidenceNote({ data }: { data?: SotpBreakdown | null }) {
                     : ""}
                 </p>
                 {segment.period_end ? (
-                  <p className="mt-1 text-[10px] text-[#8E8E99]">As of {segment.period_end}</p>
+                  <p className="mt-1 text-[11px] text-[#8E8E99]">As of {segment.period_end}</p>
                 ) : null}
               </div>
             ))}

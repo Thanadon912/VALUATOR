@@ -29,7 +29,8 @@ export function WorkspaceTopbar({ ticker }: { ticker: string }) {
     handleSubmit: submit,
   } = useTickerSearch({
     onSuccess: (symbol) => {
-      router.push(`/stocks/${symbol}/summary`);
+      const currentSection = sectionFromPathname(pathname)?.section ?? "summary";
+      router.push(`/stocks/${symbol}/${currentSection}`);
       setValue("");
     },
   });

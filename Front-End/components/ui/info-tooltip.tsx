@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
+import { Info } from "lucide-react"
 
 type Position = { left: number; top: number; width: number }
 
@@ -96,7 +97,7 @@ export function InfoTooltip({ text }: { text: string }) {
         onBlur={() => setIsOpen(false)}
         className="flex h-11 w-11 items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
       >
-        <span className="flex h-4 w-4 items-center justify-center rounded-full border border-[#323238] bg-[#18181B] text-[9px] font-bold text-[#B8B8C2] transition-colors hover:border-[#FFFFFF] hover:text-[#FFFFFF]" aria-hidden="true">i</span>
+        <Info className="h-3.5 w-3.5 text-[#8E8E99] transition-colors hover:text-[#FFFFFF]" aria-hidden="true" />
       </button>
       {popup}
     </span>

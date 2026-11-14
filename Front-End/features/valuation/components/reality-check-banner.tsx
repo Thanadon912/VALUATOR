@@ -74,7 +74,7 @@ export function RealityCheckBanner({ data }: { data: ValuationPayload }) {
             <Gauge className="h-5 w-5" />
           </span>
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-400">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-amber-400">
               Market-implied expectations
             </p>
             <p className="mt-0.5 text-sm font-semibold text-[#FFFFFF]">Implied Market Expectations</p>

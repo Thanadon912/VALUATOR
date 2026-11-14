@@ -508,7 +508,7 @@ body,
   to { filter: brightness(1); }
 }
 
-@media (pointer: coarse) {
+@media (max-width: 640px), (pointer: coarse) {
   .summary-segment-button,
   .summary-trust-control {
     min-height: 44px;

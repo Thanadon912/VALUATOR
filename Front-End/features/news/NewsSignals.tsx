@@ -748,7 +748,7 @@ export function NewsSignals({ ticker }: { ticker: string }) {
         <div className="mx-auto max-w-[1440px] flex flex-col gap-3 text-xs leading-relaxed text-[#8E8E99]">
           <div className="flex items-start gap-3">
             <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[#C6F432]" aria-hidden="true" />
-            <div className="space-y-1.5">
+            <div className="max-w-4xl space-y-1.5">
               <h3 className="font-semibold text-[#FFFFFF]">
                 Market News &amp; Sentiment Analysis Disclaimer
               </h3>

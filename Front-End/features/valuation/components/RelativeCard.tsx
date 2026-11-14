@@ -149,7 +149,7 @@ export function RelativeCard({
                 <td className="px-3 py-2.5">
                   <div className="flex flex-col">
                     <span className={`font-mono text-xs font-semibold ${peer.isTarget ? 'text-[#C6F432]' : 'text-[#FFFFFF]'}`}>{peer.symbol}</span>
-                    <span className="mt-0.5 text-[10px] text-[#8E8E99]">{peer.overlapScore.toFixed(0)}% overlap</span>
+                    <span className="mt-0.5 text-[11px] text-[#8E8E99]">{peer.overlapScore.toFixed(0)}% overlap</span>
                   </div>
                 </td>
                 <td className="px-2 py-2.5 text-right font-mono tabular-nums text-[#B8B8C2]">
@@ -164,7 +164,7 @@ export function RelativeCard({
               </tr>
             ))}
             <tr className="border-t-2 border-[#242429] bg-[#0B0B0C]">
-              <td className="px-3 py-3 text-xs font-bold text-[#FFFFFF]" colSpan={3}>Backend Blended Fair Value</td>
+              <td className="px-3 py-3 text-xs font-bold text-[#FFFFFF]" colSpan={3}>Peer Implied Fair Value</td>
               <td className={`px-2 py-3 text-right font-mono text-xs font-semibold ${fairValueColor}`}>
                 {marginOfSafety >= 0 ? "+" : ""}{marginOfSafety.toFixed(1)}%
               </td>

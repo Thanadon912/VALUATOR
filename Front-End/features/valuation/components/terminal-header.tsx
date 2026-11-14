@@ -22,7 +22,7 @@ function Telemetry({
     <>
       <span className="text-xs text-[#8E8E99]">{label}</span>
       <span className={`mt-0.5 font-mono text-sm font-medium tabular-nums ${emphasized ? "text-[#C6F432]" : "text-[#FFFFFF]"}`}>{value}</span>
-      <span className="mt-0.5 text-[9px] uppercase leading-4 tracking-[0.08em] text-[#8E8E99]">{role}{asOf ? ` · ${asOf}` : ""}</span>
+      <span className="mt-0.5 text-[11px] font-medium uppercase leading-4 tracking-[0.04em] text-[#8E8E99]">{role}{asOf ? ` · ${asOf}` : ""}</span>
     </>
   );
   const baseClass = `flex min-h-[76px] min-w-0 flex-col items-start justify-center px-3 py-2 text-left lg:items-end lg:text-right ${className}`;
@@ -32,6 +32,7 @@ function Telemetry({
 
 export function TerminalHeader({ 
   tickerSymbol, 
+  companyName = null,
   currentPrice, 
   costOfEquity = null,
   riskFreeRate = null,
@@ -45,6 +46,7 @@ export function TerminalHeader({
   fmpLogoUrl,
 }: { 
   tickerSymbol: string, 
+  companyName?: string | null,
   currentPrice: number | null,
   costOfEquity?: number | null,
   riskFreeRate?: number | null,
@@ -99,12 +101,16 @@ export function TerminalHeader({
             )}
           </div>
           <div className="flex flex-col">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <h1 className="font-mono text-lg font-bold tracking-tight text-[#FFFFFF]">
                 {tickerSymbol}
                 <span className="sr-only"> valuation dashboard</span>
               </h1>
-              <span className="text-sm text-[#8E8E99]">| Live Equities</span>
+              {companyName ? (
+                <span className="truncate text-sm font-medium text-[#B8B8C2]">· {companyName}</span>
+              ) : (
+                <span className="text-sm text-[#8E8E99]">· Valuation</span>
+              )}
             </div>
             <div className="mt-1 flex items-center gap-3">
               <span className="font-mono text-xl font-semibold tabular-nums text-[#FFFFFF]">

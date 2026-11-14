@@ -71,7 +71,7 @@ export function ValuationComparison({
         </div>
       </div>
 
-      <div className="hidden grid-cols-[minmax(0,1.5fr)_minmax(7rem,0.7fr)_minmax(7rem,0.7fr)_minmax(8rem,0.8fr)] gap-3 border-b border-[#242429] px-5 py-2 text-[10px] uppercase tracking-[0.12em] text-[#8E8E99] md:grid">
+      <div className="hidden grid-cols-[minmax(0,1.5fr)_minmax(7rem,0.7fr)_minmax(7rem,0.7fr)_minmax(8rem,0.8fr)] gap-3 border-b border-[#242429] px-5 py-2 text-[11px] font-medium uppercase tracking-[0.08em] text-[#8E8E99] md:grid">
         <span>Method</span><span>Status</span><span>Fair value</span><span>Margin vs market</span>
       </div>
       <div className="divide-y divide-[#242429]">
@@ -95,13 +95,13 @@ export function ValuationComparison({
               </div>
               <div className="grid grid-cols-2 gap-3 md:contents">
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.1em] text-[#8E8E99] md:hidden">Fair value</p>
+                  <p className="text-[11px] uppercase tracking-[0.08em] text-[#8E8E99] md:hidden">Fair value</p>
                   <p className="mt-1 font-mono text-sm font-semibold tabular-nums text-[#FFFFFF] md:mt-0">
                     {calculated && finite(item.fairValue) ? `$${fmt.money(item.fairValue)}` : "—"}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.1em] text-[#8E8E99] md:hidden">Margin vs market</p>
+                  <p className="text-[11px] uppercase tracking-[0.08em] text-[#8E8E99] md:hidden">Margin vs market</p>
                   <p className={`mt-1 font-mono text-sm font-semibold tabular-nums md:mt-0 ${finite(item.marginOfSafety) && item.marginOfSafety < 0 ? "text-amber-300" : "text-[#FFFFFF]"}`}>
                     {calculated && finite(item.marginOfSafety) ? `${item.marginOfSafety > 0 ? "+" : ""}${fmt.pct(item.marginOfSafety)}` : "—"}
                   </p>
