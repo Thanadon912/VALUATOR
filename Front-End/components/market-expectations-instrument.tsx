@@ -273,7 +273,7 @@ export function MarketExpectationsInstrument() {
         {stages.map((stage, index) => (
           <article key={stage.id} id={stage.id === "methods" ? "methods-mobile" : undefined} data-instrument-stage={stage.id} className="instrument-stage border-t border-white/12 py-14 first:border-t-0">
             <div className="flex items-center gap-4"><span className="font-mono text-xs text-[#C6F432]">0{index + 1}</span><span className="text-sm font-semibold text-[#B8B8C2]">{stage.label}</span></div>
-            <h2 className="valuator-display mt-6 max-w-[18ch] text-balance text-[clamp(2.5rem,10vw,4rem)] font-semibold leading-[0.98] tracking-[-0.035em] text-[#FFFFFF]">{stage.title}</h2>
+            <h2 className="valuator-display mt-6 max-w-[11ch] text-balance text-[clamp(2.8rem,12vw,4.4rem)] font-semibold leading-[0.94] tracking-[-0.035em] text-[#FFFFFF]">{stage.title}</h2>
             <p className="mt-6 max-w-[35rem] text-pretty text-base leading-7 text-[#B8B8C2]">{stage.copy}</p>
             <div className="mt-9"><InstrumentFace activeIndex={index} data={data} error={error} isLoading={isLoading} reduceMotion /></div>
           </article>
@@ -323,7 +323,7 @@ function NarrativeContent({ stage, index }: { stage: (typeof stages)[number]; in
         <span className="font-mono text-xs text-[#C6F432]">0{index + 1}</span>
         <span className="text-sm font-semibold text-[#B8B8C2]">{stage.label}</span>
       </div>
-      <h2 className="valuator-display mt-7 max-w-[18ch] text-balance text-[clamp(2.35rem,2.6vw,2.85rem)] font-semibold leading-[1.02] tracking-[-0.035em] text-[#FFFFFF]">{stage.title}</h2>
+      <h2 className="valuator-display mt-7 max-w-[10ch] text-balance text-[clamp(3.15rem,4.15vw,4.85rem)] font-semibold leading-[0.94] tracking-[-0.035em] text-[#FFFFFF]">{stage.title}</h2>
       <p className="mt-7 max-w-[32rem] text-pretty text-lg leading-8 text-[#B8B8C2]">{stage.copy}</p>
     </>
   )
@@ -719,7 +719,7 @@ function SourceLedger() {
   return (
     <div id="sources" className="border-y border-white/12 bg-[#0B0B0C]">
       <div className="mx-auto grid max-w-[90rem] gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[1fr_1fr] lg:items-end">
-        <div><p className="text-sm font-semibold text-[#C6F432]">Evidence ledger</p><h2 className="valuator-display mt-6 max-w-[18ch] text-balance text-5xl font-semibold leading-[0.96] tracking-[-0.035em] text-[#FFFFFF] sm:text-7xl">Trust is not a claim. It is a trail.</h2></div>
+        <div><p className="text-sm font-semibold text-[#C6F432]">Evidence ledger</p><h2 className="valuator-display mt-6 max-w-[11ch] text-balance text-5xl font-semibold leading-[0.92] tracking-[-0.035em] text-[#FFFFFF] sm:text-7xl">Trust is not a claim. It is a trail.</h2></div>
         <div>
           <p className="max-w-[38rem] text-lg leading-8 text-[#B8B8C2]">Every completed response retains its methodology, source references, assumptions, projections, and warnings. Missing inputs stop the calculation instead of becoming invented values.</p>
           <div className="mt-8 flex flex-wrap gap-3">
