@@ -37,7 +37,7 @@ const revenueDimensionLabels: Record<RevenueMixDimension, string> = {
   geography: "Geography",
   end_markets: "End markets",
 };
-const revenueCategoryColors = ["#A78BFA", "#EFFAF4", "#90B09E", "#38BDF8", "#B7FF3C", "#22D3EE"] as const;
+const revenueCategoryColors = ["#A78BFA", "#FFFFFF", "#B8B8C2", "#38BDF8", "#C6F432", "#22D3EE"] as const;
 
 function moduleData<T>(module: SummaryModule | undefined | null): T | null {
   if (!module || !module.data) return null;
@@ -148,7 +148,7 @@ function filterPricePoints(points: PriceHistoryData["points"], range: PriceRange
 
 function WorkspaceCard({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <section className={`rounded-lg border border-white/10 bg-[#121824] p-4 sm:p-5 ${className}`}>
+    <section className={`rounded-lg border border-white/10 bg-[#121214] p-4 sm:p-5 ${className}`}>
       {children}
     </section>
   );
@@ -170,8 +170,8 @@ function CardTitle({
   return (
     <div className="mb-5 flex min-w-0 flex-col items-start gap-2 sm:flex-row sm:justify-between sm:gap-4">
       <div className="min-w-0">
-        <h2 className="text-base font-semibold tracking-tight text-[#EFFAF4]">{title}</h2>
-        {subtitle ? <p className="mt-1 text-[13px] leading-5 text-[#90B09E]">{subtitle}</p> : null}
+        <h2 className="text-base font-semibold tracking-tight text-[#FFFFFF]">{title}</h2>
+        {subtitle ? <p className="mt-1 text-[13px] leading-5 text-[#8E8E99]">{subtitle}</p> : null}
       </div>
       {headerAction ? <div className="min-w-0 w-full sm:w-auto sm:max-w-[54%] sm:shrink">{headerAction}</div> : null}
     </div>
@@ -181,16 +181,16 @@ function CardTitle({
 function SourcePill({ source }: { source: SourceAttribution }) {
   return (
     <details className="group relative w-full max-w-full sm:w-auto">
-      <summary className="summary-trust-control inline-flex min-h-11 max-w-full cursor-pointer list-none items-center justify-start gap-1.5 rounded-md px-1 text-left font-mono text-xs leading-5 text-[#90B09E] transition-colors hover:text-[#B7FF3C] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B7FF3C] sm:justify-end sm:text-right [&::-webkit-details-marker]:hidden">
-        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#B7FF3C]" aria-hidden />
+      <summary className="summary-trust-control inline-flex min-h-11 max-w-full cursor-pointer list-none items-center justify-start gap-1.5 rounded-md px-1 text-left font-mono text-xs leading-5 text-[#8E8E99] transition-colors hover:text-[#C6F432] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C6F432] sm:justify-end sm:text-right [&::-webkit-details-marker]:hidden">
+        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#C6F432]" aria-hidden />
         <span className="min-w-0 whitespace-normal">{source.label}</span>
         <span className="sr-only">Open source details</span>
       </summary>
-      <div className="summary-disclosure-panel absolute left-0 z-20 mt-2 w-72 max-w-[80vw] rounded-lg border border-white/10 bg-[#0B0F17] p-3 text-left text-[13px] leading-5 text-slate-200 shadow-md sm:left-auto sm:right-0">
+      <div className="summary-disclosure-panel absolute left-0 z-20 mt-2 w-72 max-w-[80vw] rounded-lg border border-white/10 bg-[#0B0B0C] p-3 text-left text-[13px] leading-5 text-[#B8B8C2] shadow-md sm:left-auto sm:right-0">
         <p className="break-words">{source.label}</p>
         {source.url ? (
           <a
-            className="summary-trust-control mt-2 inline-flex min-h-11 items-center gap-1.5 font-semibold text-[#B7FF3C] hover:text-[#EFFAF4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B7FF3C]"
+            className="summary-trust-control mt-2 inline-flex min-h-11 items-center gap-1.5 font-semibold text-[#C6F432] hover:text-[#FFFFFF] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C6F432]"
             href={source.url}
             rel="noreferrer"
             target="_blank"
@@ -199,7 +199,7 @@ function SourcePill({ source }: { source: SourceAttribution }) {
             <ArrowRight className="h-3.5 w-3.5" aria-hidden />
           </a>
         ) : (
-          <p className="mt-2 text-slate-400">Provider link is unavailable.</p>
+          <p className="mt-2 text-[#8E8E99]">Provider link is unavailable.</p>
         )}
       </div>
     </details>
@@ -210,13 +210,13 @@ function SourceCoverage({ sources }: { sources: SummaryResponse["sources"] }) {
   const providers = [...new Map(sources.map((source) => [source.provider, source])).values()];
 
   const sourceLine = (source: SummaryResponse["sources"][number], key: string) => (
-    <li className="min-w-0 text-[13px] leading-5 text-[#90B09E]" key={key}>
+    <li className="min-w-0 text-[13px] leading-5 text-[#8E8E99]" key={key}>
       {source.source_url ? (
-        <a className="summary-trust-control inline-flex min-h-11 items-center font-semibold text-slate-100 hover:text-[#B7FF3C] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#B7FF3C]" href={source.source_url} target="_blank" rel="noreferrer">
+        <a className="summary-trust-control inline-flex min-h-11 items-center font-semibold text-[#FFFFFF] hover:text-[#C6F432] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#C6F432]" href={source.source_url} target="_blank" rel="noreferrer">
           {source.provider}
         </a>
       ) : (
-        <span className="font-semibold text-slate-100">{source.provider}</span>
+        <span className="font-semibold text-[#FFFFFF]">{source.provider}</span>
       )}
       <span> · {source.source_timestamp || source.fetched_at.slice(0, 10)}</span>
     </li>
@@ -225,25 +225,25 @@ function SourceCoverage({ sources }: { sources: SummaryResponse["sources"] }) {
   return (
     <>
       <details className="mt-4 border-y border-white/10 py-1 md:hidden">
-        <summary className="summary-trust-control flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 text-xs font-semibold text-slate-100 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#B7FF3C] [&::-webkit-details-marker]:hidden">
+        <summary className="summary-trust-control flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 text-xs font-semibold text-[#FFFFFF] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#C6F432] [&::-webkit-details-marker]:hidden">
           <span>Source coverage</span>
-          <span className="font-mono font-normal text-[#90B09E]">{sources.length} source records</span>
+          <span className="font-mono font-normal text-[#8E8E99]">{sources.length} source records</span>
         </summary>
         <ul className="summary-disclosure-panel grid gap-1 border-t border-white/10 py-2">{sources.map((source, index) => sourceLine(source, `${source.provider}-mobile-${index}`))}</ul>
       </details>
 
       <div className="mt-5 hidden items-center gap-3 border-y border-white/10 py-1 md:flex">
-        <span className="font-mono text-xs font-semibold text-slate-200">Source coverage</span>
-        <span className="font-mono text-xs text-[#90B09E]">
+        <span className="font-mono text-xs font-semibold text-[#FFFFFF]">Source coverage</span>
+        <span className="font-mono text-xs text-[#8E8E99]">
           {providers.slice(0, 3).map((source) => source.provider).join(" · ")}
           {providers.length > 3 ? ` · +${providers.length - 3} providers` : ""}
           {` · ${sources.length} timestamped records`}
         </span>
         <details className="relative ml-auto">
-          <summary className="summary-trust-control inline-flex min-h-11 cursor-pointer list-none items-center rounded-md px-2 text-xs font-semibold text-[#B7FF3C] hover:bg-[#B7FF3C]/[0.06] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#B7FF3C] [&::-webkit-details-marker]:hidden">
+          <summary className="summary-trust-control inline-flex min-h-11 cursor-pointer list-none items-center rounded-md px-2 text-xs font-semibold text-[#C6F432] hover:bg-[#C6F432]/[0.06] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#C6F432] [&::-webkit-details-marker]:hidden">
             Review sources
           </summary>
-          <ul className="summary-disclosure-panel absolute right-0 top-full z-20 mt-2 grid w-[min(760px,80vw)] gap-1 rounded-lg border border-white/10 bg-[#0B0F17] p-3 shadow-md sm:grid-cols-2">{sources.map((source, index) => sourceLine(source, `${source.provider}-register-${index}`))}</ul>
+          <ul className="summary-disclosure-panel absolute right-0 top-full z-20 mt-2 grid w-[min(760px,80vw)] gap-1 rounded-lg border border-white/10 bg-[#0B0B0C] p-3 shadow-md sm:grid-cols-2">{sources.map((source, index) => sourceLine(source, `${source.provider}-register-${index}`))}</ul>
         </details>
       </div>
     </>
@@ -255,11 +255,11 @@ function BasisDisclosure({ basis, label }: { basis?: string; label: string }) {
 
   return (
     <details className="mt-1.5 text-left">
-      <summary className="summary-trust-control inline-flex min-h-8 cursor-pointer list-none items-center rounded-md px-2 font-sans text-xs font-semibold text-[#B7FF3C] hover:bg-[#B7FF3C]/[0.06] hover:text-[#EFFAF4] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#B7FF3C] [&::-webkit-details-marker]:hidden">
+      <summary className="summary-trust-control inline-flex min-h-8 cursor-pointer list-none items-center rounded-md px-2 font-sans text-xs font-semibold text-[#C6F432] hover:bg-[#C6F432]/[0.06] hover:text-[#FFFFFF] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#C6F432] [&::-webkit-details-marker]:hidden">
         Calculation basis
         <span className="sr-only">: calculation details for {label}</span>
       </summary>
-      <p className="summary-disclosure-panel mt-1 text-xs font-normal leading-5 text-slate-300">{basis}</p>
+      <p className="summary-disclosure-panel mt-1 text-xs font-normal leading-5 text-[#B8B8C2]">{basis}</p>
     </details>
   );
 }
@@ -270,8 +270,8 @@ function FactGrid({ items, module }: { items: MetricItem[]; module: SummaryModul
       <dl className="grid grid-cols-2 gap-x-5">
         {items.map((item) => (
           <div key={item.label} className="min-w-0 border-b border-white/10 py-3">
-            <dt className="text-[13px] leading-tight text-[#90B09E]">{item.label}</dt>
-            <dd className="mt-1 break-words font-mono text-sm tabular-nums text-slate-100">
+            <dt className="text-[13px] leading-tight text-[#8E8E99]">{item.label}</dt>
+            <dd className="mt-1 break-words font-mono text-sm tabular-nums text-[#FFFFFF]">
               {item.value}
               <BasisDisclosure basis={item.basis} label={item.label} />
             </dd>
@@ -284,21 +284,31 @@ function FactGrid({ items, module }: { items: MetricItem[]; module: SummaryModul
   );
 }
 
-function StatList({ label, rows }: { label: string; rows: MetricItem[] }) {
+function StatList({
+  label,
+  rows,
+  defaultOpen = false,
+  id,
+}: {
+  label: string;
+  rows: MetricItem[];
+  defaultOpen?: boolean;
+  id?: string;
+}) {
   return (
-    <details className="border-t border-white/10 pt-2">
-      <summary className="summary-trust-control flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 rounded-lg px-2 text-sm font-semibold text-slate-200 hover:bg-white/[0.03] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#B7FF3C] [&::-webkit-details-marker]:hidden">
+    <details id={id} open={defaultOpen ? true : undefined} className="scroll-mt-28 border-t border-white/10 pt-2">
+      <summary className="summary-trust-control flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 rounded-lg px-2 text-sm font-semibold text-[#FFFFFF] hover:bg-white/[0.03] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#C6F432] [&::-webkit-details-marker]:hidden">
         <span>{label}</span>
-        <span className="font-mono text-xs font-normal text-[#90B09E]">{rows.length} metrics</span>
+        <span className="font-mono text-xs font-normal text-[#8E8E99]">{rows.length} metrics</span>
       </summary>
       <dl className="summary-disclosure-panel mt-2 flex flex-col px-2 pb-2">
         {rows.map((row) => (
-          <div key={row.label} className="flex items-start justify-between gap-4 border-b border-[#1E293B]/50 py-2 last:border-b-0">
-            <dt className="min-w-0 text-sm text-slate-400">
+          <div key={row.label} className="flex items-start justify-between gap-4 border-b border-[#242429]/60 py-2 last:border-b-0">
+            <dt className="min-w-0 text-sm text-[#8E8E99]">
               {row.label}
               <BasisDisclosure basis={row.basis} label={row.label} />
             </dt>
-            <dd className="text-right font-mono text-sm tabular-nums text-slate-100">{row.value}</dd>
+            <dd className="text-right font-mono text-sm tabular-nums text-[#FFFFFF]">{row.value}</dd>
           </div>
         ))}
       </dl>
@@ -309,9 +319,9 @@ function StatList({ label, rows }: { label: string; rows: MetricItem[] }) {
 function BusinessHeading() {
   return (
     <div id="business-economics" className="mb-1 flex items-center gap-4 scroll-mt-24 py-1">
-      <h2 className="text-lg font-semibold tracking-tight text-[#EFFAF4]">Business economics</h2>
+      <h2 className="text-lg font-semibold tracking-tight text-[#FFFFFF]">Business economics</h2>
       <span className="h-px flex-1 bg-white/10" aria-hidden />
-      <span className="font-mono text-xs text-[#90B09E]">
+      <span className="font-mono text-xs text-[#8E8E99]">
         Filing evidence
       </span>
     </div>
@@ -358,14 +368,14 @@ function InvestmentSnapshot({
     <section id="investment-snapshot" aria-labelledby="investment-snapshot-title" className="scroll-mt-28 border-b border-white/10 px-4 py-7 md:px-6 md:py-8">
       <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
         <div>
-          <h2 id="investment-snapshot-title" className="text-xl font-bold tracking-tight text-[#EFFAF4]">
+          <h2 id="investment-snapshot-title" className="text-xl font-bold tracking-tight text-[#FFFFFF]">
             {ticker} investment snapshot
           </h2>
-          <p className="mt-1 max-w-2xl text-sm leading-6 text-[#90B09E]">
+          <p className="mt-1 max-w-2xl text-sm leading-6 text-[#8E8E99]">
             {signals.length} sourced signals for a fast first read. Open any signal to inspect its evidence.
           </p>
         </div>
-        <span className="font-mono text-xs text-[#90B09E]">No investment rating applied</span>
+        <span className="font-mono text-xs text-[#8E8E99]">No investment rating applied</span>
       </div>
 
       <div className={`mt-5 grid border-y border-white/10 ${gridColumns}`}>
@@ -373,20 +383,20 @@ function InvestmentSnapshot({
           <a
             key={signal.label}
             href={signal.href}
-            className={`group min-w-0 py-5 transition-colors hover:bg-white/[0.025] focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#B7FF3C] ${index > 0 ? "border-t border-white/10 xl:border-l xl:border-t-0 xl:pl-5" : ""} ${index < signals.length - 1 ? "xl:pr-5" : ""}`}
+            className={`group min-w-0 py-5 transition-colors hover:bg-white/[0.025] focus-visible:relative focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[#C6F432] ${index > 0 ? "border-t border-white/10 xl:border-l xl:border-t-0 xl:pl-5" : ""} ${index < signals.length - 1 ? "xl:pr-5" : ""}`}
           >
             <span className="flex items-center justify-between gap-3">
-              <span className="flex items-center gap-2 text-sm font-semibold text-slate-200">
-                <span className="text-[#B7FF3C]">{signal.icon}</span>
+              <span className="flex items-center gap-2 text-sm font-semibold text-[#B8B8C2]">
+                <span className="text-[#C6F432]">{signal.icon}</span>
                 {signal.label}
               </span>
-              <span className="font-mono text-xs text-[#90B09E]">{signal.provenance}</span>
+              <span className="font-mono text-xs text-[#8E8E99]">{signal.provenance}</span>
             </span>
-            <strong className={`mt-4 block break-words font-mono font-semibold tabular-nums text-[#EFFAF4] ${index === 0 ? "text-2xl" : "text-xl"}`}>
+            <strong className={`mt-4 block break-words font-mono font-semibold tabular-nums text-[#FFFFFF] ${index === 0 ? "text-2xl" : "text-xl"}`}>
               {signal.value}
             </strong>
-            <span className="mt-1.5 block text-[13px] leading-5 text-[#90B09E]">{signal.detail}</span>
-            <span className="summary-trust-control mt-3 inline-flex min-h-11 items-center gap-1 text-xs font-semibold text-[#B7FF3C] group-hover:text-[#EFFAF4]">
+            <span className="mt-1.5 block text-[13px] leading-5 text-[#8E8E99]">{signal.detail}</span>
+            <span className="summary-trust-control mt-3 inline-flex min-h-11 items-center gap-1 text-xs font-semibold text-[#C6F432] group-hover:text-[#FFFFFF]">
               View evidence
               <ArrowRight className="h-3.5 w-3.5" aria-hidden />
             </span>
@@ -395,7 +405,7 @@ function InvestmentSnapshot({
       </div>
       {evidenceNotice ? (
         <a
-          className="mt-3 flex min-h-11 flex-col justify-center border-b border-amber-400/20 px-1 py-2 text-amber-100 transition-colors hover:border-amber-300/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B7FF3C] sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+          className="mt-3 flex min-h-11 flex-col justify-center border-b border-amber-400/20 px-1 py-2 text-amber-100 transition-colors hover:border-amber-300/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C6F432] sm:flex-row sm:items-center sm:justify-between sm:gap-4"
           href={evidenceNotice.href}
         >
           <span>
@@ -458,23 +468,23 @@ function SummaryHeader({
         : "Extended session";
 
   return (
-    <header className="border-b border-white/10 bg-[#010302]">
+    <header className="border-b border-white/10 bg-[#0B0B0C]">
       <div className="mx-auto max-w-[1400px] px-4 py-5 md:px-6">
-        <p className="text-[13px] text-[#90B09E]">
+        <p className="text-[13px] text-[#8E8E99]">
           {quote?.exchange || company?.exchange || "Exchange unavailable"} · Market price snapshot
-          <span className="mx-1.5 text-slate-600">•</span>
+          <span className="mx-1.5 text-[#323238]">•</span>
           {currency}
         </p>
 
         <div className="mt-1.5 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl font-bold tracking-tight text-[#EFFAF4] md:text-[28px]">
+            <h1 className="text-2xl font-bold tracking-tight text-[#FFFFFF] md:text-[28px]">
               {companyName} ({summary.ticker})
             </h1>
           </div>
           <a
             href={`/stocks/${summary.ticker}/valuation`}
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-md bg-[#B7FF3C] px-4 text-sm font-bold text-[#010302] transition-colors hover:bg-[#C7FF69] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B7FF3C]"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-md bg-[#C6F432] px-4 text-sm font-bold text-[#0B0B0C] transition-colors hover:bg-[#D4F759] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C6F432]"
           >
             Open {summary.ticker} fair value
             <ArrowRight className="h-4 w-4" aria-hidden />
@@ -486,26 +496,26 @@ function SummaryHeader({
         <div className="mt-4 flex flex-wrap items-start gap-x-10 gap-y-4">
           <div>
             <div className={`flex items-baseline gap-3 ${liveQuoteActive ? "summary-live-quote-update" : ""}`} key={liveQuoteActive ? regularPrice : "server-quote"}>
-              <span className="text-4xl font-bold tabular-nums text-slate-50">
+              <span className="text-4xl font-bold tabular-nums text-[#FFFFFF]">
                 {formatCurrency(regularPrice, currency).replace(/^[A-Z]{3} /, "")}
               </span>
               <span className={`text-lg font-semibold tabular-nums ${regularUp ? "text-[#34D399]" : "text-[#FB7185]"}`}>
                 {formatChange(regularChange)} ({formatPercent(regularChangePct, true)})
               </span>
             </div>
-            <p className="mt-1.5 text-[13px] text-[#90B09E]">
+            <p className="mt-1.5 text-[13px] text-[#8E8E99]">
               Regular session date: {formatProviderDate(quote?.latest_trading_day)} · provider date
             </p>
           </div>
 
           <div className={hasExtendedQuote ? "" : "hidden sm:block"}>
             <div className="flex items-baseline gap-3">
-              <span className={`text-4xl font-bold tabular-nums ${hasExtendedQuote ? "text-slate-50" : "text-slate-600"}`}>
+              <span className={`text-4xl font-bold tabular-nums ${hasExtendedQuote ? "text-[#FFFFFF]" : "text-[#8E8E99]"}`}>
                 {hasExtendedQuote ? formatCurrency(quote.extendedPrice, currency).replace(/^[A-Z]{3} /, "") : "—"}
               </span>
               <span
                 className={`text-lg font-semibold tabular-nums ${
-                  !hasExtendedQuote ? "text-slate-500" : extendedUp ? "text-[#34D399]" : "text-[#FB7185]"
+                  !hasExtendedQuote ? "text-[#8E8E99]" : extendedUp ? "text-[#34D399]" : "text-[#FB7185]"
                 }`}
               >
                 {hasExtendedQuote
@@ -513,7 +523,7 @@ function SummaryHeader({
                   : "not reported"}
               </span>
             </div>
-            <p className="mt-1.5 text-[13px] text-[#90B09E]">
+            <p className="mt-1.5 text-[13px] text-[#8E8E99]">
               {extendedLabel}:{" "}
               {hasExtendedQuote && quote?.extendedHoursTimestamp
                 ? formatTimestamp(quote.extendedHoursTimestamp)
@@ -572,17 +582,17 @@ function RevenueMixCard({
       />
 
       {dimensions.length > 1 ? (
-        <div className="mb-5 inline-flex flex-wrap gap-1 rounded-lg border border-[#1E293B] bg-[#0B0F17]/60 p-1">
+        <div className="mb-5 inline-flex flex-wrap gap-1 rounded-lg border border-[#242429] bg-[#0B0B0C]/60 p-1">
           {dimensions.map((item) => (
             <button
               key={item}
               type="button"
               onClick={() => setDimension(item)}
               aria-pressed={dimension === item}
-              className={`summary-segment-button rounded-md px-3 text-xs transition-colors ${
+              className={`summary-segment-button flex min-h-9 sm:min-h-8 sm:h-8 items-center justify-center rounded-md px-3 text-xs transition-colors max-sm:min-h-[44px] ${
                 dimension === item
-                  ? "bg-[#B7FF3C]/10 text-[#B7FF3C] ring-1 ring-inset ring-[#B7FF3C]/25"
-                  : "text-slate-300 hover:bg-white/[0.04] hover:text-slate-100"
+                  ? "bg-[#C6F432]/10 text-[#C6F432] ring-1 ring-inset ring-[#C6F432]/25"
+                  : "text-[#B8B8C2] hover:bg-white/[0.04] hover:text-[#FFFFFF]"
               }`}
             >
               {revenueDimensionLabels[item]}
@@ -611,9 +621,9 @@ function RevenueMixCard({
             const categoryIndex = categoryIndexByMember.get(item.member) ?? 0;
             return (
             <li key={item.member} className="flex items-center justify-between gap-3 text-sm">
-              <span className="flex items-center gap-2 text-slate-300">
+              <span className="flex items-center gap-2 text-[#B8B8C2]">
                 <span
-                  className="summary-revenue-swatch inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-sm font-mono text-[10px] font-bold text-[#07110B]"
+                  className="summary-revenue-swatch inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-sm font-mono text-[10px] font-bold text-[#0B0B0C]"
                   style={{ backgroundColor: revenueSwatch(categoryIndex) }}
                   aria-hidden="true"
                 >
@@ -622,11 +632,11 @@ function RevenueMixCard({
                 {item.name}
               </span>
               <span className="flex items-center gap-3 font-mono text-xs tabular-nums">
-                <span className="text-slate-500">
+                <span className="text-[#8E8E99]">
                   {latestYear ? `FY ${latestYear}` : "Latest"}
                 </span>
-                <span className="text-slate-600">→</span>
-                <span className="text-slate-100">{formatNumber(item.percentage, 1)}%</span>
+                <span className="text-[#8E8E99]">→</span>
+                <span className="text-[#FFFFFF]">{formatNumber(item.percentage, 1)}%</span>
               </span>
             </li>
             );
@@ -652,13 +662,13 @@ function StackedRevenueBar({
   return (
     <div>
       <div className="mb-2 flex items-center justify-between">
-        <span className="font-mono text-xs text-slate-500">FY {period.fiscal_year}</span>
-        <span className="font-mono text-xs tabular-nums text-slate-500">
+        <span className="font-mono text-xs text-[#8E8E99]">FY {period.fiscal_year}</span>
+        <span className="font-mono text-xs tabular-nums text-[#8E8E99]">
           {formatNumber(Math.min(100, reportedTotal), 1)}%
         </span>
       </div>
       <div
-        className="summary-revenue-mix-bar flex h-4 w-full overflow-hidden rounded-full bg-[#0B0F17] sm:h-3"
+        className="summary-revenue-mix-bar flex h-4 w-full overflow-hidden rounded-full bg-[#0B0B0C] sm:h-3"
         role="img"
         aria-label={`Fiscal year ${period.fiscal_year} revenue mix: ${reported.map((item) => `${item.name} ${formatNumber(item.percentage, 1)} percent`).join(", ")}${residual > 0 ? `, unallocated or unreported ${formatNumber(residual, 1)} percent` : ""}`}
       >
@@ -667,7 +677,7 @@ function StackedRevenueBar({
           return (
             <div
               key={`${period.fiscal_year}-${item.member}`}
-              className="flex h-full items-center justify-center overflow-hidden border-r border-[#0B0F17] font-mono text-[10px] font-bold leading-none text-[#07110B] first:rounded-l-full last:border-r-0"
+              className="flex h-full items-center justify-center overflow-hidden border-r border-[#0B0B0C] font-mono text-[10px] font-bold leading-none text-[#0B0B0C] first:rounded-l-full last:border-r-0"
               style={{
                 width: `${Math.max(0, item.percentage)}%`,
                 backgroundColor: revenueSwatch(categoryIndex),
@@ -680,7 +690,7 @@ function StackedRevenueBar({
         })}
         {residual > 0 ? (
           <div
-            className="h-full last:rounded-r-full bg-slate-700/40"
+            className="h-full last:rounded-r-full bg-[#323238]/60"
             style={{ width: `${residual}%` }}
             title={`Unallocated or unreported: ${formatNumber(residual, 1)}%`}
           />
@@ -726,14 +736,14 @@ function reportedPerformanceMovement(data: RevenueEarningsData | null): string |
 function EmptyPanel({ text, retry = true }: { text: string; retry?: boolean }) {
   return (
     <div
-      className="flex h-full min-h-[160px] flex-col items-start justify-center rounded-lg border border-[#1E293B] bg-[#0B0F17]/40 px-4 py-5 text-sm text-slate-300"
+      className="flex h-full min-h-[160px] flex-col items-start justify-center rounded-lg border border-[#242429] bg-[#0B0B0C]/40 px-4 py-5 text-sm text-[#B8B8C2]"
       data-chart-state="empty"
     >
       <p>{text}</p>
       {retry ? (
         <button
           type="button"
-          className="mt-3 inline-flex min-h-11 items-center rounded-lg border border-slate-600 px-3 text-xs font-semibold text-slate-100 transition-colors hover:border-slate-400 hover:bg-slate-800/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B7FF3C]"
+          className="mt-3 inline-flex min-h-11 items-center rounded-lg border border-[#323238] px-3 text-xs font-semibold text-[#FFFFFF] transition-colors hover:border-[#FFFFFF]/40 hover:bg-[#18181B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C6F432]"
           onClick={() => window.location.reload()}
         >
           Reload data
@@ -769,24 +779,24 @@ function SupplyChainCard({ summary, module, data }: { summary: SummaryResponse; 
         <DisclosureQuadrant label="Footprint" items={footprint} empty="No location disclosed" />
       </div>
 
-      <div className={riskIsComplete ? "mt-4 rounded-lg border border-amber-500/25 bg-amber-500/5 p-4" : "mt-4 rounded-lg border border-[#2A3B31] bg-[#0B0F17]/45 p-4"}>
+      <div className={riskIsComplete ? "mt-4 rounded-lg border border-amber-500/25 bg-amber-500/5 p-4" : "mt-4 rounded-lg border border-[#242429] bg-[#0B0B0C]/45 p-4"}>
         <div className="flex items-center gap-2">
-          <span className={riskIsComplete ? "flex h-6 w-6 items-center justify-center rounded-md bg-amber-500/15 text-amber-300" : "flex h-6 w-6 items-center justify-center rounded-md bg-[#90B09E]/10 text-[#A9C6B3]"}>
+          <span className={riskIsComplete ? "flex h-6 w-6 items-center justify-center rounded-md bg-amber-500/15 text-amber-300" : "flex h-6 w-6 items-center justify-center rounded-md bg-white/10 text-[#B8B8C2]"}>
             {riskIsComplete ? <ShieldAlert className="h-3.5 w-3.5" aria-hidden /> : <FileQuestion className="h-3.5 w-3.5" aria-hidden />}
           </span>
-          <span className={riskIsComplete ? "font-mono text-xs font-semibold text-amber-300" : "font-mono text-xs font-semibold text-[#A9C6B3]"}>
+          <span className={riskIsComplete ? "font-mono text-xs font-semibold text-amber-300" : "font-mono text-xs font-semibold text-[#B8B8C2]"}>
             {riskIsComplete ? "Material risk evidence" : "Evidence incomplete"}
           </span>
         </div>
-        <h3 id="risk-evidence" className={riskIsComplete ? "mt-3 scroll-mt-24 text-sm font-semibold text-amber-200" : "mt-3 scroll-mt-24 text-sm font-semibold text-[#DCEBE2]"}>
+        <h3 id="risk-evidence" className={riskIsComplete ? "mt-3 scroll-mt-24 text-sm font-semibold text-amber-200" : "mt-3 scroll-mt-24 text-sm font-semibold text-[#FFFFFF]"}>
           {riskIsComplete && risk ? sentenceCase(risk.type) : "The filing evidence is not complete enough for the primary snapshot"}
         </h3>
         {risk ? (
           <>
-            <p className={riskIsComplete ? "mt-1 text-sm leading-6 text-amber-100/85" : "mt-1 text-sm leading-6 text-[#A9BAAF]"}>
+            <p className={riskIsComplete ? "mt-1 text-sm leading-6 text-amber-100/85" : "mt-1 text-sm leading-6 text-[#B8B8C2]"}>
               {sentenceCase(risk.type)} · {risk.severity === "unknown" ? "Severity unavailable" : `${sentenceCase(risk.severity)} severity`} · {formatConfidence(risk.confidence)}
             </p>
-            <dl className="mt-3 grid gap-2 text-[13px] text-[#90B09E] sm:grid-cols-2">
+            <dl className="mt-3 grid gap-2 text-[13px] text-[#8E8E99] sm:grid-cols-2">
               <div>
                 <dt className="font-semibold text-amber-200/90">Filing</dt>
                 <dd className="mt-0.5">{risk.source_form || "Form unavailable"} · {risk.filing_date || "date unavailable"}</dd>
@@ -800,7 +810,7 @@ function SupplyChainCard({ summary, module, data }: { summary: SummaryResponse; 
               <p className="text-xs font-semibold text-amber-200/90">Extracted filing passage</p>
               <blockquote className="mt-1 text-sm leading-relaxed text-amber-100/90">{risk.evidence}</blockquote>
               {risk.source_url ? (
-                <a className="summary-trust-control mt-2 inline-flex min-h-11 items-center gap-1 text-xs font-semibold text-amber-200 hover:text-amber-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B7FF3C]" href={risk.source_url} target="_blank" rel="noreferrer">
+                <a className="summary-trust-control mt-2 inline-flex min-h-11 items-center gap-1 text-xs font-semibold text-amber-200 hover:text-amber-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C6F432]" href={risk.source_url} target="_blank" rel="noreferrer">
                   Open filing source <ArrowRight className="h-3.5 w-3.5" aria-hidden />
                 </a>
               ) : null}
@@ -817,11 +827,11 @@ function SupplyChainCard({ summary, module, data }: { summary: SummaryResponse; 
 function DisclosureQuadrant({ label, items, empty }: { label: string; items: string[]; empty: string }) {
   const visible = items.filter(Boolean).slice(0, 5);
   return (
-    <div className="border-t border-[#1E293B] pt-3">
-      <span className="text-xs font-semibold text-slate-400">{label}</span>
+    <div className="border-t border-[#242429] pt-3">
+      <span className="text-xs font-semibold text-[#8E8E99]">{label}</span>
       <div className="mt-3 flex flex-wrap gap-2">
         {(visible.length ? visible : [empty]).map((item) => (
-          <span key={`${label}-${item}`} className="rounded-md border border-[#1E293B] bg-[#121824] px-2.5 py-1 font-mono text-xs text-slate-300">
+          <span key={`${label}-${item}`} className="rounded-md border border-[#242429] bg-[#121214] px-2.5 py-1 font-mono text-xs text-[#B8B8C2]">
             {item}
           </span>
         ))}
@@ -851,15 +861,15 @@ function CustomerMixCard({ summary, module, data }: { summary: SummaryResponse; 
       <CardTitle title="Customer Mix & End Markets" source={sourceCaption(summary, module)} />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="border-t border-[#1E293B] pt-3">
-          <span className="text-xs font-semibold text-slate-400">Major customer revenue</span>
-          <p className="mt-3 text-sm leading-6 text-slate-300">{majorCustomerText}</p>
+        <div className="border-t border-[#242429] pt-3">
+          <span className="text-xs font-semibold text-[#8E8E99]">Major customer revenue</span>
+          <p className="mt-3 text-sm leading-6 text-[#B8B8C2]">{majorCustomerText}</p>
         </div>
-        <div className="border-t border-[#1E293B] pt-3">
-          <span className="text-xs font-semibold text-slate-400">Customer types</span>
+        <div className="border-t border-[#242429] pt-3">
+          <span className="text-xs font-semibold text-[#8E8E99]">Customer types</span>
           <div className="mt-3 flex flex-wrap gap-2">
             {(customerTypes.length ? customerTypes : ["Not explicitly disclosed"]).slice(0, 6).map((item) => (
-              <span key={item} className="rounded-md border border-[#1E293B] bg-[#121824] px-2.5 py-1 font-mono text-xs text-slate-300">
+              <span key={item} className="rounded-md border border-[#242429] bg-[#121214] px-2.5 py-1 font-mono text-xs text-[#B8B8C2]">
                 {item}
               </span>
             ))}
@@ -867,12 +877,12 @@ function CustomerMixCard({ summary, module, data }: { summary: SummaryResponse; 
         </div>
       </div>
 
-      <div className="mt-4 border-t border-[#1E293B] pt-3">
-        <span className="text-xs font-semibold text-slate-400">End markets</span>
-        <ul className="mt-3 divide-y divide-[#1E293B]/60">
+      <div className="mt-4 border-t border-[#242429] pt-3">
+        <span className="text-xs font-semibold text-[#8E8E99]">End markets</span>
+        <ul className="mt-3 divide-y divide-[#242429]/60">
           {(endMarkets.length ? endMarkets : ["Not explicitly disclosed"]).slice(0, 6).map((item) => (
-            <li key={item} className="flex items-center gap-2 py-2 text-sm text-slate-300 first:pt-0 last:pb-0">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#B7FF3C]/80" aria-hidden />
+            <li key={item} className="flex items-center gap-2 py-2 text-sm text-[#B8B8C2] first:pt-0 last:pb-0">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#C6F432]/80" aria-hidden />
               {item}
             </li>
           ))}
@@ -986,7 +996,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
       detail: valuation?.metrics?.ev_to_ebitda?.value == null
         ? "EV / EBITDA is unavailable."
         : `${formatNumber(valuation.metrics.ev_to_ebitda.value)}× EV / EBITDA`,
-      href: "#deep-statistics",
+      href: "#valuation-measures",
       provenance: "App-derived",
       icon: <CircleDollarSign className="h-4 w-4" aria-hidden />,
     },
@@ -998,7 +1008,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
       detail: highlights?.metrics?.return_on_equity?.value == null
         ? "Return on equity is unavailable."
         : `${formatNumber(highlights.metrics.return_on_equity.value * 100)}% return on equity`,
-      href: "#deep-statistics",
+      href: "#financial-highlights",
       provenance: "App-derived",
       icon: <Landmark className="h-4 w-4" aria-hidden />,
     },
@@ -1010,7 +1020,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
       detail: highlights?.metrics?.total_cash?.value == null
         ? "Total cash is unavailable."
         : `${formatCurrency(highlights.metrics.total_cash.value, currency)} total cash`,
-      href: "#deep-statistics",
+      href: "#financial-highlights",
       provenance: "App-derived",
       icon: <WalletCards className="h-4 w-4" aria-hidden />,
     },
@@ -1044,17 +1054,17 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
   });
 
   return (
-    <main className="min-h-screen bg-[#0B0F17] text-slate-100">
+    <main className="min-h-screen bg-[#0B0B0C] text-[#FFFFFF]">
       <SummaryHeader summary={summary} companyName={companyName} company={company} quote={quote} currency={currency} liveQuoteActive={liveQuoteActive} />
 
       <div className="mx-auto max-w-[1400px]">
         {displayWarnings.length ? (
-          <details className="mx-4 mt-5 rounded-lg border border-[#2A3B31] bg-[#0B0F17]/55 px-3 py-2 text-sm text-[#A9BAAF] md:mx-6">
-            <summary className="summary-trust-control flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 font-semibold text-[#DCEBE2] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#B7FF3C] [&::-webkit-details-marker]:hidden">
+          <details className="mx-4 mt-5 rounded-lg border border-[#242429] bg-[#0B0B0C]/55 px-3 py-2 text-sm text-[#B8B8C2] md:mx-6">
+            <summary className="summary-trust-control flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 font-semibold text-[#FFFFFF] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#C6F432] [&::-webkit-details-marker]:hidden">
               <span>Coverage notes</span>
-              <span className="font-mono text-xs font-normal text-[#90B09E]">{displayWarnings.length} {displayWarnings.length === 1 ? "note" : "notes"}</span>
+              <span className="font-mono text-xs font-normal text-[#8E8E99]">{displayWarnings.length} {displayWarnings.length === 1 ? "note" : "notes"}</span>
             </summary>
-            <ul className="space-y-2 border-t border-[#2A3B31] py-3 text-sm leading-6 text-[#A9BAAF]">
+            <ul className="space-y-2 border-t border-[#242429] py-3 text-sm leading-6 text-[#B8B8C2]">
               {displayWarnings.map((warning, index) => <li key={`${warning}-${index}`}>{warning}</li>)}
             </ul>
           </details>
@@ -1072,7 +1082,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
                 source={sourceCaption(summary, data.price_history)}
               />
               <div id="price-history" className="mb-5 scroll-mt-28">
-                <div className="inline-flex flex-wrap gap-1 rounded-lg border border-[#1E293B] bg-[#0B0F17]/60 p-1">
+                <div className="inline-flex flex-wrap gap-1 rounded-lg border border-[#242429] bg-[#0B0B0C]/60 p-1">
                   {primaryPriceRanges.map((range) => (
                       <button
                         key={range}
@@ -1082,10 +1092,10 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
                           setPriceRange(range);
                         }}
                         aria-pressed={priceRange === range}
-                        className={`summary-segment-button rounded-md px-3 font-mono text-xs tabular-nums transition-colors ${
+                        className={`summary-segment-button flex min-h-9 sm:min-h-8 sm:h-8 items-center justify-center rounded-md px-3 font-mono text-xs tabular-nums transition-colors max-sm:min-h-[44px] ${
                           priceRange === range
-                            ? "bg-[#B7FF3C]/10 text-[#B7FF3C] ring-1 ring-inset ring-[#B7FF3C]/25"
-                            : "text-slate-300 hover:bg-white/[0.04] hover:text-slate-100"
+                            ? "bg-[#C6F432]/10 text-[#C6F432] ring-1 ring-inset ring-[#C6F432]/25"
+                            : "text-[#B8B8C2] hover:bg-white/[0.04] hover:text-[#FFFFFF]"
                         }`}
                       >
                         {range}
@@ -1095,7 +1105,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
                   <select
                     id="additional-price-range"
                     aria-label="Additional price ranges"
-                    className="summary-segment-button min-w-24 rounded-md border-0 bg-[#121824] px-2 font-mono text-xs text-slate-200 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#B7FF3C]"
+                    className="summary-segment-button min-w-24 min-h-9 sm:min-h-8 sm:h-8 rounded-md border-0 bg-[#121214] px-2 font-mono text-xs text-[#FFFFFF] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#C6F432] max-sm:min-h-[44px]"
                     value={secondaryPriceRanges.includes(priceRange) ? priceRange : ""}
                     onChange={(event) => {
                       if (event.target.value) {
@@ -1112,7 +1122,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
                   </select>
                 </div>
                 {priceHistory?.interval !== "daily" ? (
-                  <p className="mt-2 text-[13px] leading-5 text-[#90B09E]">1D and 5D ranges require daily price history from the provider.</p>
+                  <p className="mt-2 text-[13px] leading-5 text-[#8E8E99]">1D and 5D ranges require daily price history from the provider.</p>
                 ) : null}
               </div>
               <div className={priceRangeInteracted ? "summary-chart-range-transition" : ""} data-testid="price-history-chart" key={priceRange}>
@@ -1142,14 +1152,14 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
               <CardTitle title="Market & Fundamentals Performance" source={sourceCaption(summary, data.revenue_earnings)} />
               <div id="market-performance" className="grid scroll-mt-24 grid-cols-1 gap-8 xl:grid-cols-2">
                 <div>
-                  <h3 className="mb-4 text-sm font-semibold text-slate-200">Reported quarterly EPS</h3>
+                  <h3 className="mb-4 text-sm font-semibold text-[#FFFFFF]">Reported quarterly EPS</h3>
                   <div data-testid="eps-trend-chart">
                     {epsTrend?.points.length ? <EpsTrendChart points={epsTrend.points} /> : <EmptyPanel text="Reported quarterly EPS is unavailable." />}
                   </div>
                   <ModuleState module={data.eps_trend} compact />
                 </div>
                 <div>
-                  <h3 className="mb-4 text-sm font-semibold text-slate-200">Annual revenue vs. earnings</h3>
+                  <h3 className="mb-4 text-sm font-semibold text-[#FFFFFF]">Annual revenue vs. earnings</h3>
                   <div data-testid="revenue-earnings-chart">
                     {revenueEarnings?.points.length ? (
                       <RevenueEarningsChart points={revenueEarnings.points} />
@@ -1161,7 +1171,7 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
                 </div>
               </div>
               {latestPerformanceMovement ? (
-                <p className="mt-5 border-t border-[#1E293B] pt-4 text-[13px] leading-5 text-slate-300">
+                <p className="mt-5 border-t border-[#242429] pt-4 text-[13px] leading-5 text-[#B8B8C2]">
                   <span className="mr-2 font-semibold text-[#A78BFA]">Latest reported movement</span>
                   <span>{latestPerformanceMovement}</span>
                 </p>
@@ -1180,8 +1190,8 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
               <div id="deep-statistics" className="scroll-mt-24" />
               <CardTitle title="Valuation & quality metrics" subtitle="Expand a group to inspect calculation basis" source={sourceCaption(summary, data.valuation_measures)} />
               <div className="flex flex-col gap-3">
-                <StatList label="Valuation measures" rows={valuationItems} />
-                <StatList label="Financial highlights" rows={financialHighlightItems} />
+                <StatList id="valuation-measures" defaultOpen label="Valuation measures" rows={valuationItems} />
+                <StatList id="financial-highlights" defaultOpen label="Financial highlights" rows={financialHighlightItems} />
               </div>
               <ModuleState module={data.valuation_measures} compact />
               <ModuleState module={data.financial_highlights} compact />
@@ -1189,8 +1199,8 @@ export function SummaryDashboard({ summary }: { summary: SummaryResponse }) {
           </aside>
         </div>
 
-        <footer className="border-t border-[#1E293B] px-4 py-5 md:px-6">
-          <p className="font-mono text-xs leading-relaxed text-[#90B09E]">
+        <footer className="border-t border-[#242429] px-4 py-5 md:px-6">
+          <p className="font-mono text-xs leading-relaxed text-[#8E8E99]">
             Source-aware workspace. Figures retain provider source references and are not investment advice. Financial metrics and model outputs are quantitative estimates for research purposes and do not guarantee future performance.
           </p>
         </footer>

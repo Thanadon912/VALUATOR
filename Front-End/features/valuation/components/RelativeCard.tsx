@@ -79,7 +79,7 @@ export function RelativeCard({
   const fairValue = data.computed_fair_value;
   const marginOfSafety = data.margin_of_safety_percentage;
   const isOvervalued = marginOfSafety < 0;
-  const fairValueColor = isOvervalued ? "text-amber-400" : "text-[#00FF66]";
+  const fairValueColor = isOvervalued ? "text-amber-400" : "text-[#C6F432]";
 
   const togglePeer = (symbol: string) => {
     if (!onPeerSelectionChange || isUpdating) return
@@ -101,7 +101,7 @@ export function RelativeCard({
         icon={<Table2 className="h-4 w-4" />}
         tooltipText="Estimates fair value by comparing the company's financial multiples (e.g., P/E, P/B) against its industry peers."
         badge={
-          <span role="status" className="rounded-md border border-[#1A2E20] bg-[#111613] px-2 py-1 font-mono text-xs tabular-nums text-white">
+          <span role="status" className="rounded-md border border-[#242429] bg-[#121214] px-2 py-1 font-mono text-xs tabular-nums text-[#FFFFFF]">
             {isUpdating
               ? "Recalculating…"
               : underlying_assumptions.avg_pe !== null && underlying_assumptions.avg_pe !== undefined
@@ -111,7 +111,7 @@ export function RelativeCard({
         }
       />
       <div className="p-2 sm:p-4">
-        <div className="flex flex-wrap items-center justify-between gap-2 px-2 pb-3 text-xs text-[#88998C]">
+        <div className="flex flex-wrap items-center justify-between gap-2 px-2 pb-3 text-xs text-[#8E8E99]">
           <p>Select sourced peers to request a new backend valuation.</p>
           <p className="font-mono tabular-nums">
             {activeSymbols.size} of {dynamicPeers.length} peers included
@@ -119,7 +119,7 @@ export function RelativeCard({
         </div>
         <table className="w-full text-sm">
           <thead>
-            <tr className="text-xs text-[#88998C]">
+            <tr className="text-xs text-[#8E8E99]">
               <th className="w-8 px-2 py-2"></th>
               <th className="px-3 py-2 text-left font-medium">Peer Ticker</th>
               <th className="px-2 py-2 text-right font-medium">P/E</th>
@@ -132,7 +132,7 @@ export function RelativeCard({
               <tr
                 key={peer.symbol}
                 title={peer.reason}
-                className={`border-t border-[#1A2E20] transition-colors duration-150 hover:bg-[#1A2E20]/40 ${peer.isTarget ? 'bg-[#00FF66]/10' : ''} ${activeSymbols.has(peer.symbol) ? "" : "opacity-45"}`}
+                className={`border-t border-[#242429] transition-colors duration-150 hover:bg-[#18181B]/70 ${peer.isTarget ? 'bg-[#C6F432]/10' : ''} ${activeSymbols.has(peer.symbol) ? "" : "opacity-45"}`}
               >
                 <td className="p-0">
                   <label className="flex min-h-11 min-w-11 cursor-pointer items-center justify-center">
@@ -142,29 +142,29 @@ export function RelativeCard({
                       checked={activeSymbols.has(peer.symbol)}
                       disabled={isUpdating || (activeSymbols.has(peer.symbol) && activeSymbols.size === 1)}
                       onChange={() => togglePeer(peer.symbol)}
-                      className="h-3.5 w-3.5 rounded border-[#1A2E20] bg-[#111613] text-[#00FF66] focus:ring-[#00FF66] focus:ring-offset-[#0A0D0B]"
+                      className="h-3.5 w-3.5 rounded border-[#323238] bg-[#121214] text-[#C6F432] focus:ring-[#C6F432] focus:ring-offset-[#0B0B0C]"
                     />
                   </label>
                 </td>
                 <td className="px-3 py-2.5">
                   <div className="flex flex-col">
-                    <span className={`font-mono text-xs font-semibold ${peer.isTarget ? 'text-[#00FF66]' : 'text-white'}`}>{peer.symbol}</span>
-                    <span className="mt-0.5 text-[10px] text-[#88998C]">{peer.overlapScore.toFixed(0)}% overlap</span>
+                    <span className={`font-mono text-xs font-semibold ${peer.isTarget ? 'text-[#C6F432]' : 'text-[#FFFFFF]'}`}>{peer.symbol}</span>
+                    <span className="mt-0.5 text-[11px] text-[#8E8E99]">{peer.overlapScore.toFixed(0)}% overlap</span>
                   </div>
                 </td>
-                <td className="px-2 py-2.5 text-right font-mono tabular-nums text-[#88998C]">
+                <td className="px-2 py-2.5 text-right font-mono tabular-nums text-[#B8B8C2]">
                   {formatMultiple(peer.pe)}
                 </td>
-                <td className="px-2 py-2.5 text-right font-mono tabular-nums text-[#88998C]">
+                <td className="px-2 py-2.5 text-right font-mono tabular-nums text-[#B8B8C2]">
                   {formatMultiple(peer.pb)}
                 </td>
-                <td className="px-2 py-2.5 text-right font-mono tabular-nums text-[#88998C]">
+                <td className="px-2 py-2.5 text-right font-mono tabular-nums text-[#B8B8C2]">
                   {formatMultiple(peer.evEbitda)}
                 </td>
               </tr>
             ))}
-            <tr className="border-t-2 border-[#1A2E20] bg-[#0A0D0B]">
-              <td className="px-3 py-3 text-xs font-bold text-white" colSpan={3}>Backend Blended Fair Value</td>
+            <tr className="border-t-2 border-[#242429] bg-[#0B0B0C]">
+              <td className="px-3 py-3 text-xs font-bold text-[#FFFFFF]" colSpan={3}>Backend Blended Fair Value</td>
               <td className={`px-2 py-3 text-right font-mono text-xs font-semibold ${fairValueColor}`}>
                 {marginOfSafety >= 0 ? "+" : ""}{marginOfSafety.toFixed(1)}%
               </td>

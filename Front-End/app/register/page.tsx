@@ -19,7 +19,7 @@ export default async function RegisterPage({
     >
       <RegisterForm next={next} googleEnabled={isGoogleAuthEnabled()} />
 
-      <p className="mt-6 text-center text-[12px] text-[#90B09E]">
+      <p className="mt-6 text-center text-[12px] text-[#8E8E99]">
         Saved stocks are private to your account.
       </p>
     </AuthPageShell>

@@ -53,8 +53,8 @@ export function RICard({ data }: { data: RIData }) {
   );
 
   const chartData = [
-    { name: "Book Value", value: bookComponent, fill: "#88998C" },
-    { name: "PV Future Wealth", value: pvFutureWealth, fill: "#00FF66" },
+    { name: "Book Value", value: bookComponent, fill: "#8E8E99" },
+    { name: "PV Future Wealth", value: pvFutureWealth, fill: "#C6F432" },
   ]
 
   const margin = data.margin_of_safety_percentage;
@@ -70,7 +70,7 @@ export function RICard({ data }: { data: RIData }) {
           <span
             className={`rounded-md border px-2 py-1 font-mono text-xs tabular-nums ${
               margin >= 0
-                ? "border-[#00FF66]/30 bg-[#00FF66]/10 text-[#00FF66]"
+                ? "border-[#C6F432]/30 bg-[#C6F432]/10 text-[#C6F432]"
                 : "border-amber-500/30 bg-amber-500/10 text-amber-400"
             }`}
           >
@@ -99,51 +99,51 @@ export function RICard({ data }: { data: RIData }) {
               </Pie>
               <Tooltip
                 formatter={(val) => [typeof val === "number" ? `$${fmt.money(val)}` : "N/A", ""]}
-                contentStyle={{ backgroundColor: "#0A0D0B", borderColor: "#1A2E20", color: "#FFFFFF" }}
-                itemStyle={{ color: "#00FF66" }}
+                contentStyle={{ backgroundColor: "#0B0B0C", borderColor: "#242429", color: "#FFFFFF" }}
+                itemStyle={{ color: "#C6F432" }}
               />
             </PieChart>
           </ResponsiveContainer>
           
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
-            <span className="text-xs text-[#88998C] font-medium">
+            <span className="text-xs text-[#8E8E99] font-medium">
               Intrinsic
             </span>
-            <span className="text-base sm:text-lg font-mono font-bold tracking-tighter text-[#00FF66] mt-0.5">
+            <span className="text-base sm:text-lg font-mono font-bold tracking-tighter text-[#C6F432] mt-0.5">
               ${fmt.money(total)}
             </span>
           </div>
         </div>
         <div className="flex-1 space-y-4">
               <Legend
-                color="bg-[#88998C]"
+                color="bg-[#8E8E99]"
                 label="Book Value"
                 value={`$${fmt.money(bookComponent!)}`}
                 pct={bookPct!}
               />
               <Legend
-                color="bg-[#00FF66]"
+                color="bg-[#C6F432]"
                 label="PV of Future Wealth"
                 value={`$${fmt.money(pvFutureWealth!)}`}
                 pct={wealthPct!}
               />
-          <div className="flex items-center justify-between border-t border-[#1A2E20] pt-3">
-            <span className="text-xs text-[#88998C]">ROE</span>
-            <span className="font-mono text-sm font-medium tabular-nums text-[#00FF66]">
+          <div className="flex items-center justify-between border-t border-[#242429] pt-3">
+            <span className="text-xs text-[#8E8E99]">ROE</span>
+            <span className="font-mono text-sm font-medium tabular-nums text-[#C6F432]">
               {fmt.pct(roe * 100)}
             </span>
           </div>
         </div>
       </div> : signedComponentsAvailable ? (
         <div className="p-5" data-testid="ri-signed-value-bridge">
-          <div className="overflow-hidden rounded-md border border-[#294231] bg-[#090A0B]">
-            <div className="border-b border-[#1A2E20] px-4 py-3">
-              <p className="text-sm font-semibold text-[#E0E6E2]">Signed value bridge</p>
-              <p className="mt-1 text-xs leading-5 text-[#9AB0A1]">
+          <div className="overflow-hidden rounded-md border border-[#242429] bg-[#0B0B0C]">
+            <div className="border-b border-[#242429] px-4 py-3">
+              <p className="text-sm font-semibold text-[#FFFFFF]">Signed value bridge</p>
+              <p className="mt-1 text-xs leading-5 text-[#B8B8C2]">
                 A negative future-wealth contribution reduces book value; it does not make the completed valuation unavailable.
               </p>
             </div>
-            <div className="grid gap-px bg-[#1A2E20] sm:grid-cols-3">
+            <div className="grid gap-px bg-[#242429] sm:grid-cols-3">
               <BridgeValue
                 label="Book value / share"
                 value={`$${fmt.money(bookComponent!)}`}
@@ -159,23 +159,23 @@ export function RICard({ data }: { data: RIData }) {
                 result
               />
             </div>
-            <p className="border-t border-[#1A2E20] px-4 py-3 text-center font-mono text-sm font-semibold tabular-nums text-[#E0E6E2]">
+            <p className="border-t border-[#242429] px-4 py-3 text-center font-mono text-sm font-semibold tabular-nums text-[#FFFFFF]">
               ${fmt.money(bookComponent!)} {pvFutureWealth! < 0 ? "−" : "+"} ${fmt.money(Math.abs(pvFutureWealth!))} = ${fmt.money(total)}
             </p>
           </div>
           <div className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-md border border-amber-500/20 bg-amber-500/[0.06] px-4 py-3 text-xs leading-5">
-            <p className="text-[#CDBF9B]">
+            <p className="text-amber-200/90">
               {typeof costOfEquity === "number" && Number.isFinite(costOfEquity) && roe < costOfEquity
                 ? `Modeled ROE (${fmt.pct(roe * 100)}) is below Cost of Equity (${fmt.pct(costOfEquity * 100)}), creating negative residual income.`
                 : "The discounted residual-income stream contributes negatively to current book value."}
             </p>
-            <span className="font-mono tabular-nums text-[#E0E6E2]">ROE {fmt.pct(roe * 100)}</span>
+            <span className="font-mono tabular-nums text-[#FFFFFF]">ROE {fmt.pct(roe * 100)}</span>
           </div>
         </div>
       ) : <div className="p-5">
-        <div className="rounded-md border border-[#1A2E20] bg-[#090A0B] px-4 py-5">
-          <p className="text-sm font-semibold text-[#E0E6E2]">Composition unavailable</p>
-          <p className="mt-1 text-xs leading-5 text-[#88998C]">
+        <div className="rounded-md border border-[#242429] bg-[#0B0B0C] px-4 py-5">
+          <p className="text-sm font-semibold text-[#FFFFFF]">Composition unavailable</p>
+          <p className="mt-1 text-xs leading-5 text-[#8E8E99]">
             The response did not include finite book-value and future-wealth components. No composition was inferred.
           </p>
         </div>
@@ -196,10 +196,10 @@ function BridgeValue({
   result?: boolean
 }) {
   return (
-    <div className="flex min-h-20 flex-col justify-center bg-[#090A0B] px-4 py-3">
-      <span className="text-[11px] text-[#88998C]">{label}</span>
+    <div className="flex min-h-20 flex-col justify-center bg-[#0B0B0C] px-4 py-3">
+      <span className="text-[11px] text-[#8E8E99]">{label}</span>
       <span className={`mt-1 font-mono text-base font-semibold tabular-nums ${
-        negative ? "text-amber-300" : result ? "text-emerald-400" : "text-[#E0E6E2]"
+        negative ? "text-amber-300" : result ? "text-[#C6F432]" : "text-[#FFFFFF]"
       }`}>
         {value}
       </span>
@@ -225,15 +225,15 @@ function Legend({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className={`h-2.5 w-2.5 rounded-sm ${color}`} />
-          <span className="text-xs text-[#88998C]">{label}</span>
+          <span className="text-xs text-[#8E8E99]">{label}</span>
         </div>
-        <span className="font-mono text-sm font-medium tabular-nums text-white">{value}</span>
+        <span className="font-mono text-sm font-medium tabular-nums text-[#FFFFFF]">{value}</span>
       </div>
       <div className="mt-1.5 flex items-center gap-2 pl-4.5">
-        <div className="h-1 flex-1 overflow-hidden rounded-full bg-[#1A2E20]">
+        <div className="h-1 flex-1 overflow-hidden rounded-full bg-[#242429]">
           <div className={`h-full rounded-full ${color}`} style={{ width: `${barPct}%` }} />
         </div>
-        <span className="font-mono text-[10px] tabular-nums text-[#88998C]">{safePct.toFixed(0)}%</span>
+        <span className="font-mono text-[11px] tabular-nums text-[#8E8E99]">{safePct.toFixed(0)}%</span>
       </div>
     </div>
   )

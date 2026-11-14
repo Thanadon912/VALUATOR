@@ -51,13 +51,13 @@ function buildMetrics(data?: DCFData): TelemetryMetric[] {
           icon: FlaskConical,
           label: "Capitalized R&D Asset",
           value: money(metadata.capitalized_rnd_asset),
-          tint: "text-emerald-400",
+          tint: "text-[#C6F432]",
         },
         {
           icon: CircleDot,
           label: "Explicit Modeling Horizon",
           value: `${horizonYears}-Year Base + TV`,
-          tint: "text-emerald-400",
+          tint: "text-[#C6F432]",
         },
       ]
     case "Regulatory FCFE":
@@ -66,19 +66,19 @@ function buildMetrics(data?: DCFData): TelemetryMetric[] {
           icon: Landmark,
           label: "Tier 1 Capital Ratio Used",
           value: pct(metadata.tier_1_capital_ratio_used),
-          tint: "text-emerald-500",
+          tint: "text-[#C6F432]",
         },
         {
           icon: CircleDot,
           label: "Projected Loan Growth",
           value: pct(metadata.projected_loan_growth),
-          tint: "text-emerald-500",
+          tint: "text-[#C6F432]",
         },
         {
           icon: CircleDot,
           label: "Discount Rate Type",
           value: metadata.discount_rate_type ?? "Cost of Equity (Ke)",
-          tint: "text-emerald-500",
+          tint: "text-[#C6F432]",
         },
       ]
     case "Normalized Median DCF":
@@ -87,13 +87,13 @@ function buildMetrics(data?: DCFData): TelemetryMetric[] {
           icon: Waves,
           label: "10-Year Historical Median Margin",
           value: pct(metadata["10_year_historical_median_margin"]),
-          tint: "text-[#E0E6E2]",
+          tint: "text-[#FFFFFF]",
         },
         {
           icon: CircleDot,
           label: "Normalized Base EBIT Generated",
           value: money(metadata.normalized_base_ebit_generated),
-          tint: "text-[#E0E6E2]",
+          tint: "text-[#FFFFFF]",
         },
       ]
     case "SOTP Reverse DCF": {
@@ -104,13 +104,13 @@ function buildMetrics(data?: DCFData): TelemetryMetric[] {
           icon: FlaskConical,
           label: "Capitalized R&D Asset",
           value: money(metadata.capitalized_rnd_asset),
-          tint: "text-emerald-400",
+          tint: "text-[#C6F432]",
         },
         {
           icon: CircleDot,
           label: "Explicit Modeling Horizon",
           value: reverseHorizonYears > 0 ? `${reverseHorizonYears} Yrs (SOTP + Real Options)` : "SOTP + Real Options",
-          tint: "text-emerald-400",
+          tint: "text-[#C6F432]",
         },
       ]
     }
@@ -121,13 +121,13 @@ function buildMetrics(data?: DCFData): TelemetryMetric[] {
           icon: CircleDot,
           label: "Adjustment Applied",
           value: metadata.fallback_reason ?? "None - standard driver model",
-          tint: "text-emerald-400",
+          tint: "text-[#C6F432]",
         },
         {
           icon: CircleDot,
           label: "Projection Basis",
           value: `${horizonYears}-year driver-based matrix`,
-          tint: "text-emerald-400",
+          tint: "text-[#C6F432]",
         },
       ]
   }
@@ -165,13 +165,13 @@ export function EngineTelemetry({ data }: { data?: DCFData }) {
               return (
                 <div
                   key={metric.label}
-                  className="flex items-start gap-3 rounded-md border border-emerald-900/20 bg-[#090A0B] p-4"
+                  className="flex items-start gap-3 rounded-md border border-[#242429] bg-[#0B0B0C] p-4"
                 >
-                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-emerald-900/30 bg-emerald-900/10">
+                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-[#323238] bg-[#121214]">
                     <Icon className={`h-4 w-4 ${metric.tint}`} />
                   </span>
                   <div className="min-w-0">
-                    <p className="text-xs text-[#869E8F]">{metric.label}</p>
+                    <p className="text-xs text-[#8E8E99]">{metric.label}</p>
                     <p className={`mt-1 font-mono text-sm font-semibold tabular-nums ${metric.tint}`}>
                       {metric.value}
                     </p>

@@ -58,19 +58,19 @@ export function MonteCarloCurve({
         <div className="p-5">
           {isUpdating ? (
             <div role="status" className="space-y-3">
-              <p className="text-sm text-[#C8D4CC]">Running the 10,000-outcome simulation for the active assumptions…</p>
-              <div className="h-28 animate-pulse rounded-sm bg-[#1A2E20]/60 motion-reduce:animate-none" />
+              <p className="text-sm text-[#B8B8C2]">Running the 10,000-outcome simulation for the active assumptions…</p>
+              <div className="h-28 animate-pulse rounded-sm bg-[#242429]/60 motion-reduce:animate-none" />
             </div>
           ) : (
-            <div className="flex flex-wrap items-center justify-between gap-4 rounded-md border border-[#294231] bg-[#0A0D0B] p-4">
+            <div className="flex flex-wrap items-center justify-between gap-4 rounded-md border border-[#242429] bg-[#0B0B0C] p-4">
               <div>
-                <p className="text-sm font-semibold text-[#E0E6E2]">No simulation percentiles were returned</p>
-                <p className="mt-1 max-w-2xl text-xs leading-5 text-[#9AB0A1]">
+                <p className="text-sm font-semibold text-[#FFFFFF]">No simulation percentiles were returned</p>
+                <p className="mt-1 max-w-2xl text-xs leading-5 text-[#B8B8C2]">
                   {warning ?? "The valuation remains available, but the probabilistic layer did not return P10, P50, and P90 outcomes. No substitute values were created."}
                 </p>
               </div>
               {onRetry ? (
-                <button type="button" onClick={onRetry} className="min-h-11 rounded-sm border border-[#294231] px-4 text-sm font-semibold text-[#E0E6E2] hover:bg-[#1A2E20]">
+                <button type="button" onClick={onRetry} className="min-h-11 rounded-sm border border-[#323238] px-4 text-sm font-semibold text-[#FFFFFF] hover:bg-[#18181B]">
                   Retry simulation
                 </button>
               ) : null}
@@ -100,14 +100,14 @@ export function MonteCarloCurve({
       label: "Median",
       description: "Half of valid simulations finish at or below this value",
       value: p50,
-      color: "rgb(52 211 153)",
+      color: "#C6F432",
     },
     {
       key: "P90",
       label: "90th percentile",
       description: "10% of valid simulations finish above this value",
       value: p90,
-      color: "rgb(134 158 143)",
+      color: "#FFFFFF",
     },
   ]
   const validSamples = mc.valid_sample_count ?? 0
@@ -122,28 +122,28 @@ export function MonteCarloCurve({
           icon={<Activity className="h-4 w-4" />}
         />
         {isUpdating ? (
-          <p role="status" className="border-b border-[#1A2E20] px-5 py-2 text-xs text-amber-300">
+          <p role="status" className="border-b border-[#242429] px-5 py-2 text-xs text-amber-300">
             Updating for the active assumptions. The last complete percentiles remain visible.
           </p>
         ) : null}
         <div className="p-5">
           <div className="grid gap-3 md:grid-cols-3">
             {percentiles.map((percentile) => (
-              <div key={percentile.key} className="rounded-md border border-[#1A2E20] bg-[#090A0B] px-4 py-3">
-                <p className="text-xs text-[#869E8F]">{percentile.label}</p>
-                <p className="mt-1.5 font-mono text-2xl font-semibold tabular-nums text-[#E0E6E2]">
+              <div key={percentile.key} className="rounded-md border border-[#242429] bg-[#0B0B0C] px-4 py-3">
+                <p className="text-xs text-[#8E8E99]">{percentile.label}</p>
+                <p className="mt-1.5 font-mono text-2xl font-semibold tabular-nums text-[#FFFFFF]">
                   ${fmt.money(percentile.value)}
                 </p>
-                <p className="mt-1 text-xs leading-5 text-[#869E8F]">{percentile.description}</p>
+                <p className="mt-1 text-xs leading-5 text-[#8E8E99]">{percentile.description}</p>
               </div>
             ))}
           </div>
-          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-md border border-[#294231] px-4 py-3">
-            <p className="text-xs leading-5 text-[#9AB0A1]">
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-md border border-[#242429] px-4 py-3">
+            <p className="text-xs leading-5 text-[#B8B8C2]">
               The percentile results are available, but the histogram bins were not returned, so no distribution chart is plotted.
             </p>
             {onRetry ? (
-              <button type="button" onClick={onRetry} className="min-h-11 rounded-sm border border-[#294231] px-4 text-sm font-semibold text-[#E0E6E2] hover:bg-[#1A2E20]">
+              <button type="button" onClick={onRetry} className="min-h-11 rounded-sm border border-[#323238] px-4 text-sm font-semibold text-[#FFFFFF] hover:bg-[#18181B]">
                 Retry histogram
               </button>
             ) : null}
@@ -175,7 +175,7 @@ export function MonteCarloCurve({
         icon={<Activity className="h-4 w-4" />}
       />
       {isUpdating ? (
-        <p role="status" className="border-b border-[#1A2E20] px-5 py-2 text-xs text-amber-300">
+        <p role="status" className="border-b border-[#242429] px-5 py-2 text-xs text-amber-300">
           Updating for the active assumptions. The last complete simulation remains visible.
         </p>
       ) : null}
@@ -194,28 +194,28 @@ export function MonteCarloCurve({
             initialDimension={{ width: 680, height: 288 }}
           >
             <BarChart data={chartData} margin={{ top: 12, right: 8, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgb(30 41 59 / 0.5)" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#242429" vertical={false} />
               <XAxis
                 dataKey="price"
                 type="number"
                 domain={["dataMin", "dataMax"]}
-                tick={{ fill: "rgb(148 163 184)", fontSize: 11 }}
-                axisLine={{ stroke: "rgb(30 41 59)" }}
+                tick={{ fill: "#8E8E99", fontSize: 11 }}
+                axisLine={{ stroke: "#242429" }}
                 tickLine={false}
                 tickFormatter={(value) => `$${Number(value).toFixed(0)}`}
               />
               <YAxis
-                tick={{ fill: "rgb(148 163 184)", fontSize: 11 }}
+                tick={{ fill: "#8E8E99", fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(value) => `${Number(value).toFixed(0)}%`}
                 width={38}
               />
               <Tooltip
-                cursor={{ fill: "rgb(134 158 143 / 0.08)" }}
+                cursor={{ fill: "rgba(255, 255, 255, 0.04)" }}
                 contentStyle={{
-                  background: "#090A0B",
-                  border: "1px solid rgba(16, 185, 129, 0.2)",
+                  background: "#0B0B0C",
+                  border: "1px solid #242429",
                   borderRadius: 6,
                   fontSize: 12,
                 }}
@@ -227,7 +227,7 @@ export function MonteCarloCurve({
                   return [String(value), String(name)]
                 }}
               />
-              <Bar dataKey="probability" fill="rgb(52 211 153)" fillOpacity={0.7} isAnimationActive={false} />
+              <Bar dataKey="probability" fill="#C6F432" fillOpacity={0.75} isAnimationActive={false} />
               {percentiles.map((percentile) => (
                 <ReferenceLine
                   key={percentile.key}
@@ -262,9 +262,9 @@ export function MonteCarloCurve({
           </ResponsiveContainer>
         </div>
         {safeLivePrice !== null && !livePriceInRange ? (
-          <div role="status" className="mt-3 rounded-md border border-[#294231] bg-[#0A0D0B] px-4 py-3">
-            <p className="text-xs font-semibold text-[#A9C6B3]">Live price is outside the displayed simulation range</p>
-            <p className="mt-1 text-sm leading-6 text-[#E0E6E2]">
+          <div role="status" className="mt-3 rounded-md border border-[#242429] bg-[#0B0B0C] px-4 py-3">
+            <p className="text-xs font-semibold text-[#B8B8C2]">Live price is outside the displayed simulation range</p>
+            <p className="mt-1 text-sm leading-6 text-[#FFFFFF]">
               <span className="font-mono font-semibold tabular-nums">${fmt.money(safeLivePrice)}</span>
               {livePricePosition === "above" ? " is above " : " is below "}
               the simulated range of <span className="font-mono tabular-nums">${fmt.money(chartMin)}–${fmt.money(chartMax)}</span>
@@ -278,22 +278,22 @@ export function MonteCarloCurve({
           {percentiles.map((percentile) => (
             <div
               key={percentile.key}
-              className="rounded-md border border-[#1A2E20] bg-[#090A0B] px-4 py-3"
+              className="rounded-md border border-[#242429] bg-[#0B0B0C] px-4 py-3"
             >
-              <div className="flex items-center gap-2 text-xs text-[#869E8F]">
+              <div className="flex items-center gap-2 text-xs text-[#8E8E99]">
                 <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: percentile.color }} />
                 {percentile.label}
               </div>
-              <p className="mt-1.5 font-mono text-2xl font-semibold tabular-nums text-[#E0E6E2]">
+              <p className="mt-1.5 font-mono text-2xl font-semibold tabular-nums text-[#FFFFFF]">
                 ${fmt.money(percentile.value)}
               </p>
-              <p className="mt-1 text-xs leading-5 text-[#869E8F]">{percentile.description}</p>
+              <p className="mt-1 text-xs leading-5 text-[#8E8E99]">{percentile.description}</p>
             </div>
           ))}
 
           <div className="mt-1 rounded-md border border-amber-500/30 bg-amber-500/5 px-4 py-3">
             <p className="text-xs font-medium text-amber-400">Live market price</p>
-            <p className="mt-1 text-sm leading-relaxed text-[#E0E6E2]">
+            <p className="mt-1 text-sm leading-relaxed text-[#FFFFFF]">
               {safeLivePrice !== null ? (
                 <>
                   <span className="font-mono font-semibold tabular-nums text-amber-300">

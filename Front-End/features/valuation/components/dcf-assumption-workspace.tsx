@@ -165,28 +165,28 @@ export function DcfAssumptionWorkspace({
     <section
       aria-label="DCF assumption workspace"
       aria-busy={isUpdating || isResetting}
-      className="mb-6 rounded-md border border-[#1A2E20] bg-[#111613]"
+      className="mb-6 rounded-md border border-[#242429] bg-[#121214]"
     >
-      <div className={`flex flex-wrap items-center justify-between gap-3 px-4 py-2 ${isOpen ? "border-b border-[#1A2E20]" : ""}`}>
+      <div className={`flex flex-wrap items-center justify-between gap-3 px-4 py-2 ${isOpen ? "border-b border-[#242429]" : ""}`}>
         <button
           type="button"
           aria-expanded={isOpen}
           aria-controls="dcf-assumption-fields"
           onClick={() => setIsOpen((current) => !current)}
-          className="flex min-h-11 min-w-0 flex-1 items-center gap-3 rounded-sm text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+          className="flex min-h-11 min-w-0 flex-1 items-center gap-3 rounded-sm text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
         >
-          <SlidersHorizontal className="h-4 w-4 text-[#B7FF3C]" aria-hidden="true" />
+          <SlidersHorizontal className="h-4 w-4 text-[#C6F432]" aria-hidden="true" />
           <div className="min-w-0">
-            <span className="block text-sm font-semibold text-[#E0E6E2]">DCF assumptions</span>
-            <p className="mt-0.5 truncate text-xs text-[#869E8F]">{summary}</p>
+            <span className="block text-sm font-semibold text-[#FFFFFF]">DCF assumptions</span>
+            <p className="mt-0.5 truncate text-xs text-[#8E8E99]">{summary}</p>
           </div>
-          <ChevronDown className={`ml-auto h-4 w-4 shrink-0 text-[#869E8F] transition-transform ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+          <ChevronDown className={`ml-auto h-4 w-4 shrink-0 text-[#8E8E99] transition-transform ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
         </button>
         <div className="flex items-center gap-2">
-          <span className={`rounded-full border px-2 py-1 text-[11px] font-medium ${dirty || modified ? "border-amber-500/30 bg-amber-500/10 text-amber-300" : "border-[#1A2E20] bg-[#0A0D0B] text-[#9AB0A1]"}`}>
+          <span className={`rounded-full border px-2 py-1 text-[11px] font-medium ${dirty || modified ? "border-amber-500/30 bg-amber-500/10 text-amber-300" : "border-[#242429] bg-[#0B0B0C] text-[#B8B8C2]"}`}>
             {dirty || modified ? "User assumption" : "Model input"}
           </span>
-          <span role="status" className="text-xs text-[#9AB0A1]">{stateLabel}</span>
+          <span role="status" className="text-xs text-[#B8B8C2]">{stateLabel}</span>
         </div>
       </div>
 
@@ -198,7 +198,7 @@ export function DcfAssumptionWorkspace({
             : fieldText[field.key] !== toFieldText(base)[field.key]
           const descriptionId = `dcf-${field.key}-description`
           return (
-            <label key={field.key} className="block text-xs text-[#9AB0A1]">
+            <label key={field.key} className="block text-xs text-[#B8B8C2]">
               <span className="flex items-center justify-between gap-2">
                 {field.label}
                 {changed ? (
@@ -225,11 +225,11 @@ export function DcfAssumptionWorkspace({
                       [field.key]: event.target.value,
                     },
                   }))}
-                  className={`h-11 w-full rounded-sm border bg-[#0A0D0B] px-3 pr-8 font-mono text-sm tabular-nums text-[#E0E6E2] outline-none focus:ring-1 ${error ? "border-amber-500/60 focus:border-amber-400 focus:ring-amber-400/30" : "border-[#294231] focus:border-[#B7FF3C] focus:ring-[#B7FF3C]/40"}`}
+                  className={`h-11 w-full rounded-sm border bg-[#0B0B0C] px-3 pr-8 font-mono text-sm tabular-nums text-[#FFFFFF] outline-none focus:ring-1 ${error ? "border-amber-500/60 focus:border-amber-400 focus:ring-amber-400/30" : "border-[#323238] focus:border-[#C6F432] focus:ring-[#C6F432]/40"}`}
                 />
-                <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center font-mono text-xs text-[#869E8F]">%</span>
+                <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center font-mono text-xs text-[#8E8E99]">%</span>
               </div>
-              <span id={descriptionId} className={`mt-1.5 block min-h-4 text-[11px] leading-4 ${error ? "text-amber-300" : "text-[#869E8F]"}`}>
+              <span id={descriptionId} className={`mt-1.5 block min-h-4 text-[11px] leading-4 ${error ? "text-amber-300" : "text-[#8E8E99]"}`}>
                 {error ?? field.rangeHelp}
               </span>
             </label>
@@ -244,7 +244,7 @@ export function DcfAssumptionWorkspace({
               else if (parsed) onApply(parsed)
             }}
             disabled={(!dirty && !retryingModel) || !valid || isUpdating || isResetting}
-            className="h-11 rounded-sm bg-[#B7FF3C] px-4 text-sm font-semibold text-[#071008] transition-colors hover:bg-[#C7FF69] disabled:cursor-not-allowed disabled:opacity-40"
+            className="h-11 rounded-sm bg-[#C6F432] px-4 text-sm font-semibold text-[#0B0B0C] transition-colors hover:bg-[#D4F759] disabled:cursor-not-allowed disabled:opacity-40"
           >
             {isUpdating ? "Applying…" : retryingModel ? "Retry model" : "Apply to workspace"}
           </button>
@@ -255,7 +255,7 @@ export function DcfAssumptionWorkspace({
               onReset()
             }}
             disabled={(!modified && !dirty) || isResetting}
-            className="inline-flex h-11 items-center gap-2 rounded-sm border border-[#294231] px-3 text-sm font-medium text-[#C8D4CC] hover:bg-[#1A2E20] disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex h-11 items-center gap-2 rounded-sm border border-[#323238] px-3 text-sm font-medium text-[#FFFFFF] hover:bg-[#18181B] disabled:cursor-not-allowed disabled:opacity-40"
           >
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             {isResetting ? "Resetting…" : "Reset all"}
@@ -264,15 +264,15 @@ export function DcfAssumptionWorkspace({
       </div> : null}
 
       {isOpen && requestError && !isUpdating ? (
-        <div role="status" className="border-t border-[#1A2E20] px-4 py-3 text-xs leading-5 text-[#A9BAAF]">
-          <span className="font-semibold text-[#DCEBE2]">Model update unavailable. </span>
+        <div role="status" className="border-t border-[#242429] px-4 py-3 text-xs leading-5 text-[#B8B8C2]">
+          <span className="font-semibold text-[#FFFFFF]">Model update unavailable. </span>
           The last complete result remains visible. {requestError.message}
         </div>
       ) : null}
       {isOpen && persistenceError ? (
-        <div role="alert" className="flex flex-wrap items-center justify-between gap-3 border-t border-[#1A2E20] px-4 py-3 text-xs leading-5 text-[#FFB4A9]">
+        <div role="alert" className="flex flex-wrap items-center justify-between gap-3 border-t border-[#242429] px-4 py-3 text-xs leading-5 text-[#FFB4A9]">
           <span><strong className="text-[#FFD0C8]">Assumptions weren’t synced. </strong>{persistenceError}</span>
-          <button type="button" onClick={onRetryPersistence} className="min-h-11 rounded-sm border border-[#6B3A3E] px-3 font-semibold text-[#FFD0C8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]">
+          <button type="button" onClick={onRetryPersistence} className="min-h-11 rounded-sm border border-[#6B3A3E] px-3 font-semibold text-[#FFD0C8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]">
             Retry sync
           </button>
         </div>

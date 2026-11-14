@@ -51,26 +51,26 @@ export function RegisterForm({ next = '/', googleEnabled = false }: { next?: str
             <button
               type="button"
               onClick={() => setEditingEmail(state.email ?? '')}
-              className="inline-flex min-h-11 items-center font-semibold text-[#B7FF3C] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+              className="inline-flex min-h-11 items-center font-semibold text-[#C6F432] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
             >
               Use a different email
             </button>
             <Link
               href={authPageHref('/login', next)}
-              className="inline-flex min-h-11 items-center font-semibold text-[#DCEBE2] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+              className="inline-flex min-h-11 items-center font-semibold text-[#FFFFFF] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
             >
               Sign in
             </Link>
             <Link
               href={authPageHref('/forgot-password', next)}
-              className="inline-flex min-h-11 items-center font-semibold text-[#DCEBE2] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+              className="inline-flex min-h-11 items-center font-semibold text-[#FFFFFF] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
             >
               Reset password
             </Link>
           </>
         )}
       >
-        If <span className="font-semibold text-[#DCEBE2]">{state.email}</span> can receive a confirmation email, a link will arrive shortly. Already registered? Sign in or reset your password. Saved stocks on this device remain available.
+        If <span className="font-semibold text-[#FFFFFF]">{state.email}</span> can receive a confirmation email, a link will arrive shortly. Already registered? Sign in or reset your password. Saved stocks on this device remain available.
       </StatusNotice>
     )
   }
@@ -92,7 +92,7 @@ export function RegisterForm({ next = '/', googleEnabled = false }: { next?: str
         </StatusNotice>
       ) : null}
       <div className="flex flex-col gap-1.5">
-        <label htmlFor="email" className="text-[12px] font-semibold text-[#90B09E]">Email</label>
+        <label htmlFor="email" className="text-[12px] font-semibold text-[#B8B8C2]">Email</label>
         <input
           id="email"
           name="email"
@@ -104,7 +104,7 @@ export function RegisterForm({ next = '/', googleEnabled = false }: { next?: str
           aria-describedby={emailError ? "email-error" : undefined}
           onBlur={emailProps.onBlur}
           onChange={emailProps.onChange}
-          className={`h-[44px] rounded-[10px] bg-[#0B0F17] px-3 py-2 text-[13px] text-[#EFFAF4] outline-none ring-1 transition-shadow focus:ring-2 focus:ring-[#B7FF3C] ${emailError ? 'ring-[#FB7185] focus:ring-[#FB7185]' : 'ring-[#1E293B]'}`}
+          className={`h-[44px] rounded-[10px] bg-[#0B0B0C] px-3 py-2 text-[13px] text-[#FFFFFF] outline-none ring-1 transition-shadow focus:ring-2 focus:ring-[#C6F432] ${emailError ? 'ring-[#FB7185] focus:ring-[#FB7185]' : 'ring-[#242429]'}`}
         />
         {emailError && (
           <p id="email-error" className="text-[13px] leading-5 text-[#FF9C82]">{emailError}</p>
@@ -122,7 +122,7 @@ export function RegisterForm({ next = '/', googleEnabled = false }: { next?: str
           onBlur={passwordProps.onBlur}
           onChange={passwordProps.onChange}
         />
-        <p id="password-requirements" className="text-[13px] leading-5 text-[#7F998A]">Use at least 8 characters.</p>
+        <p id="password-requirements" className="text-[13px] leading-5 text-[#8E8E99]">Use at least 8 characters.</p>
       </div>
 
       <div className="flex flex-col gap-1.5">
@@ -141,7 +141,7 @@ export function RegisterForm({ next = '/', googleEnabled = false }: { next?: str
         type="submit"
         disabled={pending}
         aria-busy={pending}
-        className="mt-2 h-[44px] w-full rounded-[10px] bg-[#B7FF3C] px-3 py-2 text-[13px] font-semibold text-[#010303] transition-colors hover:bg-[#a6e635] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EFFAF4] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B0F0D] disabled:opacity-50"
+        className="mt-2 h-[44px] w-full rounded-[10px] bg-[#C6F432] px-3 py-2 text-[13px] font-semibold text-[#0B0B0C] transition-colors hover:bg-[#D4F759] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFFFFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#121214] disabled:opacity-50"
       >
         {pending ? 'Creating account…' : 'Create account'}
       </button>

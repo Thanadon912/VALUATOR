@@ -258,7 +258,7 @@ export interface ValuationTelemetry {
 
 export function methodologyBadgeClasses(methodology?: string) {
   void methodology
-  return "border border-[#294231] bg-[#0A0D0B] text-[#B7C5BC]"
+  return "border border-[#323238] bg-[#0B0B0C] text-[#B8B8C2]"
 }
 
 export function isRegulatoryFcfe(data?: DCFData) {
@@ -302,9 +302,9 @@ export function DCFCard({ data }: { data: DCFData }) {
           <span
             className={`inline-flex items-center rounded-full px-2.5 py-1 font-mono text-xs font-semibold tabular-nums ${
               under === null
-                ? "border border-[#1A2E20] bg-[#111613] text-[#88998C]"
+                ? "border border-[#242429] bg-[#121214] text-[#8E8E99]"
                 : under
-                ? "border border-[#00FF66]/30 bg-[#00FF66]/15 text-[#00FF66]"
+                ? "border border-[#C6F432]/30 bg-[#C6F432]/15 text-[#C6F432]"
                 : "border border-amber-500/30 bg-amber-500/15 text-amber-400"
             }`}
           >
@@ -320,48 +320,48 @@ export function DCFCard({ data }: { data: DCFData }) {
         {isConsensusSensitive ? (
           <section
             aria-labelledby="dcf-consensus-sensitivity-title"
-            className="mb-5 rounded-lg border border-[#294231] bg-[#0A0D0B] p-4"
+            className="mb-5 rounded-lg border border-[#242429] bg-[#0B0B0C] p-4"
             data-testid="dcf-consensus-horizon-warning"
           >
             <div className="flex items-start gap-3">
-              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#294231] bg-[#111613] text-[#9AB0A1]">
+              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#323238] bg-[#121214] text-[#B8B8C2]">
                 <Info className="h-4 w-4" aria-hidden="true" />
               </span>
               <div className="min-w-0 flex-1">
                 <h3
                   id="dcf-consensus-sensitivity-title"
-                  className="text-sm font-semibold text-[#E0E6E2]"
+                  className="text-sm font-semibold text-[#FFFFFF]"
                 >
                   Consensus-sensitive result
                 </h3>
-                <p className="mt-1 text-xs leading-5 text-[#9AB0A1]">
+                <p className="mt-1 text-xs leading-5 text-[#B8B8C2]">
                   The primary result uses every valid provider consensus year. The comparison below is a diagnostic, not a replacement valuation.
                 </p>
               </div>
             </div>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <div className="rounded-md border border-[#1A2E20] bg-[#111613] px-3 py-3">
-                <p className="text-[11px] uppercase tracking-[0.1em] text-[#869E8F]">Full consensus</p>
-                <p className="mt-1 font-mono text-lg font-semibold tabular-nums text-[#E0E6E2]">
+              <div className="rounded-md border border-[#242429] bg-[#121214] px-3 py-3">
+                <p className="text-[11px] uppercase tracking-[0.1em] text-[#8E8E99]">Full consensus</p>
+                <p className="mt-1 font-mono text-lg font-semibold tabular-nums text-[#FFFFFF]">
                   {typeof horizonSensitivity.full_fair_value === "number"
                     ? `$${fmt.money(horizonSensitivity.full_fair_value)}`
                     : "N/A"}
                 </p>
-                <p className="mt-1 text-[11px] text-[#869E8F]">Primary model result</p>
+                <p className="mt-1 text-[11px] text-[#8E8E99]">Primary model result</p>
               </div>
-              <div className="rounded-md border border-[#1A2E20] bg-[#111613] px-3 py-3">
-                <p className="text-[11px] uppercase tracking-[0.1em] text-[#869E8F]">
+              <div className="rounded-md border border-[#242429] bg-[#121214] px-3 py-3">
+                <p className="text-[11px] uppercase tracking-[0.1em] text-[#8E8E99]">
                   Without {horizonSensitivity.removed_consensus_year ?? "last year"}
                 </p>
-                <p className="mt-1 font-mono text-lg font-semibold tabular-nums text-[#E0E6E2]">
+                <p className="mt-1 font-mono text-lg font-semibold tabular-nums text-[#FFFFFF]">
                   {typeof horizonSensitivity.truncated_fair_value === "number"
                     ? `$${fmt.money(horizonSensitivity.truncated_fair_value)}`
                     : "N/A"}
                 </p>
-                <p className="mt-1 text-[11px] text-[#869E8F]">Diagnostic only</p>
+                <p className="mt-1 text-[11px] text-[#8E8E99]">Diagnostic only</p>
               </div>
             </div>
-            <p className="mt-3 text-xs leading-5 text-[#9AB0A1]">
+            <p className="mt-3 text-xs leading-5 text-[#B8B8C2]">
               Removing the {horizonSensitivity.removed_consensus_year ?? "last"} consensus year changes fair value
               {typeof horizonSensitivity.relative_delta_percentage === "number"
                 ? ` by ${horizonSensitivity.relative_delta_percentage.toFixed(1)}%.`
@@ -379,13 +379,13 @@ export function DCFCard({ data }: { data: DCFData }) {
         ) : null}
         <div className="grid grid-cols-5 gap-4">
           <div className="col-span-2">
-            <p className="text-xs text-[#88998C]">
+            <p className="text-xs text-[#8E8E99]">
               {isConsensusSensitive ? "Full-consensus fair value" : "Fair Value"}
             </p>
-            <p data-testid="dcf-fair-value" className="mt-1 font-mono text-3xl font-semibold tabular-nums text-white">
+            <p data-testid="dcf-fair-value" className="mt-1 font-mono text-3xl font-semibold tabular-nums text-[#FFFFFF]">
               {apiFairValue === null ? "N/A" : `$${fmt.money(apiFairValue)}`}
             </p>
-            <p className="mt-1 font-mono text-xs tabular-nums text-[#88998C]">
+            <p className="mt-1 font-mono text-xs tabular-nums text-[#8E8E99]">
               {current_price === null
                 ? "Market reference unavailable"
                 : `vs $${fmt.money(current_price)} market reference`}
@@ -396,20 +396,20 @@ export function DCFCard({ data }: { data: DCFData }) {
               </span>
             </div>
           </div>
-          <div className="col-span-3 h-20">
+          <div className="col-span-3 h-20 [&_.recharts-surface]:overflow-visible">
             <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1} initialDimension={{ width: 200, height: 80 }}>
-              <AreaChart data={chartData} margin={{ top: 4, right: 0, bottom: 0, left: 0 }}>
+              <AreaChart data={chartData} margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
                 <defs>
                   <linearGradient id="dcfFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#00FF66" stopOpacity={0.4} />
-                    <stop offset="100%" stopColor="#00FF66" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#C6F432" stopOpacity={0.4} />
+                    <stop offset="100%" stopColor="#C6F432" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <YAxis hide domain={["dataMin", "dataMax"]} />
                 <Area
                   type="monotone"
                   dataKey="v"
-                  stroke="#00FF66"
+                  stroke="#C6F432"
                   strokeWidth={2}
                   fill="url(#dcfFill)"
                   isAnimationActive={false}
@@ -419,10 +419,10 @@ export function DCFCard({ data }: { data: DCFData }) {
           </div>
         </div>
 
-        <div className="mt-5 grid gap-4 border-t border-[#1A2E20] pt-4">
+        <div className="mt-5 grid gap-4 border-t border-[#242429] pt-4">
           <div className="flex items-center justify-between text-xs">
-            <span className="text-[#88998C]">Terminal Value</span>
-            <span className="font-mono tabular-nums text-white">
+            <span className="text-[#8E8E99]">Terminal Value</span>
+            <span className="font-mono tabular-nums text-[#FFFFFF]">
               {typeof underlying_assumptions.terminal_value === "number"
                 ? underlying_assumptions.terminal_value >= 1e9
                   ? fmt.bn(underlying_assumptions.terminal_value / 1e9, 1)

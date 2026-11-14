@@ -55,13 +55,13 @@ export function AssetBasedCard({ data }: { data: AssetBasedData }) {
         icon={<Landmark className="h-4 w-4" />}
         tooltipText="Estimates the floor value of the company based on its balance sheet (Assets minus Liabilities), representing the tangible book value."
         badge={
-          <div className="flex rounded-lg border border-[#1A2E20] bg-[#111613] p-0.5">
+          <div className="flex rounded-lg border border-[#242429] bg-[#121214] p-0.5">
             <button
               type="button"
               onClick={() => setTangible(false)}
               aria-pressed={!tangible}
               className={`min-h-11 rounded-md px-3 py-2 text-xs font-medium transition-colors ${
-                !tangible ? "bg-[#1A2E20] text-white shadow" : "text-[#88998C] hover:text-white"
+                !tangible ? "bg-[#18181B] text-[#FFFFFF] shadow" : "text-[#8E8E99] hover:text-[#FFFFFF]"
               }`}
             >
               Book Value
@@ -71,7 +71,7 @@ export function AssetBasedCard({ data }: { data: AssetBasedData }) {
               onClick={() => setTangible(true)}
               aria-pressed={tangible}
               className={`min-h-11 rounded-md px-3 py-2 text-xs font-medium transition-colors ${
-                tangible ? "bg-[#1A2E20] text-white shadow" : "text-[#88998C] hover:text-white"
+                tangible ? "bg-[#18181B] text-[#FFFFFF] shadow" : "text-[#8E8E99] hover:text-[#FFFFFF]"
               }`}
             >
               Tangible Net-Net
@@ -80,31 +80,31 @@ export function AssetBasedCard({ data }: { data: AssetBasedData }) {
         }
       />
       <div className="p-5">
-        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-md border border-[#1A2E20] bg-[#1A2E20] sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-md border border-[#242429] bg-[#242429] sm:grid-cols-3">
           <BalanceMetric label="Total Assets" value={bn(ua.total_assets)} />
           <BalanceMetric label="Total Liabilities" value={bn(ua.total_liabilities)} />
           <BalanceMetric label={tangible ? "Tangible NAV" : "Standard NAV"} value={bn(equity)} accent />
         </div>
 
         <div className="mt-5 grid grid-cols-2 gap-3">
-          <div className="rounded-md border border-[#1A2E20] bg-[#111613] p-3">
-            <p className="text-xs text-[#88998C]">NAV / Share</p>
-            <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-white">
+          <div className="rounded-md border border-[#242429] bg-[#121214] p-3">
+            <p className="text-xs text-[#8E8E99]">NAV / Share</p>
+            <p className="mt-1 font-mono text-2xl font-semibold tabular-nums text-[#FFFFFF]">
               {money(nav)}
             </p>
           </div>
-          <div className="flex flex-col justify-between rounded-md border border-[#1A2E20] bg-[#111613] p-3">
-            <p className="text-xs text-[#88998C]">Margin of Safety</p>
+          <div className="flex flex-col justify-between rounded-md border border-[#242429] bg-[#121214] p-3">
+            <p className="text-xs text-[#8E8E99]">Margin of Safety</p>
             {typeof margin === "number" && Number.isFinite(margin) ? <span
               className={`mt-1 inline-flex w-fit items-center rounded-md px-2 py-1 font-mono text-sm font-semibold tabular-nums ${
                 margin >= 0
-                  ? "border border-[#00FF66]/30 bg-[#00FF66]/10 text-[#00FF66]"
+                  ? "border border-[#C6F432]/30 bg-[#C6F432]/10 text-[#C6F432]"
                   : "border border-amber-500/30 bg-amber-500/10 text-amber-400"
               }`}
             >
               {margin >= 0 ? "+" : ""}
               {margin.toFixed(1)}%
-            </span> : <span className="mt-1 font-mono text-sm text-[#88998C]">Unavailable</span>}
+            </span> : <span className="mt-1 font-mono text-sm text-[#8E8E99]">Unavailable</span>}
           </div>
         </div>
       </div>
@@ -122,9 +122,9 @@ function BalanceMetric({
   accent?: boolean;
 }) {
   return (
-    <div className="bg-[#090A0B] p-3">
-      <p className="text-xs text-[#88998C]">{label}</p>
-      <p className={`mt-1 font-mono text-sm font-semibold tabular-nums ${accent ? "text-[#00FF66]" : "text-white"}`}>
+    <div className="bg-[#0B0B0C] p-3">
+      <p className="text-xs text-[#8E8E99]">{label}</p>
+      <p className={`mt-1 font-mono text-sm font-semibold tabular-nums ${accent ? "text-[#C6F432]" : "text-[#FFFFFF]"}`}>
         {value}
       </p>
     </div>

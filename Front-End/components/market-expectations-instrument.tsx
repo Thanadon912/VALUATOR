@@ -244,7 +244,7 @@ export function MarketExpectationsInstrument() {
   const activeStage = stages[displayedIndex]
 
   return (
-    <section id="instrument" className="valuator-instrument relative bg-[#0A0A09]">
+    <section id="instrument" className="valuator-instrument relative bg-[#0B0B0C]">
       <div ref={desktopSceneRef} data-instrument-scene className={`instrument-scroll-scene relative hidden lg:block ${reduceMotion ? "instrument-scroll-scene--static" : ""}`}>
         <span id="methods-desktop" className="pointer-events-none absolute left-0 top-1/2" aria-hidden="true" />
         <div className="mx-auto grid w-full max-w-[90rem] grid-cols-[minmax(20rem,0.7fr)_minmax(36rem,1.3fr)] items-start gap-14 px-8 xl:gap-20">
@@ -272,9 +272,9 @@ export function MarketExpectationsInstrument() {
       <div className="mx-auto max-w-[48rem] px-5 py-16 sm:px-8 lg:hidden">
         {stages.map((stage, index) => (
           <article key={stage.id} id={stage.id === "methods" ? "methods-mobile" : undefined} data-instrument-stage={stage.id} className="instrument-stage border-t border-white/12 py-14 first:border-t-0">
-            <div className="flex items-center gap-4"><span className="font-mono text-xs text-[#B7FF3C]">0{index + 1}</span><span className="text-sm font-semibold text-[#D8D8D0]">{stage.label}</span></div>
-            <h2 className="valuator-display mt-6 max-w-[11ch] text-balance text-[clamp(2.8rem,12vw,4.4rem)] font-semibold leading-[0.94] tracking-[-0.035em] text-[#F2F2EE]">{stage.title}</h2>
-            <p className="mt-6 max-w-[35rem] text-pretty text-base leading-7 text-[#BDBDB6]">{stage.copy}</p>
+            <div className="flex items-center gap-4"><span className="font-mono text-xs text-[#C6F432]">0{index + 1}</span><span className="text-sm font-semibold text-[#B8B8C2]">{stage.label}</span></div>
+            <h2 className="valuator-display mt-6 max-w-[11ch] text-balance text-[clamp(2.8rem,12vw,4.4rem)] font-semibold leading-[0.94] tracking-[-0.035em] text-[#FFFFFF]">{stage.title}</h2>
+            <p className="mt-6 max-w-[35rem] text-pretty text-base leading-7 text-[#B8B8C2]">{stage.copy}</p>
             <div className="mt-9"><InstrumentFace activeIndex={index} data={data} error={error} isLoading={isLoading} reduceMotion /></div>
           </article>
         ))}
@@ -320,11 +320,11 @@ function NarrativeContent({ stage, index }: { stage: (typeof stages)[number]; in
   return (
     <>
       <div className="flex items-center gap-4">
-        <span className="font-mono text-xs text-[#B7FF3C]">0{index + 1}</span>
-        <span className="text-sm font-semibold text-[#D8D8D0]">{stage.label}</span>
+        <span className="font-mono text-xs text-[#C6F432]">0{index + 1}</span>
+        <span className="text-sm font-semibold text-[#B8B8C2]">{stage.label}</span>
       </div>
-      <h2 className="valuator-display mt-7 max-w-[10ch] text-balance text-[clamp(3.15rem,4.15vw,4.85rem)] font-semibold leading-[0.94] tracking-[-0.035em] text-[#F2F2EE]">{stage.title}</h2>
-      <p className="mt-7 max-w-[32rem] text-pretty text-lg leading-8 text-[#BDBDB6]">{stage.copy}</p>
+      <h2 className="valuator-display mt-7 max-w-[10ch] text-balance text-[clamp(3.15rem,4.15vw,4.85rem)] font-semibold leading-[0.94] tracking-[-0.035em] text-[#FFFFFF]">{stage.title}</h2>
+      <p className="mt-7 max-w-[32rem] text-pretty text-lg leading-8 text-[#B8B8C2]">{stage.copy}</p>
     </>
   )
 }
@@ -366,18 +366,18 @@ function InstrumentFace({
   const chapterProgress = progress ?? fallbackProgress
   const chapterIndicatorX = useTransform(chapterProgress, [0, 1], ["0%", "300%"])
   return (
-    <div className="instrument-face relative overflow-hidden border border-white/16 bg-[#0D0D0C]">
-      <header className="relative z-10 border-b border-white/12 p-5 sm:px-6 sm:py-5">
+    <div className="instrument-face relative overflow-hidden border border-white/16 bg-[#121214]">
+      <header className="relative z-10 border-b border-white/12 px-6 py-5 sm:px-7 sm:py-6">
         <div className="flex items-start justify-between gap-6">
           <div>
-            <p className="text-xs font-semibold text-[#B7FF3C]">FEATURED WALKTHROUGH · {ticker}</p>
-            <p className="mt-2 text-sm text-[#A9A9A2]">
+            <p className="text-xs font-semibold text-[#C6F432]">FEATURED WALKTHROUGH · {ticker}</p>
+            <p className="mt-2 text-sm text-[#B8B8C2]">
               {data?.company_name ?? (loading ? "Loading validated company record" : "Validated company record")}
             </p>
           </div>
           <div aria-live="polite"><StatusBadge loading={loading} unavailable={unavailable} partial={data?.status === "partial"} /></div>
         </div>
-        <div className="mt-4 grid grid-cols-[auto_minmax(0,1fr)] gap-5 border-t border-white/10 pt-3 text-xs">
+        <div className="mt-4 grid grid-cols-[auto_minmax(0,1fr)] gap-6 border-t border-white/10 pt-4 text-xs">
           <ReadoutInline label="Resolved" value={`${validMethods.length} / 5`} />
           <ReadoutInline label="Data as of" value={data ? formatTimestamp(data.fetched_at) : "Awaiting data"} align="right" />
         </div>
@@ -390,15 +390,15 @@ function InstrumentFace({
               <button
                 key={item.id}
                 type="button"
-                className={`instrument-chapter-button min-h-12 border-r border-white/10 px-3 text-left text-xs font-semibold last:border-r-0 ${index === stageIndex ? "text-[#F2F2EE]" : index < stageIndex ? "text-[#9EBC8C]" : "text-[#85857F]"}`}
+                className={`instrument-chapter-button min-h-[3.25rem] border-r border-white/10 px-4 py-3 text-left text-xs font-semibold last:border-r-0 sm:px-6 ${index === stageIndex ? "text-[#FFFFFF]" : index < stageIndex ? "text-[#B8B8C2]" : "text-[#8E8E99]"}`}
                 aria-current={index === stageIndex ? "step" : undefined}
                 onClick={() => onSelectStage(index)}
               >
-                <span className="mr-2 font-mono text-[0.65rem] text-[#B7FF3C]">0{index + 1}</span>{item.label}
+                <span className="mr-2 font-mono text-[0.65rem] text-[#C6F432]">0{index + 1}</span>{item.label}
               </button>
             ))}
           </div>
-          <motion.span className="pointer-events-none absolute bottom-0 left-0 h-0.5 w-1/4 bg-[#B7FF3C]" style={{ x: chapterIndicatorX }} />
+          <motion.span className="pointer-events-none absolute bottom-0 left-0 h-0.5 w-1/4 bg-[#C6F432]" style={{ x: chapterIndicatorX }} />
         </nav>
       ) : (
         <div
@@ -410,11 +410,11 @@ function InstrumentFace({
           aria-valuenow={stageIndex + 1}
           aria-valuetext={`Stage ${stageIndex + 1} of 4`}
         >
-          <div className="absolute inset-0 origin-left bg-[#B7FF3C]" style={{ transform: `scaleX(${stageProgress})` }} />
+          <div className="absolute inset-0 origin-left bg-[#C6F432]" style={{ transform: `scaleX(${stageProgress})` }} />
         </div>
       )}
 
-      <div className="instrument-viewport relative min-h-0 p-5 sm:p-6 xl:p-7">
+      <div className="instrument-viewport relative min-h-0 p-6 sm:p-7 xl:p-8">
         {loading ? <LoadingState /> : unavailable ? <UnavailableState ticker={ticker} /> : null}
         {!loading && !unavailable && reduceMotion ? (
           <div className="h-full">
@@ -452,28 +452,36 @@ function InstrumentLayer({ index, activeIndex, progress, children }: { index: nu
   const y = useTransform(progress, input, yOutputs)
 
   return (
-    <motion.div className="instrument-layer absolute inset-0" style={{ opacity, y }} aria-hidden={activeIndex !== index}>
+    <motion.div
+      className="instrument-layer absolute inset-0 overflow-y-auto overscroll-contain pb-4 pr-1 scrollbar-thin"
+      style={{
+        opacity,
+        y,
+        pointerEvents: activeIndex === index ? "auto" : "none",
+      }}
+      aria-hidden={activeIndex !== index}
+    >
       {children}
     </motion.div>
   )
 }
 
 function StatusBadge({ loading, unavailable, partial }: { loading: boolean; unavailable: boolean; partial: boolean }) {
-  if (loading) return <span className="flex items-center gap-2 font-mono text-xs font-bold text-[#D8D8D0]"><LoaderCircle className="size-3.5 animate-spin" />VALIDATING</span>
-  if (unavailable) return <span className="flex items-center gap-2 font-mono text-xs font-bold text-[#A9C6B3]"><Database className="size-3.5" />UNAVAILABLE</span>
-  return <span className="flex items-center gap-2 font-mono text-xs font-bold text-[#B7FF3C]"><Check className="size-3.5" />{partial ? "PARTIAL" : "VALIDATED"}</span>
+  if (loading) return <span className="flex items-center gap-2 font-mono text-xs font-bold text-[#B8B8C2]"><LoaderCircle className="size-3.5 animate-spin" />VALIDATING</span>
+  if (unavailable) return <span className="flex items-center gap-2 font-mono text-xs font-bold text-[#B8B8C2]"><Database className="size-3.5" />UNAVAILABLE</span>
+  return <span className="flex items-center gap-2 font-mono text-xs font-bold text-[#C6F432]"><Check className="size-3.5" />{partial ? "PARTIAL" : "VALIDATED"}</span>
 }
 
 function LoadingState() {
   return (
     <div className="flex min-h-[26rem] flex-col justify-between">
       <div>
-        <p className="text-sm font-semibold text-[#F2F2EE]">Validating the featured record</p>
-        <p className="mt-2 max-w-md text-sm leading-6 text-[#A9A9A2]">The walkthrough is requesting cached provider responses. No valuation geometry is drawn until those inputs return.</p>
+        <p className="text-sm font-semibold text-[#FFFFFF]">Validating the featured record</p>
+        <p className="mt-2 max-w-md text-sm leading-6 text-[#B8B8C2]">The walkthrough is requesting cached provider responses. No valuation geometry is drawn until those inputs return.</p>
       </div>
       <div className="space-y-3" aria-hidden="true">
         {["Company record", "Market telemetry", "Valuation engines"].map((label) => (
-          <div key={label} className="flex items-center gap-4 border-b border-white/12 py-4 text-sm text-[#A9A9A2]"><LoaderCircle className="size-4 animate-spin text-[#B7FF3C]" />{label}</div>
+          <div key={label} className="flex items-center gap-4 border-b border-white/12 px-4 py-4 text-sm text-[#B8B8C2]"><LoaderCircle className="size-4 animate-spin text-[#C6F432]" />{label}</div>
         ))}
       </div>
     </div>
@@ -483,10 +491,10 @@ function LoadingState() {
 function UnavailableState({ ticker }: { ticker: string }) {
   return (
     <div className="flex min-h-[26rem] flex-col items-start justify-center">
-      <Database className="size-6 text-[#A9C6B3]" />
-      <h3 className="mt-5 text-xl font-semibold text-[#F2F2EE]">Featured data is unavailable.</h3>
-      <p className="mt-3 max-w-md text-sm leading-6 text-[#A9A9A2]">VALUATOR did not substitute demo values. Open the workspace to retry the real {ticker} analysis.</p>
-      <Link href={`/stocks/${ticker}/valuation`} className="mt-7 inline-flex min-h-11 items-center gap-2 border-b border-[#B7FF3C] font-semibold text-[#B7FF3C]">Open {ticker} workspace <ArrowUpRight className="size-4" /></Link>
+      <Database className="size-6 text-[#B8B8C2]" />
+      <h3 className="mt-5 text-xl font-semibold text-[#FFFFFF]">Featured data is unavailable.</h3>
+      <p className="mt-3 max-w-md text-sm leading-6 text-[#B8B8C2]">VALUATOR did not substitute demo values. Open the workspace to retry the real {ticker} analysis.</p>
+      <Link href={`/stocks/${ticker}/valuation`} className="mt-7 inline-flex min-h-11 items-center gap-2 border-b border-[#C6F432] font-semibold text-[#C6F432]">Open {ticker} workspace <ArrowUpRight className="size-4" /></Link>
     </div>
   )
 }
@@ -497,16 +505,16 @@ function EvidenceState({ data, methods }: { data: FeaturedResponse | undefined; 
   return (
     <div>
       <StateHeading title="Provider record" copy="Only returned provider values enter the walkthrough." />
-      <div className="mt-8 grid gap-px border border-white/12 bg-white/12 sm:grid-cols-2">
+      <div className="mt-6 grid gap-px border border-white/12 bg-white/12 sm:grid-cols-2">
         <EvidenceCell label="Ticker" value={data?.ticker ?? "Unavailable"} />
         <EvidenceCell label="Engine responses" value={`${returned} of 5 returned`} />
         <EvidenceCell label="Response timestamp" value={formatTimestamp(data?.fetched_at)} />
         <EvidenceCell label="Cache policy" value="1 hour · background refresh" />
       </div>
       <div className="mt-6">
-        <p className="text-xs font-semibold text-[#A9A9A2]">Providers reported by the response</p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {providers.length ? providers.map((provider) => <span key={provider} className="border border-white/16 px-3 py-2 text-xs text-[#D8D8D0]">{provider}</span>) : <span className="text-sm text-[#A9A9A2]">Provider names unavailable in this response.</span>}
+        <p className="text-xs font-semibold text-[#8E8E99]">Providers reported by the response</p>
+        <div className="mt-3.5 flex flex-wrap gap-2.5">
+          {providers.length ? providers.map((provider) => <span key={provider} className="border border-white/16 bg-[#0E0E10]/50 px-4 py-2 text-xs text-[#B8B8C2]">{provider}</span>) : <span className="text-sm text-[#8E8E99]">Provider names unavailable in this response.</span>}
         </div>
       </div>
     </div>
@@ -523,12 +531,12 @@ function AssumptionsState({ assumptions, telemetry }: { assumptions: JsonRecord 
   return (
     <div>
       <StateHeading title="Classification stays visible" copy="Provider inputs, global assumptions, and derived rates retain different labels." />
-      <div className="mt-8 border-y border-white/12">
+      <div className="mt-6 border border-white/12 bg-[#0E0E10]/40">
         {rows.map(([label, value, kind]) => (
-          <div key={label} className="grid grid-cols-[1fr_auto] gap-4 border-b border-white/12 py-4 last:border-b-0 sm:grid-cols-[1fr_8rem_9rem]">
-            <span className="text-sm text-[#D8D8D0]">{label}</span>
-            <strong className="font-mono text-sm text-[#F2F2EE]">{value}</strong>
-            <span className="col-span-2 text-xs text-[#A9A9A2] sm:col-span-1">{kind}</span>
+          <div key={label} className="grid grid-cols-[1fr_auto] items-center gap-4 border-b border-white/12 px-5 py-4 last:border-b-0 sm:grid-cols-[1fr_8rem_9rem] sm:px-6">
+            <span className="text-sm text-[#B8B8C2]">{label}</span>
+            <strong className="font-mono text-sm text-[#FFFFFF]">{value}</strong>
+            <span className="col-span-2 text-xs text-[#8E8E99] sm:col-span-1">{kind}</span>
           </div>
         ))}
       </div>
@@ -560,7 +568,7 @@ function ExpectationsState({ methods, currentPrice, implied, warnings, reduceMot
         <ExpectationCell label="Required stage-1 growth" value={formatPercent(growth)} />
         <ExpectationCell label="Required target EBIT margin" value={formatPercent(margin)} />
       </div>
-      {!converged && warnings.length ? <p className="mt-4 text-xs leading-5 text-[#FFB19D]">{warnings[0]}</p> : null}
+      {!converged && warnings.length ? <p className="mt-3.5 text-xs leading-5 text-[#FFB19D]">{warnings[0]}</p> : null}
     </div>
   )
 }
@@ -568,12 +576,12 @@ function ExpectationsState({ methods, currentPrice, implied, warnings, reduceMot
 function MonteCarloRange({ method, reduceMotion, progress }: { method: MethodDatum | undefined; reduceMotion: boolean; progress?: MotionValue<number> }) {
   const fallbackProgress = useMotionValue(1)
   const motionProgress = progress ?? fallbackProgress
-  const rangeScale = useTransform(motionProgress, [0.53, 0.64], [0, 1])
-  const medianScale = useTransform(motionProgress, [0.49, 0.56], [0, 1])
-  const valueOpacity = useTransform(motionProgress, [0.48, 0.57], [0.35, 1])
+  const rangeScale = useTransform(motionProgress, [0.48, 0.58], [0, 1])
+  const medianScale = useTransform(motionProgress, [0.46, 0.55], [0, 1])
+  const valueOpacity = useTransform(motionProgress, [0.46, 0.55], [0.35, 1])
 
   if (!method || method.low === null || method.median === null || method.high === null) {
-    return <div className="mt-5 border-y border-white/12 py-5 text-sm text-[#A9A9A2]">Monte Carlo percentiles are unavailable in this response.</div>
+    return <div className="mt-5 border border-white/12 bg-[#0E0E10]/40 px-5 py-4 text-sm text-[#8E8E99]">Monte Carlo percentiles are unavailable in this response.</div>
   }
 
   const min = method.low
@@ -581,41 +589,41 @@ function MonteCarloRange({ method, reduceMotion, progress }: { method: MethodDat
   const medianPosition = Math.min(100, Math.max(0, ((method.median - min) / span) * 100))
 
   return (
-    <div className="mt-5 border-y border-white/12 py-5">
-      <motion.div className="grid grid-cols-3 gap-3" style={reduceMotion ? undefined : { opacity: valueOpacity }}>
+    <div className="mt-5 border border-white/12 bg-[#0E0E10]/40 px-5 py-4">
+      <motion.div className="grid grid-cols-3 gap-4" style={reduceMotion ? undefined : { opacity: valueOpacity }}>
         <MonteCarloValue label="P10 · Bear" value={method.low} />
         <MonteCarloValue label="P50 · Base" value={method.median} emphasized />
         <MonteCarloValue label="P90 · Bull" value={method.high} align="right" />
       </motion.div>
-      <div className="relative mt-5 h-8" aria-label={`Monte Carlo range from ${formatMoney(method.low)} to ${formatMoney(method.high)}, median ${formatMoney(method.median)}`}>
+      <div className="relative mt-3.5 h-6" aria-label={`Monte Carlo range from ${formatMoney(method.low)} to ${formatMoney(method.high)}, median ${formatMoney(method.median)}`}>
         <div className="absolute inset-x-0 top-1/2 h-px bg-white/16" />
         <motion.div
-          className="absolute inset-x-0 top-1/2 h-2 origin-center -translate-y-1/2 bg-[#B7FF3C]/28"
+          className="absolute inset-x-0 top-1/2 h-2 origin-center -translate-y-1/2 bg-[#C6F432]/28"
           style={reduceMotion ? undefined : { scaleX: rangeScale }}
         />
         <motion.span
-          className="absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 bg-[#F2F2EE]"
+          className="absolute top-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 bg-[#FFFFFF]"
           style={{ left: `${medianPosition}%`, ...(reduceMotion ? {} : { scale: medianScale }) }}
         />
-        <span className="absolute left-0 top-1/2 h-4 w-px -translate-y-1/2 bg-[#B7FF3C]" />
-        <span className="absolute right-0 top-1/2 h-4 w-px -translate-y-1/2 bg-[#B7FF3C]" />
+        <span className="absolute left-0 top-1/2 h-3.5 w-px -translate-y-1/2 bg-[#C6F432]" />
+        <span className="absolute right-0 top-1/2 h-3.5 w-px -translate-y-1/2 bg-[#C6F432]" />
       </div>
     </div>
   )
 }
 
 function MonteCarloValue({ label, value, emphasized = false, align = "left" }: { label: string; value: number; emphasized?: boolean; align?: "left" | "right" }) {
-  return <div className={align === "right" ? "text-right" : emphasized ? "text-center" : "text-left"}><p className={`text-[0.68rem] ${emphasized ? "text-[#B7FF3C]" : "text-[#A9A9A2]"}`}>{label}</p><p className="mt-1 font-mono text-sm font-semibold text-[#F2F2EE]">{formatMoney(value)}</p></div>
+  return <div className={align === "right" ? "text-right" : emphasized ? "text-center" : "text-left"}><p className={`text-[0.68rem] ${emphasized ? "text-[#C6F432]" : "text-[#8E8E99]"}`}>{label}</p><p className="mt-1 font-mono text-sm font-semibold text-[#FFFFFF]">{formatMoney(value)}</p></div>
 }
 
 function ValuationPlot({ methods, currentPrice, compact = false, reduceMotion = false, progress }: { methods: MethodDatum[]; currentPrice: number | null; compact?: boolean; reduceMotion?: boolean; progress?: MotionValue<number> }) {
   const fallbackProgress = useMotionValue(1)
   const motionProgress = progress ?? fallbackProgress
-  const plotReveal = useTransform(motionProgress, [0.57, 0.7], ["inset(0 100% 0 0)", "inset(0 0% 0 0)"])
+  const plotReveal = useTransform(motionProgress, [0.48, 0.62], ["inset(0 100% 0 0)", "inset(0 0% 0 0)"])
   const priceScale = useTransform(motionProgress, [0.78, 0.88], [0, 1])
   const values = methods.flatMap((method) => [method.value, method.low, method.high]).filter((value): value is number => value !== null && value > 0)
   if (currentPrice !== null && currentPrice > 0) values.push(currentPrice)
-  if (!values.length) return <p className="mt-10 border-y border-white/12 py-12 text-sm text-[#A9A9A2]">No engine returned a valid fair value. The plot remains empty.</p>
+  if (!values.length) return <p className="mt-6 border border-white/12 bg-[#0E0E10]/40 px-5 py-8 text-sm text-[#8E8E99]">No engine returned a valid fair value. The plot remains empty.</p>
   const rawMin = Math.min(...values)
   const rawMax = Math.max(...values)
   const padding = Math.max((rawMax - rawMin) * 0.12, rawMax * 0.05)
@@ -633,64 +641,87 @@ function ValuationPlot({ methods, currentPrice, compact = false, reduceMotion = 
         : "translateX(-50%)"
 
   return (
-    <figure className={`mt-7 ${compact ? "space-y-2" : "space-y-3"}`} aria-label={`Fair value plot from ${formatMoney(min)} to ${formatMoney(max)}`}>
-      <div className="flex justify-between font-mono text-[0.7rem] text-[#A9A9A2]"><span>{formatMoney(min)}</span><span>USD / share</span><span data-testid="valuation-plot-max-label">{formatMoney(max)}</span></div>
-      {currentPricePosition !== null ? (
-        <div className="relative h-5 border-x border-white/16" aria-hidden="true">
-          <span
-            className="absolute top-0 whitespace-nowrap bg-[#0D0D0C] px-1 font-mono text-[0.65rem] text-[#B7FF3C]"
-            style={{ left: `${currentPricePosition}%`, transform: priceLabelTransform }}
-            data-testid="valuation-plot-price-label"
-          >
-            PRICE
-          </span>
+    <figure className={`mt-5 ${compact ? "space-y-2.5" : "space-y-3.5"}`} aria-label={`Fair value plot from ${formatMoney(min)} to ${formatMoney(max)}`}>
+      <div className="grid grid-cols-[6.75rem_1fr] items-end sm:grid-cols-[10.5rem_1fr]">
+        <span className="px-3 font-mono text-[0.68rem] uppercase tracking-wider text-[#8E8E99] sm:px-5">Engine</span>
+        <div className="flex justify-between gap-2 px-3 font-mono text-[0.68rem] text-[#8E8E99] sm:px-5">
+          <span className="whitespace-nowrap">{formatMoney(min)}</span>
+          <span className="whitespace-nowrap">USD / share</span>
+          <span className="whitespace-nowrap" data-testid="valuation-plot-max-label">{formatMoney(max)}</span>
         </div>
-      ) : null}
-      <motion.div className="relative border-x border-white/16" style={!reduceMotion && currentPrice === null ? { clipPath: plotReveal } : undefined}>
-        {currentPrice !== null ? <motion.div className="absolute inset-y-0 z-20 w-px origin-top bg-[#B7FF3C]" style={{ left: position(currentPrice), ...(reduceMotion ? {} : { scaleY: priceScale }) }} /> : null}
-        {methods.map((method, index) => (
-          <div key={method.key} className={`grid grid-cols-[7.5rem_1fr] items-center gap-3 border-b border-white/10 last:border-b-0 ${compact ? "min-h-9" : "min-h-11"}`}>
-            <span className="truncate text-xs text-[#BDBDB6]">{method.label}</span>
-            <div className="relative h-full border-l border-white/8">
-              {method.value !== null ? (
-                <>
-                  {method.low !== null && method.high !== null ? <motion.div className="absolute top-1/2 h-1 origin-left -translate-y-1/2 bg-[#B7FF3C]/30" style={{ left: position(method.low), width: `calc(${position(method.high)} - ${position(method.low)})` }} initial={reduceMotion ? false : { scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: reduceMotion ? 0 : 0.38, delay: reduceMotion ? 0 : index * 0.035, ease: [0.22, 1, 0.36, 1] }} /> : null}
-                  <motion.span className="absolute top-1/2 z-10 size-2 -translate-x-1/2 -translate-y-1/2 bg-[#F2F2EE]" style={{ left: position(method.value) }} title={`${method.label}: ${formatMoney(method.value)}`} initial={reduceMotion ? false : { scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: reduceMotion ? 0 : 0.28, delay: reduceMotion ? 0 : 0.08 + index * 0.04, ease: [0.22, 1, 0.36, 1] }} />
-                  {!compact ? <span className="absolute top-1/2 -translate-y-1/2 pl-2 font-mono text-[0.68rem] text-[#D8D8D0]" style={{ left: position(method.value) }}>{formatMoney(method.value)}</span> : null}
-                </>
-              ) : <span className="absolute inset-y-0 left-0 flex items-center text-[0.7rem] text-[#8F8F89]">{method.status.replaceAll("_", " ")}</span>}
+      </div>
+      {currentPricePosition !== null ? (
+        <div className="grid grid-cols-[6.75rem_1fr] sm:grid-cols-[10.5rem_1fr]" aria-hidden="true">
+          <span />
+          <div className="relative h-6 px-3 sm:px-5">
+            <div className="relative flex h-full items-center">
+              <span
+                className="absolute whitespace-nowrap bg-[#121214] px-1.5 font-mono text-[0.65rem] font-semibold text-[#C6F432]"
+                style={{ left: `${currentPricePosition}%`, transform: priceLabelTransform }}
+                data-testid="valuation-plot-price-label"
+              >
+                PRICE
+              </span>
             </div>
           </div>
+        </div>
+      ) : null}
+      <div className="relative border border-white/14 bg-[#0E0E10]/40">
+        {currentPrice !== null ? (
+          <div className="pointer-events-none absolute inset-0 grid grid-cols-[6.75rem_1fr] sm:grid-cols-[10.5rem_1fr]" aria-hidden="true">
+            <span />
+            <div className="relative h-full px-3 sm:px-5">
+              <div className="relative h-full">
+                <motion.div className="absolute inset-y-0 z-20 w-px origin-top bg-[#C6F432]" style={{ left: position(currentPrice), ...(reduceMotion ? {} : { scaleY: priceScale }) }} />
+              </div>
+            </div>
+          </div>
+        ) : null}
+        {methods.map((method, index) => (
+          <div key={method.key} className="grid min-h-11 grid-cols-[6.75rem_1fr] items-center border-b border-white/10 last:border-b-0 sm:grid-cols-[10.5rem_1fr]">
+            <span className="truncate px-3 py-2.5 text-xs font-medium text-[#B8B8C2] sm:px-5">{method.label}</span>
+            <motion.div className="relative h-full border-l border-white/10 px-3 sm:px-5" style={!reduceMotion && currentPrice === null ? { clipPath: plotReveal } : undefined}>
+              <div className="relative h-full">
+                {method.value !== null ? (
+                  <>
+                    {method.low !== null && method.high !== null ? <motion.div className="absolute top-1/2 h-1 origin-left -translate-y-1/2 bg-[#C6F432]/30" style={{ left: position(method.low), width: `calc(${position(method.high)} - ${position(method.low)})` }} initial={reduceMotion ? false : { scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: reduceMotion ? 0 : 0.38, delay: reduceMotion ? 0 : index * 0.035, ease: [0.22, 1, 0.36, 1] }} /> : null}
+                    <motion.span className="absolute top-1/2 z-10 size-2 -translate-x-1/2 -translate-y-1/2 bg-[#FFFFFF]" style={{ left: position(method.value) }} title={`${method.label}: ${formatMoney(method.value)}`} initial={reduceMotion ? false : { scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: reduceMotion ? 0 : 0.28, delay: reduceMotion ? 0 : 0.08 + index * 0.04, ease: [0.22, 1, 0.36, 1] }} />
+                    {!compact ? <span className="absolute top-1/2 -translate-y-1/2 pl-2 font-mono text-[0.68rem] text-[#B8B8C2]" style={{ left: position(method.value) }}>{formatMoney(method.value)}</span> : null}
+                  </>
+                ) : <span className="absolute inset-y-0 left-0 flex items-center text-[0.7rem] text-[#8E8E99]">{method.status.replaceAll("_", " ")}</span>}
+              </div>
+            </motion.div>
+          </div>
         ))}
-      </motion.div>
-      <figcaption className="text-[0.7rem] leading-5 text-[#8F8F89]">Points are returned fair values. The DCF interval, when available, is its Monte Carlo P10–P90 range.</figcaption>
+      </div>
+      <figcaption className="pt-2 text-xs leading-5 text-[#8E8E99]">Points are returned fair values. The DCF interval, when available, is its Monte Carlo P10–P90 range.</figcaption>
     </figure>
   )
 }
 
 function StateHeading({ title, copy }: { title: string; copy: string }) {
-  return <div><h3 className="text-xl font-semibold text-[#F2F2EE]">{title}</h3><p className="mt-2 max-w-xl text-sm leading-6 text-[#A9A9A2]">{copy}</p></div>
+  return <div><h3 className="text-xl font-semibold text-[#FFFFFF]">{title}</h3><p className="mt-2 max-w-xl text-sm leading-6 text-[#B8B8C2]">{copy}</p></div>
 }
 
 function EvidenceCell({ label, value }: { label: string; value: string }) {
-  return <div className="min-h-24 bg-[#0D0D0C] p-4"><p className="text-xs text-[#A9A9A2]">{label}</p><p className="mt-3 text-sm font-semibold text-[#F2F2EE]">{value}</p></div>
+  return <div className="min-h-24 bg-[#121214] px-5 py-4 sm:px-6 sm:py-5"><p className="text-xs text-[#8E8E99]">{label}</p><p className="mt-3 text-sm font-semibold text-[#FFFFFF]">{value}</p></div>
 }
 
 function ExpectationCell({ label, value }: { label: string; value: string }) {
-  return <div className="bg-[#0D0D0C] p-4"><p className="text-xs text-[#A9A9A2]">{label}</p><p className="mt-2 font-mono text-sm font-semibold text-[#F2F2EE]">{value}</p></div>
+  return <div className="bg-[#121214] px-5 py-4"><p className="text-xs text-[#8E8E99]">{label}</p><p className="mt-2 font-mono text-sm font-semibold text-[#FFFFFF]">{value}</p></div>
 }
 
 function ReadoutInline({ label, value, align = "left" }: { label: string; value: string; align?: "left" | "right" }) {
-  return <div className={`min-w-0 ${align === "right" ? "text-right" : ""}`}><span className="text-[#7F7F79]">{label}</span><span className="ml-2 truncate font-mono font-semibold text-[#D8D8D0]" title={value}>{value}</span></div>
+  return <div className={`min-w-0 ${align === "right" ? "text-right" : ""}`}><span className="text-[#8E8E99]">{label}</span><span className="ml-2 truncate font-mono font-semibold text-[#B8B8C2]" title={value}>{value}</span></div>
 }
 
 function SourceLedger() {
   return (
-    <div id="sources" className="border-y border-white/12 bg-[#050505]">
+    <div id="sources" className="border-y border-white/12 bg-[#0B0B0C]">
       <div className="mx-auto grid max-w-[90rem] gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[1fr_1fr] lg:items-end">
-        <div><p className="text-sm font-semibold text-[#B7FF3C]">Evidence ledger</p><h2 className="valuator-display mt-6 max-w-[11ch] text-balance text-5xl font-semibold leading-[0.92] tracking-[-0.035em] sm:text-7xl">Trust is not a claim. It is a trail.</h2></div>
+        <div><p className="text-sm font-semibold text-[#C6F432]">Evidence ledger</p><h2 className="valuator-display mt-6 max-w-[11ch] text-balance text-5xl font-semibold leading-[0.92] tracking-[-0.035em] text-[#FFFFFF] sm:text-7xl">Trust is not a claim. It is a trail.</h2></div>
         <div>
-          <p className="max-w-[38rem] text-lg leading-8 text-[#B8B8B1]">Every completed response retains its methodology, source references, assumptions, projections, and warnings. Missing inputs stop the calculation instead of becoming invented values.</p>
+          <p className="max-w-[38rem] text-lg leading-8 text-[#B8B8C2]">Every completed response retains its methodology, source references, assumptions, projections, and warnings. Missing inputs stop the calculation instead of becoming invented values.</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href="https://www.sec.gov/edgar/search/" target="_blank" rel="noreferrer" className="valuator-source-link"><Database className="size-4" />SEC EDGAR <ArrowUpRight className="size-4" /></a>
             <a href="https://fiscaldata.treasury.gov/" target="_blank" rel="noreferrer" className="valuator-source-link"><Database className="size-4" />U.S. Treasury <ArrowUpRight className="size-4" /></a>

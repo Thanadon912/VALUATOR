@@ -101,17 +101,17 @@ export function SavedStocksPanel({ variant = "landing" }: { variant?: "landing" 
     <section
       aria-labelledby={`saved-stocks-${variant}-title`}
       className={variant === "landing"
-        ? "saved-stocks-panel rounded-xl border border-white/12 bg-[#080B09]/88 p-4 sm:p-5"
-        : "saved-stocks-panel rounded-xl border border-[#1E293B] bg-[#0B0F17]/90 p-4 sm:p-5"}
+        ? "saved-stocks-panel rounded-xl border border-white/12 bg-[#121214]/90 p-4 sm:p-5"
+        : "saved-stocks-panel rounded-xl border border-[#242429] bg-[#121214] p-4 sm:p-5"}
     >
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
         <div>
-          {variant === "landing" ? <p className="text-xs font-semibold text-[#B7FF3C]">Recent work</p> : null}
-          <h2 id={`saved-stocks-${variant}-title`} className={`${variant === "landing" ? "mt-1 " : ""}text-lg font-bold text-[#EFFAF4]`}>
+          {variant === "landing" ? <p className="text-xs font-semibold text-[#C6F432]">Recent work</p> : null}
+          <h2 id={`saved-stocks-${variant}-title`} className={`${variant === "landing" ? "mt-1 " : ""}text-lg font-bold text-[#FFFFFF]`}>
             Saved Stocks
           </h2>
         </div>
-        <div className="flex items-center gap-3 text-xs text-[#90B09E]">
+        <div className="flex items-center gap-3 text-xs text-[#8E8E99]">
           {items.length > 0 ? (
             <span>{variant === "landing"
               ? `${visible.length} of ${items.length} shown`
@@ -120,7 +120,7 @@ export function SavedStocksPanel({ variant = "landing" }: { variant?: "landing" 
                 : `${items.length} saved`}</span>
           ) : null}
           {variant === "landing" && items.length > 0 ? (
-            <Link href="/account" className="min-h-11 content-center font-semibold text-[#B7FF3C] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]">
+            <Link href="/account" className="min-h-11 content-center font-semibold text-[#C6F432] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]">
               View all saved
             </Link>
           ) : null}
@@ -133,7 +133,7 @@ export function SavedStocksPanel({ variant = "landing" }: { variant?: "landing" 
           tone="error"
           title="Saved stocks couldn’t sync"
           compact
-          actions={<button type="button" onClick={() => void retrySync()} className="min-h-11 font-semibold text-[#B7FF3C] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]">Retry sync</button>}
+          actions={<button type="button" onClick={() => void retrySync()} className="min-h-11 font-semibold text-[#C6F432] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]">Retry sync</button>}
         >
           {storeError}
         </StatusNotice>
@@ -142,7 +142,7 @@ export function SavedStocksPanel({ variant = "landing" }: { variant?: "landing" 
 
       {variant === "account" && items.length > 0 ? (
         <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-          <label className="min-w-0 flex-1 text-xs font-medium text-[#90B09E]">
+          <label className="min-w-0 flex-1 text-xs font-medium text-[#B8B8C2]">
             Search saved stocks
             <input
               type="search"
@@ -152,10 +152,10 @@ export function SavedStocksPanel({ variant = "landing" }: { variant?: "landing" 
                 setPage(1);
               }}
               placeholder="Ticker or company"
-              className="mt-1 block min-h-11 w-full rounded-[10px] border border-[#2A3B31] bg-[#070A0D] px-3 text-sm text-[#EFFAF4] placeholder:text-[#9AA69E] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+              className="mt-1 block min-h-11 w-full rounded-[10px] border border-[#242429] bg-[#0B0B0C] px-3 text-sm text-[#FFFFFF] placeholder:text-[#8E8E99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
             />
           </label>
-          <label className="text-xs font-medium text-[#90B09E] sm:w-48">
+          <label className="text-xs font-medium text-[#B8B8C2] sm:w-48">
             Sort saved stocks
             <select
               value={sort}
@@ -163,7 +163,7 @@ export function SavedStocksPanel({ variant = "landing" }: { variant?: "landing" 
                 setSort(event.target.value as AccountSort);
                 setPage(1);
               }}
-              className="mt-1 block min-h-11 w-full rounded-[10px] border border-[#2A3B31] bg-[#070A0D] px-3 text-sm text-[#EFFAF4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+              className="mt-1 block min-h-11 w-full rounded-[10px] border border-[#242429] bg-[#0B0B0C] px-3 text-sm text-[#FFFFFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
             >
               <option value="recent">Recently opened</option>
               <option value="ticker">Ticker A–Z</option>
@@ -181,25 +181,25 @@ export function SavedStocksPanel({ variant = "landing" }: { variant?: "landing" 
         </div>
       ) : items.length === 0 ? (
         <div className="py-7 text-center">
-          <Star className="mx-auto size-5 text-[#6D7F73]" aria-hidden="true" />
-          <p className="mt-3 text-sm font-semibold text-[#D1D1CA]">
+          <Star className="mx-auto size-5 text-[#8E8E99]" aria-hidden="true" />
+          <p className="mt-3 text-sm font-semibold text-[#FFFFFF]">
             {mode === "authenticated" ? "No saved stocks in your account yet." : "No saved stocks on this device yet."}
           </p>
-          <p className="mx-auto mt-1 max-w-sm text-xs leading-5 text-[#8C9A90]">
+          <p className="mx-auto mt-1 max-w-sm text-xs leading-5 text-[#8E8E99]">
             Open a company workspace and use the star control. Searching and valuation remain available without an account.
           </p>
-          <Link href="/#find-fair-value" className="mt-3 inline-flex min-h-11 items-center rounded-[10px] border border-[#2A3B31] px-4 text-sm font-semibold text-[#EFFAF4] transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]">
+          <Link href="/#find-fair-value" className="mt-3 inline-flex min-h-11 items-center rounded-[10px] border border-[#323238] px-4 text-sm font-semibold text-[#FFFFFF] transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]">
             Find a company
           </Link>
         </div>
       ) : variant === "account" && managedItems.length === 0 ? (
         <div className="py-7 text-center">
-          <p className="text-sm font-semibold text-[#D1D1CA]">No saved stocks match “{query.trim()}”.</p>
-          <p className="mx-auto mt-1 max-w-sm text-xs leading-5 text-[#8C9A90]">Search by ticker or company name, or clear the search to see the complete list.</p>
+          <p className="text-sm font-semibold text-[#FFFFFF]">No saved stocks match “{query.trim()}”.</p>
+          <p className="mx-auto mt-1 max-w-sm text-xs leading-5 text-[#8E8E99]">Search by ticker or company name, or clear the search to see the complete list.</p>
           <button type="button" onClick={() => {
             setQuery("");
             setPage(1);
-          }} className="mt-3 min-h-11 rounded-[10px] border border-[#2A3B31] px-4 text-sm font-semibold text-[#EFFAF4] hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]">
+          }} className="mt-3 min-h-11 rounded-[10px] border border-[#323238] px-4 text-sm font-semibold text-[#FFFFFF] hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]">
             Clear search
           </button>
         </div>
@@ -232,7 +232,7 @@ export function SavedStocksPanel({ variant = "landing" }: { variant?: "landing" 
             <button
               type="button"
               onClick={() => void handleUndo()}
-              className="min-h-11 font-semibold text-[#B7FF3C] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+              className="min-h-11 font-semibold text-[#C6F432] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
             >
               {removalFeedback.kind === "undo" ? "Undo" : "Try restore"}
             </button>
@@ -248,10 +248,10 @@ export function SavedStocksPanel({ variant = "landing" }: { variant?: "landing" 
         </StatusNotice>
       ) : null}
 
-      <footer className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-3 text-xs text-[#8C9A90]">
+      <footer className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-3 text-xs text-[#8E8E99]">
         <span>{mode === "authenticated" ? "Synced to your account" : "Stored on this device"}</span>
         {mode === "guest" && variant === "landing" ? (
-          <Link href="/login?next=%2Faccount" className="min-h-11 content-center font-semibold text-[#B7FF3C] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]">
+          <Link href="/login?next=%2Faccount" className="min-h-11 content-center font-semibold text-[#C6F432] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]">
             Sign in to sync
           </Link>
         ) : null}
@@ -263,16 +263,16 @@ export function SavedStocksPanel({ variant = "landing" }: { variant?: "landing" 
             type="button"
             disabled={safePage === 1}
             onClick={() => setPage((current) => Math.max(1, current - 1))}
-            className="inline-flex min-h-11 items-center gap-1 rounded-lg border border-white/15 px-3 text-xs font-semibold text-[#D1D1CA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C] disabled:opacity-40"
+            className="inline-flex min-h-11 items-center gap-1 rounded-lg border border-white/15 px-3 text-xs font-semibold text-[#FFFFFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432] disabled:opacity-40"
           >
             <ChevronLeft className="size-4" aria-hidden="true" /> Previous
           </button>
-          <span className="px-2 text-xs tabular-nums text-[#90B09E]">{safePage} / {pageCount}</span>
+          <span className="px-2 text-xs tabular-nums text-[#8E8E99]">{safePage} / {pageCount}</span>
           <button
             type="button"
             disabled={safePage === pageCount}
             onClick={() => setPage((current) => Math.min(pageCount, current + 1))}
-            className="inline-flex min-h-11 items-center gap-1 rounded-lg border border-white/15 px-3 text-xs font-semibold text-[#D1D1CA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C] disabled:opacity-40"
+            className="inline-flex min-h-11 items-center gap-1 rounded-lg border border-white/15 px-3 text-xs font-semibold text-[#FFFFFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432] disabled:opacity-40"
           >
             Next <ChevronRight className="size-4" aria-hidden="true" />
           </button>
@@ -302,25 +302,25 @@ function SavedStockRow({
     <article className="grid min-w-0 grid-cols-[minmax(0,1fr)_2.75rem] gap-3 py-3 sm:items-center">
       <Link
         href={savedStockHref(item)}
-        className="saved-stock-row-link group grid min-w-0 gap-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]"
+        className="saved-stock-row-link group grid min-w-0 gap-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]"
       >
         <div className="min-w-0">
           <div className="flex items-baseline gap-2">
-            <strong className="font-mono text-sm text-[#EFFAF4] group-hover:text-[#B7FF3C]">{item.ticker}</strong>
-            <span className="truncate text-xs text-[#90B09E]" title={snapshot?.company_name ?? undefined}>
+            <strong className="font-mono text-sm text-[#FFFFFF] group-hover:text-[#C6F432]">{item.ticker}</strong>
+            <span className="truncate text-xs text-[#B8B8C2]" title={snapshot?.company_name ?? undefined}>
               {snapshot?.company_name ?? (marketLoading ? "Loading company…" : "Company name unavailable")}
             </span>
           </div>
-          <p className="mt-1 truncate text-xs text-[#8C9A90]">
+          <p className="mt-1 truncate text-xs text-[#8E8E99]">
             Last opened: {item.lastSection} · {formatTimestamp(item.lastVisitedAt)}
           </p>
         </div>
         <div className="saved-stock-row-market min-w-0">
-          <p className="font-mono text-sm font-semibold tabular-nums text-[#EFFAF4]">{marketLoading ? "Loading…" : price}</p>
-          <p className={`mt-1 text-xs font-semibold tabular-nums ${snapshot?.change_percent == null ? "text-[#8C9A90]" : changePositive ? "text-[#34D399]" : "text-[#FB7185]"}`}>
+          <p className="font-mono text-sm font-semibold tabular-nums text-[#FFFFFF]">{marketLoading ? "Loading…" : price}</p>
+          <p className={`mt-1 text-xs font-semibold tabular-nums ${snapshot?.change_percent == null ? "text-[#8E8E99]" : changePositive ? "text-[#C6F432]" : "text-[#FB7185]"}`}>
             {change}
           </p>
-          <p className={`mt-1 truncate text-xs ${snapshotSource(snapshot)?.is_stale ? "text-[#F5B942]" : "text-[#8C9A90]"}`} title={provenance}>
+          <p className={`mt-1 truncate text-xs ${snapshotSource(snapshot)?.is_stale ? "text-[#F5B942]" : "text-[#8E8E99]"}`} title={provenance}>
             {provenance}
           </p>
         </div>
@@ -328,7 +328,7 @@ function SavedStockRow({
       <button
         type="button"
         onClick={onRemove}
-        className="inline-flex size-11 items-center justify-center self-start rounded-lg text-[#7E9185] hover:bg-[#FB7185]/10 hover:text-[#FB7185] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C] sm:self-center"
+        className="inline-flex size-11 items-center justify-center self-start rounded-lg text-[#8E8E99] hover:bg-[#FB7185]/10 hover:text-[#FB7185] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432] sm:self-center"
         aria-label={`Remove ${item.ticker} from saved stocks`}
       >
         <Trash2 className="size-4" aria-hidden="true" />

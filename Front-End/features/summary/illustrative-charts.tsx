@@ -21,7 +21,7 @@ import type {
 } from "@/lib/api/types";
 
 const axisTick = {
-  fill: "#90B09E",
+  fill: "#8E8E99",
   fontSize: 11,
   fontFamily: "var(--font-mono)",
 };
@@ -37,21 +37,21 @@ function ChartDataDisclosure({
 }) {
   return (
     <details className="mt-3 border-t border-white/10 pt-2">
-      <summary className="summary-trust-control inline-flex min-h-11 cursor-pointer list-none items-center rounded-lg px-2 text-xs font-semibold text-[#B7FF3C] hover:bg-[#B7FF3C]/[0.06] hover:text-[#EFFAF4] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#B7FF3C] [&::-webkit-details-marker]:hidden">
+      <summary className="summary-trust-control inline-flex min-h-11 cursor-pointer list-none items-center rounded-lg px-2 text-xs font-semibold text-[#C6F432] hover:bg-[#C6F432]/[0.06] hover:text-[#FFFFFF] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#C6F432] [&::-webkit-details-marker]:hidden">
         View {label} data
       </summary>
-      <div className="summary-disclosure-panel mt-2 max-h-72 overflow-auto rounded-lg border border-[#1E293B]">
+      <div className="summary-disclosure-panel mt-2 max-h-72 overflow-auto rounded-lg border border-[#242429]">
         <table className="w-full border-collapse text-left text-xs">
-          <thead className="sticky top-0 bg-[#0B0F17] text-[#90B09E]">
+          <thead className="sticky top-0 bg-[#0B0B0C] text-[#8E8E99]">
             <tr>
               {columns.map((column) => (
                 <th className="px-3 py-2 font-semibold" key={column} scope="col">{column}</th>
               ))}
             </tr>
           </thead>
-          <tbody className="font-mono tabular-nums text-slate-200">
+          <tbody className="font-mono tabular-nums text-[#FFFFFF]">
             {rows.map((row, rowIndex) => (
-              <tr className="border-t border-[#1E293B]/70" key={`${row[0]}-${rowIndex}`}>
+              <tr className="border-t border-[#242429]/70" key={`${row[0]}-${rowIndex}`}>
                 {row.map((cell, cellIndex) => (
                   <td className="px-3 py-2" key={`${cell}-${cellIndex}`}>{cell}</td>
                 ))}
@@ -73,8 +73,8 @@ function PriceTooltip({
 }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="summary-chart-tooltip rounded-md border border-[#1E293B] bg-[#0B0F17]/95 px-3 py-1.5 shadow-lg backdrop-blur">
-      <span className="font-mono text-sm font-semibold tabular-nums text-slate-100">
+    <div className="summary-chart-tooltip rounded-md border border-[#242429] bg-[#0B0B0C]/95 px-3 py-1.5 shadow-lg backdrop-blur">
+      <span className="font-mono text-sm font-semibold tabular-nums text-[#FFFFFF]">
         ${Number(payload[0].value).toFixed(2)}
       </span>
     </div>
@@ -113,10 +113,10 @@ export function PriceHistoryChart({ points }: { points: PricePoint[] }) {
               <stop offset="100%" stopColor="#22D3EE" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid vertical={false} stroke="#1E293B" strokeOpacity={0.4} strokeDasharray="3 3" />
+          <CartesianGrid vertical={false} stroke="#242429" strokeOpacity={0.6} strokeDasharray="3 3" />
           <XAxis
             dataKey="label"
-            axisLine={{ stroke: "#1E293B" }}
+            axisLine={{ stroke: "#242429" }}
             tickLine={false}
             tick={axisTick}
             minTickGap={40}
@@ -130,7 +130,7 @@ export function PriceHistoryChart({ points }: { points: PricePoint[] }) {
             axisLine={false}
             tickFormatter={(value) => `$${Math.round(Number(value))}`}
           />
-          <Tooltip content={<PriceTooltip />} cursor={{ stroke: "#1E293B", strokeWidth: 1 }} />
+          <Tooltip content={<PriceTooltip />} cursor={{ stroke: "#323238", strokeWidth: 1 }} />
           <Area
             type="monotone"
             dataKey="value"
@@ -138,7 +138,7 @@ export function PriceHistoryChart({ points }: { points: PricePoint[] }) {
             strokeWidth={2}
             fill="url(#priceFill)"
             dot={false}
-            activeDot={{ r: 3, fill: "#22D3EE", stroke: "#0B0F17", strokeWidth: 2 }}
+            activeDot={{ r: 3, fill: "#22D3EE", stroke: "#0B0B0C", strokeWidth: 2 }}
             isAnimationActive={false}
           />
           </AreaChart>
@@ -164,9 +164,9 @@ function EpsTooltip({
 }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="summary-chart-tooltip rounded-md border border-[#1E293B] bg-[#0B0F17]/95 px-3 py-2 text-xs shadow-lg backdrop-blur">
-      <p className="text-slate-400">{label}</p>
-      <p className="font-mono tabular-nums text-slate-100">EPS ${Number(payload[0].value).toFixed(2)}</p>
+    <div className="summary-chart-tooltip rounded-md border border-[#242429] bg-[#0B0B0C]/95 px-3 py-2 text-xs shadow-lg backdrop-blur">
+      <p className="text-[#8E8E99]">{label}</p>
+      <p className="font-mono tabular-nums text-[#FFFFFF]">EPS ${Number(payload[0].value).toFixed(2)}</p>
     </div>
   );
 }
@@ -182,8 +182,8 @@ function AnnualTooltip({
 }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="summary-chart-tooltip rounded-md border border-[#1E293B] bg-[#0B0F17]/95 px-3 py-2 text-xs shadow-lg backdrop-blur">
-      <p className="mb-1 text-slate-400">FY {label}</p>
+    <div className="summary-chart-tooltip rounded-md border border-[#242429] bg-[#0B0B0C]/95 px-3 py-2 text-xs shadow-lg backdrop-blur">
+      <p className="mb-1 text-[#8E8E99]">FY {label}</p>
       {payload.map((point) => (
         <p key={point.dataKey} className="font-mono tabular-nums" style={{ color: point.color }}>
           {point.name}: ${(Number(point.value) / 1_000_000_000).toFixed(1)}B
@@ -218,22 +218,22 @@ export function RevenueEarningsChart({
           initialDimension={{ width: 520, height: 178 }}
         >
           <BarChart data={data} barGap={8} margin={{ top: 4, right: 0, bottom: 0, left: 0 }}>
-          <CartesianGrid vertical={false} stroke="#1E293B" strokeDasharray="3 3" />
+          <CartesianGrid vertical={false} stroke="#242429" strokeDasharray="3 3" />
           <XAxis
             dataKey="label"
-            axisLine={{ stroke: "#1E293B" }}
+            axisLine={{ stroke: "#242429" }}
             tickLine={false}
             tick={axisTick}
           />
           <YAxis width={52} tick={axisTick} tickLine={false} axisLine={false} tickFormatter={(value) => `$${Number(value) / 1_000_000_000}B`} />
-          <Tooltip content={<AnnualTooltip />} cursor={{ fill: "#1E293B33" }} />
+          <Tooltip content={<AnnualTooltip />} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
           <Legend
             wrapperStyle={{ fontSize: 11, fontFamily: "var(--font-mono)" }}
             iconType="circle"
             iconSize={8}
           />
           <Bar dataKey="revenue" name="Revenue" fill="#38BDF8" radius={[3, 3, 0, 0]} maxBarSize={22} isAnimationActive={false} />
-          <Bar dataKey="earnings" name="Earnings" fill="#EFFAF4" radius={[3, 3, 0, 0]} maxBarSize={22} isAnimationActive={false} />
+          <Bar dataKey="earnings" name="Earnings" fill="#FFFFFF" radius={[3, 3, 0, 0]} maxBarSize={22} isAnimationActive={false} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -266,10 +266,10 @@ export function EpsTrendChart({ points }: { points: FilingPoint[] }) {
       <div className="summary-chart h-56 w-full" role="img" aria-label={`Reported quarterly earnings per share for ${data.length} periods, from ${data[0]?.label || "an unavailable period"} to ${data.at(-1)?.label || "an unavailable period"}.`}>
         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={1} initialDimension={{ width: 420, height: 220 }}>
           <BarChart data={data} margin={{ top: 4, right: 0, bottom: 0, left: 0 }}>
-          <CartesianGrid vertical={false} stroke="#1E293B" strokeDasharray="3 3" />
-          <XAxis dataKey="label" tick={axisTick} tickLine={false} axisLine={{ stroke: "#1E293B" }} />
+          <CartesianGrid vertical={false} stroke="#242429" strokeDasharray="3 3" />
+          <XAxis dataKey="label" tick={axisTick} tickLine={false} axisLine={{ stroke: "#242429" }} />
           <YAxis width={52} tick={axisTick} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value}`} />
-          <Tooltip content={<EpsTooltip />} cursor={{ fill: "#1E293B33" }} />
+          <Tooltip content={<EpsTooltip />} cursor={{ fill: "rgba(255,255,255,0.04)" }} />
           <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={44} isAnimationActive={false}>
             {data.map((point) => (
               <Cell key={point.label} fill="#38BDF8" />

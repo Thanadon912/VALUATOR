@@ -41,7 +41,7 @@ export function PasswordField({
     <div className="flex flex-col gap-1.5">
       {(label || rightElement) && (
         <div className="flex items-center justify-between">
-          {label && <label htmlFor={id} className="text-[12px] font-semibold text-[#90B09E]">{label}</label>}
+          {label && <label htmlFor={id} className="text-[12px] font-semibold text-[#B8B8C2]">{label}</label>}
           {rightElement}
         </div>
       )}
@@ -58,12 +58,12 @@ export function PasswordField({
           ref={inputRef}
           onBlur={onBlur}
           onChange={onChange}
-          className={`h-[44px] w-full rounded-[10px] bg-[#0B0F17] pl-3 pr-11 py-2 text-[13px] text-[#EFFAF4] outline-none ring-1 transition-shadow focus:ring-2 focus:ring-[#B7FF3C] ${error ? 'ring-[#FB7185] focus:ring-[#FB7185]' : 'ring-[#1E293B]'}`}
+          className={`h-[44px] w-full rounded-[10px] bg-[#0B0B0C] pl-3 pr-11 py-2 text-[13px] text-[#FFFFFF] outline-none ring-1 transition-shadow focus:ring-2 focus:ring-[#C6F432] ${error ? 'ring-[#FB7185] focus:ring-[#FB7185]' : 'ring-[#242429]'}`}
         />
         <button
           type="button"
           onClick={() => setShow(!show)}
-          className="absolute right-0 top-0 flex h-[44px] w-[44px] items-center justify-center text-[#90B09E] hover:text-[#EFFAF4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C] rounded-[10px]"
+          className="absolute right-0 top-0 flex h-[44px] w-[44px] items-center justify-center text-[#8E8E99] hover:text-[#FFFFFF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432] rounded-[10px]"
           aria-pressed={show}
           aria-label={show ? "Hide password" : "Show password"}
         >

@@ -25,10 +25,10 @@ export default async function LoginPage({
       title="This link is no longer valid"
       actions={(
         <>
-          <Link className="inline-flex min-h-11 items-center font-semibold text-[#B7FF3C] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]" href={authPageHref("/forgot-password", next)}>
+          <Link className="inline-flex min-h-11 items-center font-semibold text-[#C6F432] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]" href={authPageHref("/forgot-password", next)}>
             Request a reset link
           </Link>
-          <Link className="inline-flex min-h-11 items-center font-semibold text-[#DCEBE2] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7FF3C]" href={authPageHref("/register", next)}>
+          <Link className="inline-flex min-h-11 items-center font-semibold text-[#FFFFFF] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6F432]" href={authPageHref("/register", next)}>
             Return to account setup
           </Link>
         </>
@@ -53,7 +53,7 @@ export default async function LoginPage({
       <LoginForm next={next} />
       {isGoogleAuthEnabled() ? <GoogleAuthButton next={next} /> : null}
 
-      <p className="mt-6 text-center text-[12px] text-[#90B09E]">
+      <p className="mt-6 text-center text-[12px] text-[#8E8E99]">
         Saved stocks are private to your account.
       </p>
     </AuthPageShell>

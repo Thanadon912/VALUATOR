@@ -7,8 +7,8 @@ export type StatusNoticeTone = "success" | "error" | "info" | "caution";
 
 const toneStyles: Record<StatusNoticeTone, { border: string; icon: string; iconNode: ReactNode }> = {
   success: {
-    border: "border-[#36522F]",
-    icon: "border-[#36522F] bg-[#B7FF3C]/8 text-[#B7FF3C]",
+    border: "border-[#C6F432]/35",
+    icon: "border-[#C6F432]/35 bg-[#C6F432]/10 text-[#C6F432]",
     iconNode: <CircleCheck className="size-4" aria-hidden="true" />,
   },
   error: {
@@ -17,8 +17,8 @@ const toneStyles: Record<StatusNoticeTone, { border: string; icon: string; iconN
     iconNode: <CircleX className="size-4" aria-hidden="true" />,
   },
   info: {
-    border: "border-[#2A3B31]",
-    icon: "border-[#2A3B31] bg-[#90B09E]/8 text-[#A9C6B3]",
+    border: "border-[#323238]",
+    icon: "border-[#323238] bg-white/6 text-[#B8B8C2]",
     iconNode: <Info className="size-4" aria-hidden="true" />,
   },
   caution: {
@@ -57,7 +57,7 @@ export function StatusNotice({
   return (
     <div
       className={cn(
-        "rounded-xl border bg-[#090D0B] text-[#EFFAF4]",
+        "rounded-xl border bg-[#0B0B0C] text-[#FFFFFF]",
         styles.border,
         compact ? "px-3 py-2.5" : "p-4",
         className,
@@ -74,9 +74,9 @@ export function StatusNotice({
           {icon ?? styles.iconNode}
         </span>
         <div className="min-w-0 flex-1">
-          <p className="text-[13px] font-semibold leading-5 text-[#EFFAF4]">{title}</p>
+          <p className="text-[13px] font-semibold leading-5 text-[#FFFFFF]">{title}</p>
           {children ? (
-            <div className="mt-1 text-[13px] leading-5 text-[#A9BAAF]">{children}</div>
+            <div className="mt-1 text-[13px] leading-5 text-[#B8B8C2]">{children}</div>
           ) : null}
           {actions ? <div className="mt-3 flex flex-wrap items-center gap-2">{actions}</div> : null}
         </div>

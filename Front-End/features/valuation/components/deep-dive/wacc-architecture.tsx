@@ -13,9 +13,9 @@ function percent(value?: number | null, digits = 1) {
 
 function Factor({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex min-w-0 flex-1 flex-col items-center rounded-md border border-emerald-900/20 bg-[#090A0B] px-2 py-2.5 sm:px-3">
-      <span className="font-mono text-base font-semibold tabular-nums text-[#E0E6E2]">{value}</span>
-      <span className="mt-0.5 text-center text-[9px] uppercase leading-4 tracking-wider text-[#869E8F] sm:text-[10px]">{label}</span>
+    <div className="flex min-w-0 flex-1 flex-col items-center rounded-md border border-[#242429] bg-[#0B0B0C] px-2 py-2.5 sm:px-3">
+      <span className="font-mono text-base font-semibold tabular-nums text-[#FFFFFF]">{value}</span>
+      <span className="mt-0.5 text-center text-[9px] uppercase leading-4 tracking-wider text-[#8E8E99] sm:text-[10px]">{label}</span>
     </div>
   )
 }
@@ -40,7 +40,7 @@ function ComponentBlock({
       <span className={`text-[11px] font-medium uppercase tracking-wider ${tint}`}>{title}</span>
       <div className="grid min-w-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1">
         <Factor label="Weight" value={weight} />
-        <span className="font-mono text-lg text-[#869E8F]">x</span>
+        <span className="font-mono text-lg text-[#8E8E99]">x</span>
         <Factor label={costLabel} value={cost} />
       </div>
     </div>
@@ -67,7 +67,7 @@ export function WaccArchitecture({ data }: { data?: DCFData }) {
         tooltipText="Visualizes the Weighted Average Cost of Capital, blending the cost of equity and after-tax cost of debt to determine the discount rate."
         badge={
           equityOnly ? null : (
-            <span className="rounded-md border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 font-mono text-xs font-semibold tabular-nums text-emerald-400">
+            <span className="rounded-md border border-[#C6F432]/25 bg-[#C6F432]/10 px-3 py-1.5 font-mono text-xs font-semibold tabular-nums text-[#C6F432]">
               {percent(components?.effective_tax_rate, 1)} tax
             </span>
           )
@@ -76,18 +76,18 @@ export function WaccArchitecture({ data }: { data?: DCFData }) {
 
       {equityOnly ? (
         <div className="flex flex-col items-center gap-4 p-8 text-center">
-          <div className="flex flex-col items-center rounded-md border border-emerald-500/20 bg-emerald-500/10 px-10 py-5">
-            <span className="font-mono text-4xl font-bold tabular-nums text-emerald-400">
+          <div className="flex flex-col items-center rounded-md border border-[#C6F432]/25 bg-[#C6F432]/10 px-10 py-5">
+            <span className="font-mono text-4xl font-bold tabular-nums text-[#C6F432]">
               {typeof costOfEquity === "number" && Number.isFinite(costOfEquity)
                 ? fmt.money(costOfEquity * 100, 2)
                 : "N/A"}
               %
             </span>
-            <span className="mt-1 text-xs font-medium text-emerald-500/80">
+            <span className="mt-1 text-xs font-medium text-[#C6F432]/85">
               Cost of Equity (Ke)
             </span>
           </div>
-          <p className="max-w-md text-xs leading-relaxed text-[#869E8F]">
+          <p className="max-w-md text-xs leading-relaxed text-[#8E8E99]">
             WACC is not used for financial institutions. The regulatory FCFE engine discounts equity cash flow directly at Ke.
           </p>
         </div>
@@ -97,11 +97,11 @@ export function WaccArchitecture({ data }: { data?: DCFData }) {
             title="Equity"
             weight={percent(components?.weight_equity, 1)}
             cost={percent(components?.cost_of_equity, 1)}
-            tint="text-[#E0E6E2]"
+            tint="text-[#FFFFFF]"
             testId="wacc-equity-term"
           />
 
-          <span className="mx-auto flex h-8 w-8 items-center justify-center rounded-full border border-emerald-900/20 bg-[#090A0B] text-[#869E8F]" role="img" aria-label="plus">
+          <span className="mx-auto flex h-8 w-8 items-center justify-center rounded-full border border-[#242429] bg-[#0B0B0C] text-[#8E8E99]" role="img" aria-label="plus">
             <Plus className="h-4 w-4" />
           </span>
 
@@ -114,15 +114,15 @@ export function WaccArchitecture({ data }: { data?: DCFData }) {
             costLabel="After-tax cost"
           />
 
-          <span className="mx-auto font-mono text-2xl text-[#869E8F]" role="img" aria-label="equals">=</span>
-          <div className="flex min-w-0 flex-col items-center rounded-md border border-emerald-500/20 bg-emerald-500/10 px-4 py-4" data-testid="wacc-result">
-            <span className="font-mono text-3xl font-bold tabular-nums text-emerald-400">
+          <span className="mx-auto font-mono text-2xl text-[#8E8E99]" role="img" aria-label="equals">=</span>
+          <div className="flex min-w-0 flex-col items-center rounded-md border border-[#C6F432]/25 bg-[#C6F432]/10 px-4 py-4" data-testid="wacc-result">
+            <span className="font-mono text-3xl font-bold tabular-nums text-[#C6F432]">
               {typeof trueWacc === "number" && Number.isFinite(trueWacc)
                 ? fmt.money(trueWacc * 100, 2)
                 : "N/A"}
               %
             </span>
-            <span className="mt-0.5 text-xs font-medium text-emerald-500/80">
+            <span className="mt-0.5 text-xs font-medium text-[#C6F432]/85">
               Model WACC
             </span>
           </div>
