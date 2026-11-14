@@ -141,14 +141,16 @@ export function BridgeChart({ data: dcfData }: { data?: DCFData }) {
               tickFormatter={(v) => formatBridgeValue(Number(v))}
             />
             <Tooltip
-              cursor={{ fill: "rgba(255, 255, 255, 0.04)" }}
+              cursor={false}
               contentStyle={{
                 background: "#0B0B0C",
                 border: "1px solid #242429",
                 borderRadius: 6,
                 fontSize: 12,
+                color: "#FFFFFF",
               }}
               labelStyle={{ color: "#B8B8C2" }}
+              itemStyle={{ color: "#FFFFFF" }}
               formatter={(_v, _n, item) => [formatBridgeValue(item.payload.value as number), item.payload.name]}
             />
             <Bar dataKey="bar" radius={[4, 4, 4, 4]} isAnimationActive={false}>

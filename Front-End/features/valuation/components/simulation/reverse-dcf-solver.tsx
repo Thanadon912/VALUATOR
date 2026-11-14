@@ -454,27 +454,33 @@ export function ReverseDcfSolver({ data }: { data: ValuationPayload }) {
             </div>
           </div>
 
-          {hasCurve ? <div className="relative mt-4">
-            <div
-              className="pointer-events-none absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full"
-              style={{ background: `linear-gradient(to right, #C6F432 0%, rgb(34 211 238) ${pct}%, #242429 ${pct}%, #242429 100%)` }}
-              aria-hidden="true"
-            />
-            <input
-              type="range"
-              min={sliderMin}
-              max={sliderMax}
-              step={1}
-              value={sliderVal}
-              onChange={(e) => setScenarioState({ key: scenarioKey, index: Number(e.target.value) })}
-              aria-label="Explore feasible growth and margin pairs"
-                className="mc-range h-11 w-full cursor-pointer appearance-none bg-transparent"
-            />
-            <div className="mt-2 flex justify-between font-mono text-[10px] tabular-nums text-[#8E8E99]">
-              <span>High Margin</span>
-              <span>High Growth</span>
+          {hasCurve ? (
+            <div className="mt-4">
+              <div className="relative flex h-11 items-center">
+                <div
+                  className="pointer-events-none absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full"
+                  style={{
+                    background: `linear-gradient(to right, #C6F432 0%, rgb(34 211 238) calc(11px + (100% - 22px) * ${pct / 100}), #242429 calc(11px + (100% - 22px) * ${pct / 100}), #242429 100%)`,
+                  }}
+                  aria-hidden="true"
+                />
+                <input
+                  type="range"
+                  min={sliderMin}
+                  max={sliderMax}
+                  step={1}
+                  value={sliderVal}
+                  onChange={(e) => setScenarioState({ key: scenarioKey, index: Number(e.target.value) })}
+                  aria-label="Explore feasible growth and margin pairs"
+                  className="mc-range relative z-10 m-0 block h-11 w-full cursor-pointer appearance-none bg-transparent"
+                />
+              </div>
+              <div className="mt-1 flex justify-between font-mono text-[10px] tabular-nums text-[#8E8E99]">
+                <span>High Margin</span>
+                <span>High Growth</span>
+              </div>
             </div>
-          </div> : null}
+          ) : null}
 
           <p className="mt-6 text-sm leading-relaxed text-[#B8B8C2]">
             {narrative(displayPrice, impliedCagr, impliedMargin, segmentName)}
@@ -494,10 +500,15 @@ export function ReverseDcfSolver({ data }: { data: ValuationPayload }) {
       </div>
 
       <style jsx>{`
+        .mc-range::-webkit-slider-runnable-track {
+          height: 8px;
+          background: transparent;
+        }
         .mc-range::-webkit-slider-thumb {
           appearance: none;
           height: 22px;
           width: 22px;
+          margin-top: -7px;
           border-radius: 9999px;
           background: #0b0b0c;
           border: 2px solid #c6f432;
@@ -507,6 +518,10 @@ export function ReverseDcfSolver({ data }: { data: ValuationPayload }) {
         }
         .mc-range::-webkit-slider-thumb:active {
           transform: scale(1.15);
+        }
+        .mc-range::-moz-range-track {
+          height: 8px;
+          background: transparent;
         }
         .mc-range::-moz-range-thumb {
           height: 22px;

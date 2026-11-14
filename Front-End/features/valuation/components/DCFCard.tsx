@@ -396,9 +396,9 @@ export function DCFCard({ data }: { data: DCFData }) {
               </span>
             </div>
           </div>
-          <div className="col-span-3 h-20">
+          <div className="col-span-3 h-20 [&_.recharts-surface]:overflow-visible">
             <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1} initialDimension={{ width: 200, height: 80 }}>
-              <AreaChart data={chartData} margin={{ top: 4, right: 0, bottom: 0, left: 0 }}>
+              <AreaChart data={chartData} margin={{ top: 8, right: 8, bottom: 8, left: 8 }}>
                 <defs>
                   <linearGradient id="dcfFill" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="#C6F432" stopOpacity={0.4} />
