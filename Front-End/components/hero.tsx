@@ -25,7 +25,7 @@ function AuthenticatedLauncher() {
         <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(28rem,1.15fr)] lg:gap-14">
           <div>
             <p className="text-sm font-semibold text-[#C6F432]">Your research workspace</p>
-            <h1 className="valuator-display mt-3 max-w-[15ch] text-4xl font-semibold leading-[0.96] tracking-[-0.035em] text-[#FFFFFF] sm:text-5xl">
+            <h1 className="valuator-display mt-3 max-w-[20ch] text-4xl font-semibold leading-[0.96] tracking-[-0.035em] text-[#FFFFFF] sm:text-5xl">
               Continue your valuation work.
             </h1>
             <p className="mt-4 max-w-xl text-base leading-7 text-[#B8B8C2]">
@@ -61,7 +61,7 @@ function LandingLoadingShell() {
         <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(28rem,1.15fr)] lg:gap-14">
           <div>
             <p className="text-sm font-semibold text-[#C6F432]">Valuation workspace</p>
-            <h1 className="valuator-display mt-3 max-w-[15ch] text-4xl font-semibold leading-[0.96] tracking-[-0.035em] text-[#FFFFFF] sm:text-5xl">
+            <h1 className="valuator-display mt-3 max-w-[20ch] text-4xl font-semibold leading-[0.96] tracking-[-0.035em] text-[#FFFFFF] sm:text-5xl">
               Start a valuation.
             </h1>
           </div>
@@ -126,7 +126,7 @@ function PublicHero() {
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(21rem,0.75fr)] lg:items-start">
           <div>
             <p className="valuator-index mb-8 text-sm font-semibold text-[#C6F432]">VALUATION / EXPECTATIONS / EVIDENCE</p>
-            <h1 className="valuator-display max-w-[13ch] text-balance text-[clamp(3.6rem,8.8vw,8.5rem)] font-semibold leading-[0.84] tracking-[-0.04em] text-[#FFFFFF]">
+            <h1 className="valuator-display max-w-[20ch] text-balance text-[clamp(2.5rem,4.4vw,5.5rem)] font-semibold leading-[0.92] tracking-[-0.04em] text-[#FFFFFF]">
               <span ref={primaryLineRef} className="block">The market has a price.</span>
               <span ref={secondaryLineRef} className="mt-[0.08em] block text-[#8E8E99]">What does it assume?</span>
             </h1>

@@ -273,7 +273,7 @@ export function MarketExpectationsInstrument() {
         {stages.map((stage, index) => (
           <article key={stage.id} id={stage.id === "methods" ? "methods-mobile" : undefined} data-instrument-stage={stage.id} className="instrument-stage border-t border-white/12 py-14 first:border-t-0">
             <div className="flex items-center gap-4"><span className="font-mono text-xs text-[#C6F432]">0{index + 1}</span><span className="text-sm font-semibold text-[#B8B8C2]">{stage.label}</span></div>
-            <h2 className="valuator-display mt-6 max-w-[11ch] text-balance text-[clamp(2.8rem,12vw,4.4rem)] font-semibold leading-[0.94] tracking-[-0.035em] text-[#FFFFFF]">{stage.title}</h2>
+            <h2 className="valuator-display mt-6 max-w-[18ch] text-balance text-[clamp(2.5rem,10vw,4rem)] font-semibold leading-[0.98] tracking-[-0.035em] text-[#FFFFFF]">{stage.title}</h2>
             <p className="mt-6 max-w-[35rem] text-pretty text-base leading-7 text-[#B8B8C2]">{stage.copy}</p>
             <div className="mt-9"><InstrumentFace activeIndex={index} data={data} error={error} isLoading={isLoading} reduceMotion /></div>
           </article>
@@ -323,7 +323,7 @@ function NarrativeContent({ stage, index }: { stage: (typeof stages)[number]; in
         <span className="font-mono text-xs text-[#C6F432]">0{index + 1}</span>
         <span className="text-sm font-semibold text-[#B8B8C2]">{stage.label}</span>
       </div>
-      <h2 className="valuator-display mt-7 max-w-[10ch] text-balance text-[clamp(3.15rem,4.15vw,4.85rem)] font-semibold leading-[0.94] tracking-[-0.035em] text-[#FFFFFF]">{stage.title}</h2>
+      <h2 className="valuator-display mt-7 max-w-[18ch] text-balance text-[clamp(2.5rem,3.2vw,4.25rem)] font-semibold leading-[0.98] tracking-[-0.035em] text-[#FFFFFF]">{stage.title}</h2>
       <p className="mt-7 max-w-[32rem] text-pretty text-lg leading-8 text-[#B8B8C2]">{stage.copy}</p>
     </>
   )
@@ -452,7 +452,15 @@ function InstrumentLayer({ index, activeIndex, progress, children }: { index: nu
   const y = useTransform(progress, input, yOutputs)
 
   return (
-    <motion.div className="instrument-layer absolute inset-0" style={{ opacity, y }} aria-hidden={activeIndex !== index}>
+    <motion.div
+      className="instrument-layer absolute inset-0 overflow-y-auto overscroll-contain pr-1 scrollbar-thin"
+      style={{
+        opacity,
+        y,
+        pointerEvents: activeIndex === index ? "auto" : "none",
+      }}
+      aria-hidden={activeIndex !== index}
+    >
       {children}
     </motion.div>
   )
@@ -555,12 +563,12 @@ function ExpectationsState({ methods, currentPrice, implied, warnings, reduceMot
     <div>
       <StateHeading title={converged ? "Market expectations resolved" : "Solver result unavailable"} copy={converged ? "The market price is compared with the returned valuation outputs and the feasible solver result." : "The response did not contain a feasible implied-expectations solution. No result has been invented."} />
       <ValuationPlot methods={methods} currentPrice={currentPrice} compact progress={progress} reduceMotion={reduceMotion} />
-      <div className="mt-5 grid gap-px border border-white/12 bg-white/12 sm:grid-cols-3">
+      <div className="mt-3.5 grid gap-px border border-white/12 bg-white/12 sm:grid-cols-3">
         <ExpectationCell label="Market price" value={formatMoney(currentPrice)} />
         <ExpectationCell label="Required stage-1 growth" value={formatPercent(growth)} />
         <ExpectationCell label="Required target EBIT margin" value={formatPercent(margin)} />
       </div>
-      {!converged && warnings.length ? <p className="mt-4 text-xs leading-5 text-[#FFB19D]">{warnings[0]}</p> : null}
+      {!converged && warnings.length ? <p className="mt-3 text-xs leading-5 text-[#FFB19D]">{warnings[0]}</p> : null}
     </div>
   )
 }
@@ -573,7 +581,7 @@ function MonteCarloRange({ method, reduceMotion, progress }: { method: MethodDat
   const valueOpacity = useTransform(motionProgress, [0.48, 0.57], [0.35, 1])
 
   if (!method || method.low === null || method.median === null || method.high === null) {
-    return <div className="mt-5 border-y border-white/12 py-5 text-sm text-[#8E8E99]">Monte Carlo percentiles are unavailable in this response.</div>
+    return <div className="mt-4 border-y border-white/12 py-4 text-sm text-[#8E8E99]">Monte Carlo percentiles are unavailable in this response.</div>
   }
 
   const min = method.low
@@ -581,24 +589,24 @@ function MonteCarloRange({ method, reduceMotion, progress }: { method: MethodDat
   const medianPosition = Math.min(100, Math.max(0, ((method.median - min) / span) * 100))
 
   return (
-    <div className="mt-5 border-y border-white/12 py-5">
+    <div className="mt-3.5 border-y border-white/12 py-3">
       <motion.div className="grid grid-cols-3 gap-3" style={reduceMotion ? undefined : { opacity: valueOpacity }}>
         <MonteCarloValue label="P10 · Bear" value={method.low} />
         <MonteCarloValue label="P50 · Base" value={method.median} emphasized />
         <MonteCarloValue label="P90 · Bull" value={method.high} align="right" />
       </motion.div>
-      <div className="relative mt-5 h-8" aria-label={`Monte Carlo range from ${formatMoney(method.low)} to ${formatMoney(method.high)}, median ${formatMoney(method.median)}`}>
+      <div className="relative mt-3 h-6" aria-label={`Monte Carlo range from ${formatMoney(method.low)} to ${formatMoney(method.high)}, median ${formatMoney(method.median)}`}>
         <div className="absolute inset-x-0 top-1/2 h-px bg-white/16" />
         <motion.div
           className="absolute inset-x-0 top-1/2 h-2 origin-center -translate-y-1/2 bg-[#C6F432]/28"
           style={reduceMotion ? undefined : { scaleX: rangeScale }}
         />
         <motion.span
-          className="absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 bg-[#FFFFFF]"
+          className="absolute top-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 bg-[#FFFFFF]"
           style={{ left: `${medianPosition}%`, ...(reduceMotion ? {} : { scale: medianScale }) }}
         />
-        <span className="absolute left-0 top-1/2 h-4 w-px -translate-y-1/2 bg-[#C6F432]" />
-        <span className="absolute right-0 top-1/2 h-4 w-px -translate-y-1/2 bg-[#C6F432]" />
+        <span className="absolute left-0 top-1/2 h-3.5 w-px -translate-y-1/2 bg-[#C6F432]" />
+        <span className="absolute right-0 top-1/2 h-3.5 w-px -translate-y-1/2 bg-[#C6F432]" />
       </div>
     </div>
   )
@@ -615,7 +623,7 @@ function ValuationPlot({ methods, currentPrice, compact = false, reduceMotion = 
   const priceScale = useTransform(motionProgress, [0.78, 0.88], [0, 1])
   const values = methods.flatMap((method) => [method.value, method.low, method.high]).filter((value): value is number => value !== null && value > 0)
   if (currentPrice !== null && currentPrice > 0) values.push(currentPrice)
-  if (!values.length) return <p className="mt-10 border-y border-white/12 py-12 text-sm text-[#8E8E99]">No engine returned a valid fair value. The plot remains empty.</p>
+  if (!values.length) return <p className="mt-8 border-y border-white/12 py-8 text-sm text-[#8E8E99]">No engine returned a valid fair value. The plot remains empty.</p>
   const rawMin = Math.min(...values)
   const rawMax = Math.max(...values)
   const padding = Math.max((rawMax - rawMin) * 0.12, rawMax * 0.05)
@@ -633,10 +641,10 @@ function ValuationPlot({ methods, currentPrice, compact = false, reduceMotion = 
         : "translateX(-50%)"
 
   return (
-    <figure className={`mt-7 ${compact ? "space-y-2" : "space-y-3"}`} aria-label={`Fair value plot from ${formatMoney(min)} to ${formatMoney(max)}`}>
-      <div className="flex justify-between font-mono text-[0.7rem] text-[#8E8E99]"><span>{formatMoney(min)}</span><span>USD / share</span><span data-testid="valuation-plot-max-label">{formatMoney(max)}</span></div>
+    <figure className={`mt-3.5 ${compact ? "space-y-1.5" : "space-y-3"}`} aria-label={`Fair value plot from ${formatMoney(min)} to ${formatMoney(max)}`}>
+      <div className="flex justify-between font-mono text-[0.68rem] text-[#8E8E99]"><span>{formatMoney(min)}</span><span>USD / share</span><span data-testid="valuation-plot-max-label">{formatMoney(max)}</span></div>
       {currentPricePosition !== null ? (
-        <div className="relative h-5 border-x border-white/16" aria-hidden="true">
+        <div className="relative h-4 border-x border-white/16" aria-hidden="true">
           <span
             className="absolute top-0 whitespace-nowrap bg-[#121214] px-1 font-mono text-[0.65rem] text-[#C6F432]"
             style={{ left: `${currentPricePosition}%`, transform: priceLabelTransform }}
@@ -649,7 +657,7 @@ function ValuationPlot({ methods, currentPrice, compact = false, reduceMotion = 
       <motion.div className="relative border-x border-white/16" style={!reduceMotion && currentPrice === null ? { clipPath: plotReveal } : undefined}>
         {currentPrice !== null ? <motion.div className="absolute inset-y-0 z-20 w-px origin-top bg-[#C6F432]" style={{ left: position(currentPrice), ...(reduceMotion ? {} : { scaleY: priceScale }) }} /> : null}
         {methods.map((method, index) => (
-          <div key={method.key} className={`grid grid-cols-[7.5rem_1fr] items-center gap-3 border-b border-white/10 last:border-b-0 ${compact ? "min-h-9" : "min-h-11"}`}>
+          <div key={method.key} className={`grid grid-cols-[7.5rem_1fr] items-center gap-3 border-b border-white/10 last:border-b-0 ${compact ? "min-h-8" : "min-h-11"}`}>
             <span className="truncate text-xs text-[#B8B8C2]">{method.label}</span>
             <div className="relative h-full border-l border-white/8">
               {method.value !== null ? (
@@ -663,7 +671,7 @@ function ValuationPlot({ methods, currentPrice, compact = false, reduceMotion = 
           </div>
         ))}
       </motion.div>
-      <figcaption className="text-[0.7rem] leading-5 text-[#8E8E99]">Points are returned fair values. The DCF interval, when available, is its Monte Carlo P10–P90 range.</figcaption>
+      <figcaption className="mt-1.5 text-[0.68rem] leading-4 text-[#8E8E99]">Points are returned fair values. The DCF interval, when available, is its Monte Carlo P10–P90 range.</figcaption>
     </figure>
   )
 }
@@ -677,7 +685,7 @@ function EvidenceCell({ label, value }: { label: string; value: string }) {
 }
 
 function ExpectationCell({ label, value }: { label: string; value: string }) {
-  return <div className="bg-[#121214] p-4"><p className="text-xs text-[#8E8E99]">{label}</p><p className="mt-2 font-mono text-sm font-semibold text-[#FFFFFF]">{value}</p></div>
+  return <div className="bg-[#121214] p-3"><p className="text-xs text-[#8E8E99]">{label}</p><p className="mt-1.5 font-mono text-sm font-semibold text-[#FFFFFF]">{value}</p></div>
 }
 
 function ReadoutInline({ label, value, align = "left" }: { label: string; value: string; align?: "left" | "right" }) {
@@ -688,7 +696,7 @@ function SourceLedger() {
   return (
     <div id="sources" className="border-y border-white/12 bg-[#0B0B0C]">
       <div className="mx-auto grid max-w-[90rem] gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[1fr_1fr] lg:items-end">
-        <div><p className="text-sm font-semibold text-[#C6F432]">Evidence ledger</p><h2 className="valuator-display mt-6 max-w-[11ch] text-balance text-5xl font-semibold leading-[0.92] tracking-[-0.035em] text-[#FFFFFF] sm:text-7xl">Trust is not a claim. It is a trail.</h2></div>
+        <div><p className="text-sm font-semibold text-[#C6F432]">Evidence ledger</p><h2 className="valuator-display mt-6 max-w-[18ch] text-balance text-5xl font-semibold leading-[0.96] tracking-[-0.035em] text-[#FFFFFF] sm:text-7xl">Trust is not a claim. It is a trail.</h2></div>
         <div>
           <p className="max-w-[38rem] text-lg leading-8 text-[#B8B8C2]">Every completed response retains its methodology, source references, assumptions, projections, and warnings. Missing inputs stop the calculation instead of becoming invented values.</p>
           <div className="mt-8 flex flex-wrap gap-3">
