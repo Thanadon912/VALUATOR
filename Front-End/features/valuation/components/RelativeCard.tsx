@@ -164,7 +164,7 @@ export function RelativeCard({
               </tr>
             ))}
             <tr className="border-t-2 border-[#242429] bg-[#0B0B0C]">
-              <td className="px-3 py-3 text-xs font-bold text-[#FFFFFF]" colSpan={3}>Peer Implied Fair Value</td>
+              <td className="px-3 py-3 text-xs font-bold text-[#FFFFFF]" colSpan={3}>Backend Blended Fair Value</td>
               <td className={`px-2 py-3 text-right font-mono text-xs font-semibold ${fairValueColor}`}>
                 {marginOfSafety >= 0 ? "+" : ""}{marginOfSafety.toFixed(1)}%
               </td>
