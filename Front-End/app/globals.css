@@ -874,7 +874,7 @@ body,
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
   width: 100%;
-  height: min(48rem, calc(100svh - 5.5rem));
+  height: min(52rem, calc(100svh - 5.5rem));
   min-height: 0;
   box-shadow: inset 0 1px rgba(255,255,255,.05);
 }
@@ -943,7 +943,7 @@ body,
 
   .instrument-viewport {
     font-size: .94rem;
-    padding: 1rem 1.25rem;
+    padding: 1.5rem 1.75rem;
   }
 
   .instrument-state--methods > div:first-child p:last-child {

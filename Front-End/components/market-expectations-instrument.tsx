@@ -323,7 +323,7 @@ function NarrativeContent({ stage, index }: { stage: (typeof stages)[number]; in
         <span className="font-mono text-xs text-[#C6F432]">0{index + 1}</span>
         <span className="text-sm font-semibold text-[#B8B8C2]">{stage.label}</span>
       </div>
-      <h2 className="valuator-display mt-7 max-w-[18ch] text-balance text-[clamp(2.5rem,3.2vw,4.25rem)] font-semibold leading-[0.98] tracking-[-0.035em] text-[#FFFFFF]">{stage.title}</h2>
+      <h2 className="valuator-display mt-7 max-w-[18ch] text-balance text-[clamp(2.35rem,2.6vw,2.85rem)] font-semibold leading-[1.02] tracking-[-0.035em] text-[#FFFFFF]">{stage.title}</h2>
       <p className="mt-7 max-w-[32rem] text-pretty text-lg leading-8 text-[#B8B8C2]">{stage.copy}</p>
     </>
   )
@@ -367,7 +367,7 @@ function InstrumentFace({
   const chapterIndicatorX = useTransform(chapterProgress, [0, 1], ["0%", "300%"])
   return (
     <div className="instrument-face relative overflow-hidden border border-white/16 bg-[#121214]">
-      <header className="relative z-10 border-b border-white/12 p-5 sm:px-6 sm:py-5">
+      <header className="relative z-10 border-b border-white/12 px-6 py-5 sm:px-7 sm:py-6">
         <div className="flex items-start justify-between gap-6">
           <div>
             <p className="text-xs font-semibold text-[#C6F432]">FEATURED WALKTHROUGH · {ticker}</p>
@@ -377,7 +377,7 @@ function InstrumentFace({
           </div>
           <div aria-live="polite"><StatusBadge loading={loading} unavailable={unavailable} partial={data?.status === "partial"} /></div>
         </div>
-        <div className="mt-4 grid grid-cols-[auto_minmax(0,1fr)] gap-5 border-t border-white/10 pt-3 text-xs">
+        <div className="mt-4 grid grid-cols-[auto_minmax(0,1fr)] gap-6 border-t border-white/10 pt-4 text-xs">
           <ReadoutInline label="Resolved" value={`${validMethods.length} / 5`} />
           <ReadoutInline label="Data as of" value={data ? formatTimestamp(data.fetched_at) : "Awaiting data"} align="right" />
         </div>
@@ -390,7 +390,7 @@ function InstrumentFace({
               <button
                 key={item.id}
                 type="button"
-                className={`instrument-chapter-button min-h-12 border-r border-white/10 px-3 text-left text-xs font-semibold last:border-r-0 ${index === stageIndex ? "text-[#FFFFFF]" : index < stageIndex ? "text-[#B8B8C2]" : "text-[#8E8E99]"}`}
+                className={`instrument-chapter-button min-h-[3.25rem] border-r border-white/10 px-4 py-3 text-left text-xs font-semibold last:border-r-0 sm:px-6 ${index === stageIndex ? "text-[#FFFFFF]" : index < stageIndex ? "text-[#B8B8C2]" : "text-[#8E8E99]"}`}
                 aria-current={index === stageIndex ? "step" : undefined}
                 onClick={() => onSelectStage(index)}
               >
@@ -414,7 +414,7 @@ function InstrumentFace({
         </div>
       )}
 
-      <div className="instrument-viewport relative min-h-0 p-5 sm:p-6 xl:p-7">
+      <div className="instrument-viewport relative min-h-0 p-6 sm:p-7 xl:p-8">
         {loading ? <LoadingState /> : unavailable ? <UnavailableState ticker={ticker} /> : null}
         {!loading && !unavailable && reduceMotion ? (
           <div className="h-full">
@@ -453,7 +453,7 @@ function InstrumentLayer({ index, activeIndex, progress, children }: { index: nu
 
   return (
     <motion.div
-      className="instrument-layer absolute inset-0 overflow-y-auto overscroll-contain pr-1 scrollbar-thin"
+      className="instrument-layer absolute inset-0 overflow-y-auto overscroll-contain pb-4 pr-1 scrollbar-thin"
       style={{
         opacity,
         y,
@@ -481,7 +481,7 @@ function LoadingState() {
       </div>
       <div className="space-y-3" aria-hidden="true">
         {["Company record", "Market telemetry", "Valuation engines"].map((label) => (
-          <div key={label} className="flex items-center gap-4 border-b border-white/12 py-4 text-sm text-[#B8B8C2]"><LoaderCircle className="size-4 animate-spin text-[#C6F432]" />{label}</div>
+          <div key={label} className="flex items-center gap-4 border-b border-white/12 px-4 py-4 text-sm text-[#B8B8C2]"><LoaderCircle className="size-4 animate-spin text-[#C6F432]" />{label}</div>
         ))}
       </div>
     </div>
@@ -505,7 +505,7 @@ function EvidenceState({ data, methods }: { data: FeaturedResponse | undefined; 
   return (
     <div>
       <StateHeading title="Provider record" copy="Only returned provider values enter the walkthrough." />
-      <div className="mt-8 grid gap-px border border-white/12 bg-white/12 sm:grid-cols-2">
+      <div className="mt-6 grid gap-px border border-white/12 bg-white/12 sm:grid-cols-2">
         <EvidenceCell label="Ticker" value={data?.ticker ?? "Unavailable"} />
         <EvidenceCell label="Engine responses" value={`${returned} of 5 returned`} />
         <EvidenceCell label="Response timestamp" value={formatTimestamp(data?.fetched_at)} />
@@ -513,8 +513,8 @@ function EvidenceState({ data, methods }: { data: FeaturedResponse | undefined; 
       </div>
       <div className="mt-6">
         <p className="text-xs font-semibold text-[#8E8E99]">Providers reported by the response</p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {providers.length ? providers.map((provider) => <span key={provider} className="border border-white/16 px-3 py-2 text-xs text-[#B8B8C2]">{provider}</span>) : <span className="text-sm text-[#8E8E99]">Provider names unavailable in this response.</span>}
+        <div className="mt-3.5 flex flex-wrap gap-2.5">
+          {providers.length ? providers.map((provider) => <span key={provider} className="border border-white/16 bg-[#0E0E10]/50 px-4 py-2 text-xs text-[#B8B8C2]">{provider}</span>) : <span className="text-sm text-[#8E8E99]">Provider names unavailable in this response.</span>}
         </div>
       </div>
     </div>
@@ -531,9 +531,9 @@ function AssumptionsState({ assumptions, telemetry }: { assumptions: JsonRecord 
   return (
     <div>
       <StateHeading title="Classification stays visible" copy="Provider inputs, global assumptions, and derived rates retain different labels." />
-      <div className="mt-8 border-y border-white/12">
+      <div className="mt-6 border border-white/12 bg-[#0E0E10]/40">
         {rows.map(([label, value, kind]) => (
-          <div key={label} className="grid grid-cols-[1fr_auto] gap-4 border-b border-white/12 py-4 last:border-b-0 sm:grid-cols-[1fr_8rem_9rem]">
+          <div key={label} className="grid grid-cols-[1fr_auto] items-center gap-4 border-b border-white/12 px-5 py-4 last:border-b-0 sm:grid-cols-[1fr_8rem_9rem] sm:px-6">
             <span className="text-sm text-[#B8B8C2]">{label}</span>
             <strong className="font-mono text-sm text-[#FFFFFF]">{value}</strong>
             <span className="col-span-2 text-xs text-[#8E8E99] sm:col-span-1">{kind}</span>
@@ -563,12 +563,12 @@ function ExpectationsState({ methods, currentPrice, implied, warnings, reduceMot
     <div>
       <StateHeading title={converged ? "Market expectations resolved" : "Solver result unavailable"} copy={converged ? "The market price is compared with the returned valuation outputs and the feasible solver result." : "The response did not contain a feasible implied-expectations solution. No result has been invented."} />
       <ValuationPlot methods={methods} currentPrice={currentPrice} compact progress={progress} reduceMotion={reduceMotion} />
-      <div className="mt-3.5 grid gap-px border border-white/12 bg-white/12 sm:grid-cols-3">
+      <div className="mt-5 grid gap-px border border-white/12 bg-white/12 sm:grid-cols-3">
         <ExpectationCell label="Market price" value={formatMoney(currentPrice)} />
         <ExpectationCell label="Required stage-1 growth" value={formatPercent(growth)} />
         <ExpectationCell label="Required target EBIT margin" value={formatPercent(margin)} />
       </div>
-      {!converged && warnings.length ? <p className="mt-3 text-xs leading-5 text-[#FFB19D]">{warnings[0]}</p> : null}
+      {!converged && warnings.length ? <p className="mt-3.5 text-xs leading-5 text-[#FFB19D]">{warnings[0]}</p> : null}
     </div>
   )
 }
@@ -576,12 +576,12 @@ function ExpectationsState({ methods, currentPrice, implied, warnings, reduceMot
 function MonteCarloRange({ method, reduceMotion, progress }: { method: MethodDatum | undefined; reduceMotion: boolean; progress?: MotionValue<number> }) {
   const fallbackProgress = useMotionValue(1)
   const motionProgress = progress ?? fallbackProgress
-  const rangeScale = useTransform(motionProgress, [0.53, 0.64], [0, 1])
-  const medianScale = useTransform(motionProgress, [0.49, 0.56], [0, 1])
-  const valueOpacity = useTransform(motionProgress, [0.48, 0.57], [0.35, 1])
+  const rangeScale = useTransform(motionProgress, [0.48, 0.58], [0, 1])
+  const medianScale = useTransform(motionProgress, [0.46, 0.55], [0, 1])
+  const valueOpacity = useTransform(motionProgress, [0.46, 0.55], [0.35, 1])
 
   if (!method || method.low === null || method.median === null || method.high === null) {
-    return <div className="mt-4 border-y border-white/12 py-4 text-sm text-[#8E8E99]">Monte Carlo percentiles are unavailable in this response.</div>
+    return <div className="mt-5 border border-white/12 bg-[#0E0E10]/40 px-5 py-4 text-sm text-[#8E8E99]">Monte Carlo percentiles are unavailable in this response.</div>
   }
 
   const min = method.low
@@ -589,13 +589,13 @@ function MonteCarloRange({ method, reduceMotion, progress }: { method: MethodDat
   const medianPosition = Math.min(100, Math.max(0, ((method.median - min) / span) * 100))
 
   return (
-    <div className="mt-3.5 border-y border-white/12 py-3">
-      <motion.div className="grid grid-cols-3 gap-3" style={reduceMotion ? undefined : { opacity: valueOpacity }}>
+    <div className="mt-5 border border-white/12 bg-[#0E0E10]/40 px-5 py-4">
+      <motion.div className="grid grid-cols-3 gap-4" style={reduceMotion ? undefined : { opacity: valueOpacity }}>
         <MonteCarloValue label="P10 · Bear" value={method.low} />
         <MonteCarloValue label="P50 · Base" value={method.median} emphasized />
         <MonteCarloValue label="P90 · Bull" value={method.high} align="right" />
       </motion.div>
-      <div className="relative mt-3 h-6" aria-label={`Monte Carlo range from ${formatMoney(method.low)} to ${formatMoney(method.high)}, median ${formatMoney(method.median)}`}>
+      <div className="relative mt-3.5 h-6" aria-label={`Monte Carlo range from ${formatMoney(method.low)} to ${formatMoney(method.high)}, median ${formatMoney(method.median)}`}>
         <div className="absolute inset-x-0 top-1/2 h-px bg-white/16" />
         <motion.div
           className="absolute inset-x-0 top-1/2 h-2 origin-center -translate-y-1/2 bg-[#C6F432]/28"
@@ -619,11 +619,11 @@ function MonteCarloValue({ label, value, emphasized = false, align = "left" }: {
 function ValuationPlot({ methods, currentPrice, compact = false, reduceMotion = false, progress }: { methods: MethodDatum[]; currentPrice: number | null; compact?: boolean; reduceMotion?: boolean; progress?: MotionValue<number> }) {
   const fallbackProgress = useMotionValue(1)
   const motionProgress = progress ?? fallbackProgress
-  const plotReveal = useTransform(motionProgress, [0.57, 0.7], ["inset(0 100% 0 0)", "inset(0 0% 0 0)"])
+  const plotReveal = useTransform(motionProgress, [0.48, 0.62], ["inset(0 100% 0 0)", "inset(0 0% 0 0)"])
   const priceScale = useTransform(motionProgress, [0.78, 0.88], [0, 1])
   const values = methods.flatMap((method) => [method.value, method.low, method.high]).filter((value): value is number => value !== null && value > 0)
   if (currentPrice !== null && currentPrice > 0) values.push(currentPrice)
-  if (!values.length) return <p className="mt-8 border-y border-white/12 py-8 text-sm text-[#8E8E99]">No engine returned a valid fair value. The plot remains empty.</p>
+  if (!values.length) return <p className="mt-6 border border-white/12 bg-[#0E0E10]/40 px-5 py-8 text-sm text-[#8E8E99]">No engine returned a valid fair value. The plot remains empty.</p>
   const rawMin = Math.min(...values)
   const rawMax = Math.max(...values)
   const padding = Math.max((rawMax - rawMin) * 0.12, rawMax * 0.05)
@@ -641,37 +641,60 @@ function ValuationPlot({ methods, currentPrice, compact = false, reduceMotion = 
         : "translateX(-50%)"
 
   return (
-    <figure className={`mt-3.5 ${compact ? "space-y-1.5" : "space-y-3"}`} aria-label={`Fair value plot from ${formatMoney(min)} to ${formatMoney(max)}`}>
-      <div className="flex justify-between font-mono text-[0.68rem] text-[#8E8E99]"><span>{formatMoney(min)}</span><span>USD / share</span><span data-testid="valuation-plot-max-label">{formatMoney(max)}</span></div>
-      {currentPricePosition !== null ? (
-        <div className="relative h-4 border-x border-white/16" aria-hidden="true">
-          <span
-            className="absolute top-0 whitespace-nowrap bg-[#121214] px-1 font-mono text-[0.65rem] text-[#C6F432]"
-            style={{ left: `${currentPricePosition}%`, transform: priceLabelTransform }}
-            data-testid="valuation-plot-price-label"
-          >
-            PRICE
-          </span>
+    <figure className={`mt-5 ${compact ? "space-y-2.5" : "space-y-3.5"}`} aria-label={`Fair value plot from ${formatMoney(min)} to ${formatMoney(max)}`}>
+      <div className="grid grid-cols-[6.75rem_1fr] items-end sm:grid-cols-[10.5rem_1fr]">
+        <span className="px-3 font-mono text-[0.68rem] uppercase tracking-wider text-[#8E8E99] sm:px-5">Engine</span>
+        <div className="flex justify-between gap-2 px-3 font-mono text-[0.68rem] text-[#8E8E99] sm:px-5">
+          <span className="whitespace-nowrap">{formatMoney(min)}</span>
+          <span className="whitespace-nowrap">USD / share</span>
+          <span className="whitespace-nowrap" data-testid="valuation-plot-max-label">{formatMoney(max)}</span>
         </div>
-      ) : null}
-      <motion.div className="relative border-x border-white/16" style={!reduceMotion && currentPrice === null ? { clipPath: plotReveal } : undefined}>
-        {currentPrice !== null ? <motion.div className="absolute inset-y-0 z-20 w-px origin-top bg-[#C6F432]" style={{ left: position(currentPrice), ...(reduceMotion ? {} : { scaleY: priceScale }) }} /> : null}
-        {methods.map((method, index) => (
-          <div key={method.key} className={`grid grid-cols-[7.5rem_1fr] items-center gap-3 border-b border-white/10 last:border-b-0 ${compact ? "min-h-8" : "min-h-11"}`}>
-            <span className="truncate text-xs text-[#B8B8C2]">{method.label}</span>
-            <div className="relative h-full border-l border-white/8">
-              {method.value !== null ? (
-                <>
-                  {method.low !== null && method.high !== null ? <motion.div className="absolute top-1/2 h-1 origin-left -translate-y-1/2 bg-[#C6F432]/30" style={{ left: position(method.low), width: `calc(${position(method.high)} - ${position(method.low)})` }} initial={reduceMotion ? false : { scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: reduceMotion ? 0 : 0.38, delay: reduceMotion ? 0 : index * 0.035, ease: [0.22, 1, 0.36, 1] }} /> : null}
-                  <motion.span className="absolute top-1/2 z-10 size-2 -translate-x-1/2 -translate-y-1/2 bg-[#FFFFFF]" style={{ left: position(method.value) }} title={`${method.label}: ${formatMoney(method.value)}`} initial={reduceMotion ? false : { scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: reduceMotion ? 0 : 0.28, delay: reduceMotion ? 0 : 0.08 + index * 0.04, ease: [0.22, 1, 0.36, 1] }} />
-                  {!compact ? <span className="absolute top-1/2 -translate-y-1/2 pl-2 font-mono text-[0.68rem] text-[#B8B8C2]" style={{ left: position(method.value) }}>{formatMoney(method.value)}</span> : null}
-                </>
-              ) : <span className="absolute inset-y-0 left-0 flex items-center text-[0.7rem] text-[#8E8E99]">{method.status.replaceAll("_", " ")}</span>}
+      </div>
+      {currentPricePosition !== null ? (
+        <div className="grid grid-cols-[6.75rem_1fr] sm:grid-cols-[10.5rem_1fr]" aria-hidden="true">
+          <span />
+          <div className="relative h-6 px-3 sm:px-5">
+            <div className="relative flex h-full items-center">
+              <span
+                className="absolute whitespace-nowrap bg-[#121214] px-1.5 font-mono text-[0.65rem] font-semibold text-[#C6F432]"
+                style={{ left: `${currentPricePosition}%`, transform: priceLabelTransform }}
+                data-testid="valuation-plot-price-label"
+              >
+                PRICE
+              </span>
             </div>
           </div>
+        </div>
+      ) : null}
+      <div className="relative border border-white/14 bg-[#0E0E10]/40">
+        {currentPrice !== null ? (
+          <div className="pointer-events-none absolute inset-0 grid grid-cols-[6.75rem_1fr] sm:grid-cols-[10.5rem_1fr]" aria-hidden="true">
+            <span />
+            <div className="relative h-full px-3 sm:px-5">
+              <div className="relative h-full">
+                <motion.div className="absolute inset-y-0 z-20 w-px origin-top bg-[#C6F432]" style={{ left: position(currentPrice), ...(reduceMotion ? {} : { scaleY: priceScale }) }} />
+              </div>
+            </div>
+          </div>
+        ) : null}
+        {methods.map((method, index) => (
+          <div key={method.key} className="grid min-h-11 grid-cols-[6.75rem_1fr] items-center border-b border-white/10 last:border-b-0 sm:grid-cols-[10.5rem_1fr]">
+            <span className="truncate px-3 py-2.5 text-xs font-medium text-[#B8B8C2] sm:px-5">{method.label}</span>
+            <motion.div className="relative h-full border-l border-white/10 px-3 sm:px-5" style={!reduceMotion && currentPrice === null ? { clipPath: plotReveal } : undefined}>
+              <div className="relative h-full">
+                {method.value !== null ? (
+                  <>
+                    {method.low !== null && method.high !== null ? <motion.div className="absolute top-1/2 h-1 origin-left -translate-y-1/2 bg-[#C6F432]/30" style={{ left: position(method.low), width: `calc(${position(method.high)} - ${position(method.low)})` }} initial={reduceMotion ? false : { scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: reduceMotion ? 0 : 0.38, delay: reduceMotion ? 0 : index * 0.035, ease: [0.22, 1, 0.36, 1] }} /> : null}
+                    <motion.span className="absolute top-1/2 z-10 size-2 -translate-x-1/2 -translate-y-1/2 bg-[#FFFFFF]" style={{ left: position(method.value) }} title={`${method.label}: ${formatMoney(method.value)}`} initial={reduceMotion ? false : { scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: reduceMotion ? 0 : 0.28, delay: reduceMotion ? 0 : 0.08 + index * 0.04, ease: [0.22, 1, 0.36, 1] }} />
+                    {!compact ? <span className="absolute top-1/2 -translate-y-1/2 pl-2 font-mono text-[0.68rem] text-[#B8B8C2]" style={{ left: position(method.value) }}>{formatMoney(method.value)}</span> : null}
+                  </>
+                ) : <span className="absolute inset-y-0 left-0 flex items-center text-[0.7rem] text-[#8E8E99]">{method.status.replaceAll("_", " ")}</span>}
+              </div>
+            </motion.div>
+          </div>
         ))}
-      </motion.div>
-      <figcaption className="mt-1.5 text-[0.68rem] leading-4 text-[#8E8E99]">Points are returned fair values. The DCF interval, when available, is its Monte Carlo P10–P90 range.</figcaption>
+      </div>
+      <figcaption className="pt-2 text-xs leading-5 text-[#8E8E99]">Points are returned fair values. The DCF interval, when available, is its Monte Carlo P10–P90 range.</figcaption>
     </figure>
   )
 }
@@ -681,11 +704,11 @@ function StateHeading({ title, copy }: { title: string; copy: string }) {
 }
 
 function EvidenceCell({ label, value }: { label: string; value: string }) {
-  return <div className="min-h-24 bg-[#121214] p-4"><p className="text-xs text-[#8E8E99]">{label}</p><p className="mt-3 text-sm font-semibold text-[#FFFFFF]">{value}</p></div>
+  return <div className="min-h-24 bg-[#121214] px-5 py-4 sm:px-6 sm:py-5"><p className="text-xs text-[#8E8E99]">{label}</p><p className="mt-3 text-sm font-semibold text-[#FFFFFF]">{value}</p></div>
 }
 
 function ExpectationCell({ label, value }: { label: string; value: string }) {
-  return <div className="bg-[#121214] p-3"><p className="text-xs text-[#8E8E99]">{label}</p><p className="mt-1.5 font-mono text-sm font-semibold text-[#FFFFFF]">{value}</p></div>
+  return <div className="bg-[#121214] px-5 py-4"><p className="text-xs text-[#8E8E99]">{label}</p><p className="mt-2 font-mono text-sm font-semibold text-[#FFFFFF]">{value}</p></div>
 }
 
 function ReadoutInline({ label, value, align = "left" }: { label: string; value: string; align?: "left" | "right" }) {
